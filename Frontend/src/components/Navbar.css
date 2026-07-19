@@ -37,7 +37,7 @@
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: 26px;
 }
 
     .nav-links a {
@@ -95,18 +95,40 @@
 
 @media (max-width: 720px) {
     .navbar {
-        padding: 16px 6vw;
+        padding: 14px 6vw;
+        flex-wrap: wrap;
+        row-gap: 12px;
     }
 
     .nav-links {
-        gap: 18px;
+        gap: 14px;
+        flex-wrap: wrap;
     }
 
         .nav-links a {
-            font-size: 13.5px;
+            font-size: 13px;
         }
 
             .nav-links a.nav-cta {
                 padding: 8px 14px;
             }
 }
+.username {
+    font-weight: 600;
+    color: #2563eb;
+}
+
+
+.logout-btn {
+    border: none;
+    background: #ef4444;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+
+    .logout-btn:hover {
+        background: #dc2626;
+    }
