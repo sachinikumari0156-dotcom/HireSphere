@@ -19,6 +19,19 @@ builder.Services.AddControllers()
     });
 
 
+// CORS - Allow React Frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+
 // Database Connection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(
@@ -27,7 +40,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
             builder.Configuration.GetConnectionString("DefaultConnection")
         )
     ));
-
 
 
 // JWT Authentication
@@ -64,7 +76,6 @@ builder.Services.AddAuthentication(options =>
         )
     };
 });
-
 
 
 // Swagger + JWT Authorization
@@ -111,9 +122,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 
-
 var app = builder.Build();
-
 
 
 // Swagger Middleware
@@ -122,17 +131,18 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 
-
 // HTTPS
 app.UseHttpsRedirection();
 
+
+// CORS Middleware
+app.UseCors("AllowFrontend");
 
 
 // Authentication + Authorization
 app.UseAuthentication();
 
 app.UseAuthorization();
-
 
 
 // API Controllers
