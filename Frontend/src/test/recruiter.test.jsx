@@ -346,4 +346,46 @@ describe('Phase 5.2 recruiter UI', () => {
             );
         });
     });
+
+    it('validates interview schedule form', async () => {
+        const user = userEvent.setup();
+        const { default: RecruiterScheduleInterviewPage } = await import('../pages/recruiter/RecruiterScheduleInterviewPage');
+        renderWithAuth(<RecruiterScheduleInterviewPage />);
+        await user.click(screen.getByRole('button', { name: /^schedule$/i }));
+        expect(await screen.findByText(/application id and start time are required/i)).toBeInTheDocument();
+    });
+
+    it('shows interview conflict warning', async () => {
+        api.post.mockResolvedValueOnce({
+            data: {
+                scheduled: false,
+                conflicts: [{ conflictType: 'Candidate', message: 'Candidate already has an overlapping interview.' }]
+            }
+        });
+        const user = userEvent.setup();
+        const { default: RecruiterScheduleInterviewPage } = await import('../pages/recruiter/RecruiterScheduleInterviewPage');
+        renderWithAuth(<RecruiterScheduleInterviewPage />);
+        await user.type(screen.getByLabelText(/application id/i), '12');
+        await user.type(screen.getByLabelText(/start/i), '2030-01-01T10:00');
+        await user.click(screen.getByRole('button', { name: /^schedule$/i }));
+        expect(await screen.findByText(/conflict warning/i)).toBeInTheDocument();
+        expect(screen.getByText(/overlapping interview/i)).toBeInTheDocument();
+    });
+
+    it('loads reports empty and success states', async () => {
+        api.get.mockResolvedValueOnce({
+            data: {
+                applicationsTotal: 0,
+                shortlistRate: 0,
+                rejectionRate: 0,
+                assessmentAssignments: 0,
+                interviewsScheduled: 0,
+                applicationsByStatus: [],
+                applicationsOverTime: []
+            }
+        });
+        const { default: RecruiterReportsPage } = await import('../pages/recruiter/RecruiterReportsPage');
+        renderWithAuth(<RecruiterReportsPage />);
+        expect(await screen.findByText(/no applications in the selected range/i)).toBeInTheDocument();
+    });
 });

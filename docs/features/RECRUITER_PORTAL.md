@@ -47,3 +47,18 @@
 
 - Interview scheduling and reports (Phase 5.3)
 - External email/SMS (Phase 8)
+
+## Phase 5.3 — Interview scheduling and reports
+
+### Delivered
+
+- Schedule/reschedule/cancel interviews with conflict detection (Candidate, Recruiter, Hiring Manager, participants)
+- UTC start + duration; timezone metadata; calendar sync = NotConfigured
+- Reports summary + CSV export (org scoped, no password hashes)
+- Frontend interview list/schedule/detail and reports dashboard
+
+### Deferred
+
+- Google Calendar / Outlook sync (Phase 8)
+- External email/SMS delivery (Phase 8)
+- Full Recruiter browser E2E evidence pack (required before Phase 5 VERIFIED)

@@ -34,6 +34,10 @@ import RecruiterRankingPage from "./pages/recruiter/RecruiterRankingPage";
 import RecruiterAssessmentsPage from "./pages/recruiter/RecruiterAssessmentsPage";
 import RecruiterAssessmentBuilderPage from "./pages/recruiter/RecruiterAssessmentBuilderPage";
 import RecruiterMessageThreadPage from "./pages/recruiter/RecruiterMessageThreadPage";
+import RecruiterInterviewsPage from "./pages/recruiter/RecruiterInterviewsPage";
+import RecruiterScheduleInterviewPage from "./pages/recruiter/RecruiterScheduleInterviewPage";
+import RecruiterInterviewDetailPage from "./pages/recruiter/RecruiterInterviewDetailPage";
+import RecruiterReportsPage from "./pages/recruiter/RecruiterReportsPage";
 import { AdminDashboard, HiringManagerDashboard } from "./pages/RoleDashboards";
 import "./App.css";
 
@@ -175,6 +179,10 @@ function App() {
                         <Route path="assessments" element={<RecruiterAssessmentsPage />} />
                         <Route path="assessments/new" element={<RecruiterAssessmentBuilderPage />} />
                         <Route path="assessments/:id" element={<RecruiterAssessmentBuilderPage />} />
+                        <Route path="interviews" element={<RecruiterInterviewsPage />} />
+                        <Route path="interviews/schedule" element={<RecruiterScheduleInterviewPage />} />
+                        <Route path="interviews/:id" element={<RecruiterInterviewDetailPage />} />
+                        <Route path="reports" element={<RecruiterReportsPage />} />
                         <Route path="compare" element={<RecruiterComparePage />} />
                     </Route>
                     <Route

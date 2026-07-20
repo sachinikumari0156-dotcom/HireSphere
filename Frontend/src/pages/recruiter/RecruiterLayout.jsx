@@ -12,6 +12,8 @@ export default function RecruiterLayout() {
                     <NavLink to="/recruiter/jobs/new">Create job</NavLink>
                     <NavLink to="/recruiter/screening">Screening</NavLink>
                     <NavLink to="/recruiter/assessments">Assessments</NavLink>
+                    <NavLink to="/recruiter/interviews">Interviews</NavLink>
+                    <NavLink to="/recruiter/reports">Reports</NavLink>
                     <NavLink to="/recruiter/compare">Compare</NavLink>
                 </nav>
             </header>

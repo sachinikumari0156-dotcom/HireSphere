@@ -1,5 +1,17 @@
 # HireSphere — Implementation Changelog
 
+## Phase 5.3 — 2026-07-20
+
+**Commit message:** `feat(recruiter): add interview scheduling and recruitment reports`
+
+- Interview scheduling with UTC persistence, timezone metadata, conflict detection
+- Candidate confirm/reschedule flows; internal notes hidden from Candidate APIs
+- Organization-scoped reports + safe CSV export
+- Calendar sync accurately shown as NotConfigured
+- Migration `AddRecruiterPortalPhase53`
+- Frontend interviews/schedule/detail/reports pages
+- Phase 5 remains IN PROGRESS until full Recruiter Playwright E2E + evidence pack
+
 ## Phase 5.2 — 2026-07-20
 
 **Commit message:** `feat(recruiter): add screening ranking assessments and communication`

@@ -41,12 +41,15 @@ public enum ApplicationStatus
 
 public enum InterviewStatus
 {
-    Scheduled,
-    InProgress,
-    Completed,
-    Cancelled,
-    Rescheduled,
-    NoShow
+    Scheduled = 0,
+    InProgress = 1,
+    Completed = 2,
+    Cancelled = 3,
+    Rescheduled = 4,
+    NoShow = 5,
+    Proposed = 6,
+    Confirmed = 7,
+    RescheduleRequested = 8
 }
 
 public enum InterviewCandidateResponse

@@ -28,7 +28,9 @@ public sealed class CandidateInterviewService : ICandidateInterviewService
     private static readonly InterviewStatus[] RespondableStatuses =
     {
         InterviewStatus.Scheduled,
-        InterviewStatus.Rescheduled
+        InterviewStatus.Rescheduled,
+        InterviewStatus.Proposed,
+        InterviewStatus.Confirmed
     };
 
     private readonly ApplicationDbContext _db;
