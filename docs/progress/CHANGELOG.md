@@ -1,5 +1,14 @@
 # HireSphere — Implementation Changelog
 
+## Phase 11.2 — 2026-07-21
+
+**Commit message:** `docs(evidence): finalize verified coursework evidence and demo pack`
+
+- Evidence master index (185 PNGs)
+- Contribution matrix + AI disclosure
+- README finalisation; demo + presentation + submission checklist
+- Final verification summary + known limitations
+
 ## Phase 11.1 — 2026-07-21
 
 **Commit message:** `docs(architecture): finalize HireSphere architecture and technical report`

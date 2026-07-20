@@ -1,5 +1,7 @@
 # Screenshot Index
 
+**Master index:** `docs/evidence/EVIDENCE_MASTER_INDEX.md` (185 PNG files across phases 4–10).
+
 ## Phase 10 — Quality / UAT
 
 **Date:** 2026-07-21

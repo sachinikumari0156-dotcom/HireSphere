@@ -16,7 +16,7 @@
 | 8 | AI and integrations | IMPLEMENTED — EXTERNAL PROVIDER VERIFICATION PENDING | `d94e08e` + `3a5ef00` + `472df59` + `ed74aed` | SUCCESS | Deterministic AI, outbox, ICS, local storage verified; external cloud providers NotConfigured |
 | 9 | UI design system | VERIFIED | `48db259` + `3119e4f` + verify | SUCCESS | Design system + responsive portals; axe/keyboard/visual PASS; evidence in phase9-ui |
 | 10 | Quality and UAT | PARTIALLY VERIFIED | `fe3c0cc` + `6cddb19` + release | PARTIAL | Automated quality/UAT/release PASS; real usability participants PENDING |
-| 11 | Submission pack | IN PROGRESS | Phase 11.1 docs | — | Architecture report + ADRs + diagrams; evidence/demo pack pending |
+| 11 | Submission pack | IN PROGRESS | `01f49a9` + 11.2 | — | Architecture done; evidence/demo pack next; PDF/video/NLEARN pending user |
 
 ---
 
