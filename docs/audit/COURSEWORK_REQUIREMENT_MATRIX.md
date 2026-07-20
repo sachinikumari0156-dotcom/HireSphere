@@ -117,7 +117,7 @@
 | M-F04 | Client-side validation | VERIFIED | Auth + portal forms; accessible errors |
 | M-F05 | Secure authentication workflow | VERIFIED | AuthContext, protected routes, session expiry |
 | M-F06 | Error handling and user feedback | VERIFIED | Alerts, empty/error states, provider Not Configured |
-| M-F07 | Usability testing evidence | NOT STARTED | Formal usability remains Phase 10 |
+| M-F07 | Usability testing evidence | PENDING | Real participants unavailable this cycle; heuristic done; automated UAT PASS |
 
 ### Testing and evidence
 

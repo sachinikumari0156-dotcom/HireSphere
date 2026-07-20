@@ -1,5 +1,13 @@
 # HireSphere — Implementation Changelog
 
+## Phase 10.2 — 2026-07-21
+
+**Commit message:** `test(usability): complete role based UAT and usability evaluation`
+
+- Four-role automated UAT docs + Phase 10 evidence screenshots
+- Expert heuristic evaluation; real participants PENDING (0)
+- Playwright suite 14/14 including phase10-uat-evidence
+
 ## Phase 10.1 — 2026-07-21
 
 **Commit message:** `test(quality): add automated integration security and performance coverage`

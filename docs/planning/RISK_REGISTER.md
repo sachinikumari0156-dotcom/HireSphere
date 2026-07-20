@@ -23,7 +23,7 @@
 | R-15 | EF package/version mismatch | Low | Low | Aligned to EF Core 10.0.10 / net10.0 | Agent | CLOSED |
 | R-16 | Hireflow branding inconsistency | Low | Low | Phase 9 brand/tokens applied | Agent | CLOSED |
 | R-34 | Phase 9 a11y claimed without evidence | Low | High | Playwright axe + screenshots 2026-07-21 | Chinthaka | CLOSED |
-| R-35 | Nested main landmarks after SkipLink | Medium | Medium | Portal pages use div; single #main-content | Chinthaka | CLOSED |
+| R-36 | Real usability participants unavailable | High | Medium | Heuristic + automated UAT; schedule participants | Chinthaka | OPEN — Phase 10 partial |
 | R-17 | Placeholder recruiter/manager/admin UIs | Low | High | Recruiter + HM + Admin portals VERIFIED | Agent | CLOSED |
 | R-32 | Phase 7 claimed VERIFIED without Admin E2E | Low | High | Playwright journey + 28 screenshots 2026-07-20 | Chinthaka | CLOSED |
 | R-18 | Coursework/SRS in public repo | Low | Medium | Moved to ignored `local-spec/` | Kalani | CLOSED |

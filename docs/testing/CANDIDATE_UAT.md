@@ -1,29 +1,20 @@
-# Candidate UAT Checklist
+# Candidate UAT
 
-## Phase 4.1–4.3 automated
+**Date:** 2026-07-21  
+**Primary evidence:** `e2e/candidate-portal.spec.js`, Phase 8 AI/storage journey, `candidate-uat-summary.png`
 
-See prior API/Vitest coverage. Status remains covered by automated suites.
-
-## Phase 4 browser E2E (2026-07-20)
-
-| Step | Expected | Status |
-|------|----------|--------|
-| Full Candidate browser journey (Playwright) | Register → profile → jobs → apply → assessment → interview → notifications → authz → logout | **PASS** — `docs/testing/CANDIDATE_E2E_RESULTS.md` |
-| Authorization boundaries | Cross-candidate + privileged APIs blocked | **PASS** |
-| Responsive 1440 / 768 / 390 | Usable; no material overflow | **PASS** |
-| Accessibility critical pages | No blocking critical axe issues (1 residual register contrast documented) | **PASS** |
-| Screenshots | 23 genuine captures | **PASS** — `docs/evidence/phase4-candidate/` |
-
-### Environment
-
-- LocalDB `(localdb)\MSSQLLocalDB` / `HireSphereDev`
-- SQL Express not available on verification host
-- Cloud object storage: deferred Phase 8 (local storage abstraction used)
-
-### Not in this cycle
-
-| Step | Status |
+| Area | Result |
 |------|--------|
-| Recruiter creates assignment/interview in UI | Phase 5 |
-| Email/SMS delivery | Deferred — in-app only |
-| Phase 5 Recruiter workflows | Not started |
+| Login / dashboard | PASS |
+| Profile / experience / education / skills / certifications | PASS |
+| Resume upload / invalid upload | PASS |
+| Parse resume / skill review (deterministic) | PASS |
+| Job search / match / recommendations | PASS |
+| Apply / duplicate blocked / timeline | PASS |
+| Assessment (answer keys hidden) | PASS |
+| Interview / ICS | PASS |
+| Notifications / preferences | PASS |
+| Own document download / cross-candidate denied | PASS |
+| Logout | PASS |
+
+External AI Not Configured — not claimed as PASS.

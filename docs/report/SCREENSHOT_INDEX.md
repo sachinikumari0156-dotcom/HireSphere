@@ -1,5 +1,38 @@
 # Screenshot Index
 
+## Phase 10 — Quality / UAT
+
+**Date:** 2026-07-21
+**Folder:** `docs/evidence/phase10-quality/`
+**Source:** Playwright Phase 10 UAT evidence + measured summary pages
+
+| File | Scenario |
+|------|----------|
+| `public-uat-summary.png` | Public landing |
+| `candidate-uat-summary.png` | Candidate dashboard |
+| `recruiter-uat-summary.png` | Recruiter dashboard |
+| `manager-uat-summary.png` | Hiring Manager dashboard |
+| `admin-uat-summary.png` | Administrator dashboard |
+| `cross-role-denial.png` | Candidate denied Recruiter |
+| `ai-provider-results.png` | Integrations / AI status UI |
+| `notification-provider-results.png` | Integrations |
+| `calendar-provider-results.png` | Integrations |
+| `storage-provider-results.png` | Storage status |
+| `migration-verification.png` | Migration summary (measured) |
+| `swagger-verification.png` | Swagger UI |
+| `postman-run-summary.png` | Postman collection note |
+| `backend-test-summary.png` | Backend 132 PASS summary |
+| `frontend-test-summary.png` | Frontend Vitest summary |
+| `playwright-summary.png` | Admin capture |
+| `accessibility-summary.png` | Regression capture |
+| `security-verification-summary.png` | Security capture |
+| `dependency-audit-summary.png` | Audit capture |
+| `performance-smoke-summary.png` | Perf capture |
+| `defect-log-summary.png` | Defect disposition capture |
+| `usability-task-sheet.png` | Usability pending note |
+| `heuristic-evaluation-summary.png` | Heuristic capture |
+| `responsive-regression-summary.png` | Responsive capture |
+
 ## Phase 9 — Responsive UI / Accessibility
 
 **Date:** 2026-07-21
