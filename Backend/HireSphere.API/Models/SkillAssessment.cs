@@ -1,19 +1,28 @@
-﻿namespace HireSphere.API.Models
+﻿using HireSphere.API.Models.Enums;
+
+namespace HireSphere.API.Models;
+
+public class SkillAssessment
 {
-    public class SkillAssessment
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        public int CandidateId { get; set; }
+    public int? JobId { get; set; }
 
-        public string SkillName { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
 
-        public int Score { get; set; }
+    public string? Description { get; set; }
 
-        public string AssessmentResult { get; set; } = string.Empty;
+    public int? DurationMinutes { get; set; }
 
-        public DateTime AssessmentDate { get; set; }
+    public AssessmentStatus Status { get; set; } = AssessmentStatus.Pending;
 
-        public User Candidate { get; set; } = null!;
-    }
+    public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
+
+    public DateTime? UpdatedAtUtc { get; set; }
+
+    public Job? Job { get; set; }
+
+    public ICollection<AssessmentQuestion> Questions { get; set; } = new List<AssessmentQuestion>();
+
+    public ICollection<AssessmentAttempt> Attempts { get; set; } = new List<AssessmentAttempt>();
 }

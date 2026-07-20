@@ -40,13 +40,10 @@ builder.Services.AddCors(options =>
 
 
 // Database Connection
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(
-            builder.Configuration.GetConnectionString("DefaultConnection")
-        )
-    ));
+    options.UseSqlServer(connectionString));
 
 
 // JWT Authentication
@@ -131,6 +128,34 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    if (!app.Environment.IsEnvironment("Testing"))
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>()
+            .CreateLogger("DbSeeder");
+        try
+        {
+            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            if (await db.Database.CanConnectAsync())
+            {
+                await HireSphere.API.Data.Seed.DbSeeder.SeedAsync(db);
+            }
+            else
+            {
+                logger.LogWarning(
+                    "Database is not reachable. Skipping seed. Apply migrations and configure ConnectionStrings__DefaultConnection.");
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(
+                ex,
+                "Database seed skipped because the database is unavailable or not migrated yet.");
+        }
+    }
+}
+
 // Standard exception handler (sanitized response)
 app.UseExceptionHandler(errorApp =>
 {
@@ -173,3 +198,5 @@ app.MapControllers();
 
 
 app.Run();
+
+public partial class Program { }

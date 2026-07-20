@@ -1,7 +1,7 @@
 # HireSphere — Coursework Requirement Matrix
 
-**Course:** SE205.3 Software Architecture 2026  
-**Last updated:** 2026-07-20 (Phase 1 security)
+**Course:** SE205.3 Software Architecture 2026
+**Last updated:** 2026-07-20 (Phase 2 data model)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED — EXTERNAL CREDENTIAL | DEFERRED — OPTIONAL BONUS
 
 ---
@@ -36,7 +36,7 @@
 | M-RC02 | Candidate search and filtering | NOT STARTED | No dedicated search |
 | M-RC03 | Application review and shortlisting | IN PROGRESS | Status update endpoints exist |
 | M-RC04 | AI-powered candidate ranking and screening | NOT STARTED | — |
-| M-RC05 | Interview scheduling and management | NOT STARTED | `Interview` model orphan |
+| M-RC05 | Interview scheduling and management | NOT STARTED | Interview model + DB config; API pending |
 | M-RC06 | Communication with applicants | NOT STARTED | — |
 
 ### Hiring Manager features
@@ -44,27 +44,27 @@
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
 | M-HM01 | Review shortlisted candidates | NOT STARTED | — |
-| M-HM02 | Interview feedback | NOT STARTED | — |
-| M-HM03 | Candidate evaluation and scoring | NOT STARTED | — |
-| M-HM04 | Hiring decision management | NOT STARTED | — |
+| M-HM02 | Interview feedback | NOT STARTED | Model exists; API pending |
+| M-HM03 | Candidate evaluation and scoring | NOT STARTED | Model exists; API pending |
+| M-HM04 | Hiring decision management | NOT STARTED | Model exists; API pending |
 
 ### Administrator features
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-A01 | User management | IN PROGRESS | Basic `UsersController` list/get |
-| M-A02 | Role and permission management | NOT STARTED | String role on User only |
+| M-A01 | User management | IN PROGRESS | `UsersController` secured; Admin CRUD; list/get DTO-safe |
+| M-A02 | Role and permission management | IN PROGRESS | RBAC tables seeded; admin API pending |
 | M-A03 | System monitoring | NOT STARTED | — |
 | M-A04 | Recruitment analytics dashboard | NOT STARTED | — |
-| M-A05 | Organization and department management | NOT STARTED | — |
+| M-A05 | Organization and department management | NOT STARTED | Models + seed; API pending |
 
 ### Backend and database
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
 | M-B01 | C# ASP.NET Core Web API | IMPLEMENTED | Builds successfully |
-| M-B02 | SQL Server database | NOT STARTED | Currently MySQL (Pomelo) |
-| M-B03 | Core entities (profiles, jobs, applications, interviews, assessments, analytics, orgs) | IN PROGRESS | 4 of ~25+ entities in DbContext |
+| M-B02 | SQL Server database | IMPLEMENTED | Provider + migration generated; **apply BLOCKED** without SQL Server |
+| M-B03 | Core entities (profiles, jobs, applications, interviews, assessments, analytics, orgs) | IMPLEMENTED | 35+ entities in DbContext + configurations |
 | M-B04 | REST APIs (auth, profiles, resumes, jobs, applications, interviews, evaluations, analytics) | IN PROGRESS | ~5 controller groups; many missing |
 | M-B05 | Swagger/OpenAPI | IMPLEMENTED | Enabled in `Program.cs` |
 
@@ -74,10 +74,10 @@
 |----|-------------|--------|------------------|
 | M-S01 | JWT authentication | IN PROGRESS | Token issued; validation configured; key via secrets/env |
 | M-S02 | RBAC | IN PROGRESS | Role claims; public privileged registration blocked |
-| M-S03 | Secure password hashing | IMPLEMENTED | BCrypt hash on register; verify on login |
+| M-S03 | Secure password hashing | IMPLEMENTED | BCrypt hash on register; verify on login; UsersController admin paths |
 | M-S04 | HTTPS-ready configuration | IN PROGRESS | Dev HTTPS profile exists |
-| M-S05 | Audit logging | NOT STARTED | — |
-| M-S06 | Data privacy measures | NOT STARTED | — |
+| M-S05 | Audit logging | IN PROGRESS | AuditLog entity + configuration; API pending |
+| M-S06 | Data privacy measures | IN PROGRESS | UserDto excludes PasswordHash; tests verify |
 | M-S07 | Resource ownership checks | IN PROGRESS | Partial in applications/jobs |
 | M-S08 | Secure secret and document handling | IMPLEMENTED | Tracked secrets replaced with placeholders; rotation documented |
 
@@ -85,9 +85,9 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-AI01 | Resume parsing | NOT STARTED | — |
+| M-AI01 | Resume parsing | NOT STARTED | ResumeAnalysis model only |
 | M-AI02 | Skill extraction | NOT STARTED | — |
-| M-AI03 | Candidate-job matching | NOT STARTED | — |
+| M-AI03 | Candidate-job matching | NOT STARTED | CandidateJobMatch model only |
 | M-AI04 | Candidate ranking/scoring | NOT STARTED | — |
 | M-AI05 | Job recommendations | NOT STARTED | — |
 | M-AI06 | Automated feedback | NOT STARTED | — |
@@ -123,7 +123,7 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-T01 | Unit / API / auth tests | NOT STARTED | No test projects |
+| M-T01 | Unit / API / auth tests | TESTED | `HireSphere.API.Tests` — 14 passing (SQLite constraints + auth) |
 | M-T02 | Integration tests | NOT STARTED | — |
 | M-T03 | UAT scenarios (18 mandatory) | NOT STARTED | — |
 | M-T04 | Postman and Swagger evidence | NOT STARTED | Swagger only |
@@ -132,7 +132,7 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-D01 | Use Case / Class / Deployment diagrams | NOT STARTED | — |
+| M-D01 | Use Case / Class / Deployment diagrams | NOT STARTED | ER diagram added in Phase 2 |
 | M-D02 | Design patterns and ADR discussion | NOT STARTED | — |
 | M-D03 | Screenshots and evidence pack | NOT STARTED | — |
 | M-D04 | Individual contribution (Kalani) | NOT STARTED | — |
@@ -169,9 +169,9 @@
 
 | Status | Count (approx.) |
 |--------|-----------------|
-| NOT STARTED | ~55 |
-| IN PROGRESS | ~18 |
-| IMPLEMENTED | ~3 |
+| NOT STARTED | ~50 |
+| IN PROGRESS | ~22 |
+| IMPLEMENTED | ~6 |
 | TESTED / VERIFIED | 0 |
 
 **Submission readiness:** NOT READY — majority of mandatory rows are NOT STARTED or unverified.
