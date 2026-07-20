@@ -23,7 +23,7 @@
 |----|-------------|--------|------------------|
 | M-C01 | Registration and secure authentication | VERIFIED | Phase 3 live UAT + FE/BE tests |
 | M-C02 | Professional profile management | VERIFIED | Browser E2E + API tests |
-| M-C03 | CV/resume upload and management | VERIFIED | Local secure storage; cloud pending Phase 8 |
+| M-C03 | CV/resume upload and management | VERIFIED | Local secure storage verified Phase 8.3; Azure Blob NotConfigured |
 | M-C04 | Job search and application submission | VERIFIED | Browser E2E apply wizard + duplicate rejection |
 | M-C05 | AI-powered job recommendations | VERIFIED | Deterministic provider; E2E recommendations |
 | M-C06 | Application tracking dashboard | VERIFIED | Timeline E2E + automated ordering tests |
@@ -36,8 +36,8 @@
 | M-RC02 | Candidate search and filtering | VERIFIED | Pipeline search/filter/pagination E2E |
 | M-RC03 | Application review and shortlisting | VERIFIED | Status transitions + shortlist E2E |
 | M-RC04 | AI-powered candidate ranking and screening | VERIFIED | Deterministic ranking + screening queue; human-review notice (`docs/ai/RANKING_MODEL.md`) |
-| M-RC05 | Interview scheduling and management | VERIFIED | Schedule + conflicts + Candidate respond; calendar sync Phase 8 |
-| M-RC06 | Communication with applicants | VERIFIED | In-app threads + notifications; email/SMS deferred Phase 8 |
+| M-RC05 | Interview scheduling and management | VERIFIED | Schedule + conflicts + ICS/internal calendar; Google/Outlook NotConfigured |
+| M-RC06 | Communication with applicants | VERIFIED | In-app + outbox; Dev SMTP NotConfigured unless MailHog; SMS mock verified |
 
 ### Hiring Manager features
 
@@ -93,7 +93,7 @@
 | M-AI06 | Automated feedback | NOT STARTED | — |
 | M-AI07 | Recruitment performance analytics | NOT STARTED | — |
 | M-AI08 | Hiring trend analysis | NOT STARTED | — |
-| M-AI09 | Explainable AI + human-review notice | VERIFIED | Match (4.2) + ranking (5.2) notices; external AI still Phase 8 |
+| M-AI09 | Explainable AI + human-review notice | VERIFIED | Match + ranking + parse notices; External AI NotConfigured |
 
 ### External integrations
 

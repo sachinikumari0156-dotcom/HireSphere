@@ -17,7 +17,9 @@
 | R-11 | Unrestricted CORS | Low | High | Configured allowed origins | Agent | CLOSED |
 | R-12 | No automated tests | Low | High | BE 75 + FE 47 + Playwright 8 | Agent | CLOSED |
 | R-13 | Large scope vs deadline | High | High | Mandatory-first tiers | Team | OPEN |
-| R-14 | External integration credentials | Medium | Medium | Adapter + honest BLOCKED status | Kalani | OPEN |
+| R-14 | External integration credentials | Medium | Medium | Adapters + truthful NotConfigured; Phase 8 development path verified | Kalani | OPEN — external verification pending |
+| R-25 | Cloud document storage not verified | Medium | Medium | Local provider verified Phase 8.3; Azure Blob NotConfigured | Agent | MITIGATED — Azure pending |
+| R-33 | Phase 8 claimed fully VERIFIED without external providers | Low | High | Status set to IMPLEMENTED — EXTERNAL PROVIDER VERIFICATION PENDING 2026-07-21 | Chinthaka | CLOSED |
 | R-15 | EF package/version mismatch | Low | Low | Aligned to EF Core 10.0.10 / net10.0 | Agent | CLOSED |
 | R-16 | Hireflow branding inconsistency | Low | Low | Auth pages updated; remaining UI in Phase 9 | Agent | MITIGATED |
 | R-17 | Placeholder recruiter/manager/admin UIs | Low | High | Recruiter + HM + Admin portals VERIFIED | Agent | CLOSED |

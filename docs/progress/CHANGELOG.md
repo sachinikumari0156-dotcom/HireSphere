@@ -1,5 +1,14 @@
 # HireSphere — Implementation Changelog
 
+## Phase 8 verification — 2026-07-21
+
+**Commit message:** `test(platform): verify AI integrations calendar and storage workflows`
+
+- Playwright Phase 8 journey PASS; full suite 10/10
+- Evidence: 30 screenshots under `docs/evidence/phase8-platform/`
+- Phase 8 status: **IMPLEMENTED — EXTERNAL PROVIDER VERIFICATION PENDING**
+- Backend 114/114; Vitest 60/60; Phases 9–11 pending
+
 ## Phase 8.3 — 2026-07-21
 
 **Commit message:** `feat(storage): add secure cloud document storage`

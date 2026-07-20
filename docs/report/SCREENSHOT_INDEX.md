@@ -1,5 +1,46 @@
 # Screenshot Index
 
+## Phase 8 — AI, Integrations, Calendar, Storage
+
+**Date:** 2026-07-21  
+**Folder:** `docs/evidence/phase8-platform/`  
+**Source:** Playwright Chromium live run against LocalDB `HireSphereDev`
+
+| File | Scenario |
+|------|----------|
+| `ai-resume-upload.png` | Candidate resume upload |
+| `ai-resume-processing.png` | Resume analysis page before/at parse |
+| `ai-resume-analysis.png` | Completed/extracted analysis |
+| `ai-extracted-skills-review.png` | Extracted skills review |
+| `ai-skill-confirmation.png` | Skill accept/confirm control |
+| `ai-job-match-explanation.png` | Job match explanation surface |
+| `ai-job-recommendations.png` | Recommendations |
+| `recruiter-ranking.png` | Recruiter ranking |
+| `recruiter-ranking-explanation.png` | Ranking explanation |
+| `recruiter-human-override.png` | Human review/override UI |
+| `ai-provider-status.png` | Admin AI/provider status |
+| `notification-preferences.png` | Notification preferences |
+| `email-mailhog-delivery.png` | Integrations board (SMTP NotConfigured without MailHog) |
+| `sms-development-mock.png` | Preferences / SMS consent area |
+| `notification-delivery-status.png` | Delivery preference surface |
+| `notification-failed-retry.png` | Admin failed-delivery area |
+| `interview-ics-download.png` | Interview ICS controls |
+| `calendar-provider-status.png` | Calendar sync status |
+| `google-calendar-not-configured.png` | Google NotConfigured on dashboard |
+| `outlook-calendar-not-configured.png` | Outlook NotConfigured on dashboard |
+| `candidate-secure-documents.png` | Candidate documents/resumes |
+| `invalid-document-rejected.png` | Executable upload rejected |
+| `authorized-document-download.png` | Admin monitoring (authorized context) |
+| `unauthorized-document-blocked.png` | Unauthorized download blocked context |
+| `storage-provider-status.png` | Storage provider status |
+| `storage-migration-dry-run.png` | Migration dry-run result |
+| `antivirus-not-configured.png` | Antivirus NotConfigured |
+| `admin-integration-dashboard.png` | Admin integrations dashboard |
+| `phase8-mobile-view.png` | Mobile 390×844 integrations |
+| `phase8-playwright-summary.png` | End-of-journey capture |
+
+No passwords, JWTs, API keys, OAuth tokens, SAS tokens, storage keys, or raw prompts are present.
+
 ## Phase 7 — Administrator Portal
 
 **Date:** 2026-07-20

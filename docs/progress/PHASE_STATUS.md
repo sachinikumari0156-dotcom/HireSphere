@@ -1,6 +1,6 @@
 # HireSphere — Phase Status
 
-**Last updated:** 2026-07-20
+**Last updated:** 2026-07-21
 **Overall readiness:** NOT READY (Phases 9–11 pending)
 
 | Phase | Name | Status | Commit | Push | Notes |
@@ -13,10 +13,31 @@
 | 5 | Recruiter workflows | VERIFIED | Phase 5 feature + E2E verify | SUCCESS | Playwright recruiter journey PASS; LocalDB |
 | 6 | Hiring Manager | VERIFIED | `4bafce2` + `da285d2` + verify | SUCCESS | Playwright HM journey PASS; 21 screenshots; LocalDB |
 | 7 | Administrator | VERIFIED | `3d2b4d7` + `55bef50` + verify | SUCCESS | Playwright Admin journey PASS; 28 screenshots; LocalDB |
-| 8 | AI and integrations | IN PROGRESS | `d94e08e` + `3a5ef00` + 8.3 | PARTIAL | AI + integrations + storage; E2E verification pending |
+| 8 | AI and integrations | IMPLEMENTED — EXTERNAL PROVIDER VERIFICATION PENDING | `d94e08e` + `3a5ef00` + `472df59` + verify | SUCCESS | Deterministic AI, outbox, ICS, local storage verified; external cloud providers NotConfigured |
 | 9 | UI design system | NOT STARTED | — | — | — |
 | 10 | Quality and evidence | NOT STARTED | — | — | — |
 | 11 | Submission pack | NOT STARTED | — | — | — |
+
+---
+
+## Phase 8 verification (closed for development adapters)
+
+### Evidence
+
+- Playwright Phase 8 journey: **PASS** (`docs/testing/PHASE8_E2E_RESULTS.md`)
+- Full Playwright suite: **10/10 PASS**
+- Screenshots: `docs/evidence/phase8-platform/` (30 files)
+- Backend tests: **114/114 PASS**
+- Frontend Vitest: **60/60 PASS**
+- Database: `(localdb)\MSSQLLocalDB` / `HireSphereDev`
+- External AI / Production SMTP / External SMS / Google / Outlook / Azure Blob / Antivirus: **NotConfigured**
+
+### Focused commits
+
+1. `d94e08e` — resume parsing, matching, ranking, trend insights
+2. `3a5ef00` — email, SMS, calendar providers
+3. `472df59` — secure cloud document storage foundation
+4. Verification — AI integrations calendar and storage workflows
 
 ---
 
