@@ -2,46 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Segoe UI", Arial, sans-serif;
 }
 
-
-body {
-    background: #f8fafc;
-    color: #1e293b;
-}
-
-
-#root {
-    min-height: 100vh;
-}
-
-
-/* Buttons */
-
-button {
-    cursor: pointer;
-    border: none;
-    transition: 0.3s;
-}
-
-
-    button:hover {
-        transform: translateY(-2px);
-    }
-
-
-/* Links */
-
-a {
-    text-decoration: none;
-}
-
-
-/* Main container */
-
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
+button:hover:not(:disabled) {
+    /* avoid global transform lift that harms reduced-motion & a11y */
 }

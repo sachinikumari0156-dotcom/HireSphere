@@ -1,0 +1,124 @@
+/* HireSphere design tokens — WCAG 2.2 AA oriented light theme
+   Brand direction: deep teal + slate (not purple/cream/newspaper defaults) */
+
+:root {
+  /* Brand */
+  --hs-brand-50: #e8f5f3;
+  --hs-brand-100: #c5e8e2;
+  --hs-brand-500: #0f766e;
+  --hs-brand-600: #0d5f59;
+  --hs-brand-700: #0a4a45;
+  --hs-brand-800: #083833;
+
+  /* Neutrals */
+  --hs-neutral-0: #ffffff;
+  --hs-neutral-50: #f7f8fa;
+  --hs-neutral-100: #eef1f4;
+  --hs-neutral-200: #dde3ea;
+  --hs-neutral-300: #c5ced8;
+  --hs-neutral-500: #64748b;
+  --hs-neutral-700: #334155;
+  --hs-neutral-800: #1e293b;
+  --hs-neutral-900: #0f172a;
+
+  /* Semantic */
+  --hs-success-bg: #ecfdf5;
+  --hs-success-fg: #065f46;
+  --hs-success-border: #6ee7b7;
+  --hs-warning-bg: #fffbeb;
+  --hs-warning-fg: #92400e;
+  --hs-warning-border: #fcd34d;
+  --hs-error-bg: #fef2f2;
+  --hs-error-fg: #991b1b;
+  --hs-error-border: #fca5a5;
+  --hs-info-bg: #eff6ff;
+  --hs-info-fg: #1e40af;
+  --hs-info-border: #93c5fd;
+
+  /* Text / surfaces */
+  --hs-text: var(--hs-neutral-800);
+  --hs-text-muted: var(--hs-neutral-500);
+  --hs-text-inverse: var(--hs-neutral-0);
+  --hs-bg: var(--hs-neutral-50);
+  --hs-bg-elevated: var(--hs-neutral-0);
+  --hs-border: var(--hs-neutral-200);
+  --hs-focus: #0d9488;
+  --hs-focus-ring: 0 0 0 3px rgba(13, 148, 136, 0.45);
+  --hs-disabled-bg: var(--hs-neutral-100);
+  --hs-disabled-fg: var(--hs-neutral-500);
+
+  /* Spacing scale (4px base) */
+  --hs-space-1: 0.25rem;
+  --hs-space-2: 0.5rem;
+  --hs-space-3: 0.75rem;
+  --hs-space-4: 1rem;
+  --hs-space-5: 1.25rem;
+  --hs-space-6: 1.5rem;
+  --hs-space-8: 2rem;
+  --hs-space-10: 2.5rem;
+  --hs-space-12: 3rem;
+
+  /* Radius / shadow */
+  --hs-radius-sm: 0.25rem;
+  --hs-radius-md: 0.5rem;
+  --hs-radius-lg: 0.75rem;
+  --hs-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --hs-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+
+  /* Typography — Source Sans 3 / IBM Plex Sans stack (expressive, not Inter/Roboto) */
+  --hs-font-sans: "Source Sans 3", "IBM Plex Sans", "Segoe UI", sans-serif;
+  --hs-font-display: "Fraunces", "Source Serif 4", Georgia, serif;
+  --hs-text-xs: 0.8125rem;
+  --hs-text-sm: 0.875rem;
+  --hs-text-md: 1rem;
+  --hs-text-lg: 1.125rem;
+  --hs-text-xl: 1.35rem;
+  --hs-text-2xl: 1.75rem;
+  --hs-text-3xl: 2.25rem;
+  --hs-leading-tight: 1.25;
+  --hs-leading-normal: 1.5;
+  --hs-weight-regular: 400;
+  --hs-weight-medium: 500;
+  --hs-weight-semibold: 600;
+  --hs-weight-bold: 700;
+
+  /* Breakpoints (documented; used via media queries) */
+  --hs-bp-sm: 360px;
+  --hs-bp-md: 768px;
+  --hs-bp-lg: 1024px;
+  --hs-bp-xl: 1280px;
+  --hs-bp-2xl: 1440px;
+
+  /* Layout */
+  --hs-max-content: 72rem;
+  --hs-max-narrow: 28rem;
+  --hs-sidebar-width: 15rem;
+  --hs-nav-height: 3.5rem;
+
+  /* Motion */
+  --hs-duration-fast: 120ms;
+  --hs-duration-normal: 200ms;
+  --hs-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Z-index */
+  --hs-z-sticky: 20;
+  --hs-z-drawer: 40;
+  --hs-z-modal: 50;
+  --hs-z-toast: 60;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --hs-duration-fast: 1ms;
+    --hs-duration-normal: 1ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

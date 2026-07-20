@@ -67,13 +67,17 @@ import AdminIntegrationsPage from "./pages/admin/AdminIntegrationsPage";
 import AdminStoragePage from "./pages/admin/AdminStoragePage";
 import AdminAnalyticsPage from "./pages/admin/AdminAnalyticsPage";
 import AdminFinalDecisionsPage, { AdminFinalDecisionDetailPage } from "./pages/admin/AdminFinalDecisionsPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import { SkipLink } from "./components/ui/primitives";
 import "./App.css";
 
 function App() {
     return (
         <AuthProvider>
             <BrowserRouter>
+                <SkipLink />
                 <Navbar />
+                <main id="main-content">
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
@@ -277,8 +281,9 @@ function App() {
                     <Route path="/candidate-dashboard" element={<Navigate to="/candidate" replace />} />
                     <Route path="/candidate-profile" element={<Navigate to="/candidate/profile" replace />} />
                     <Route path="/recruiter-dashboard" element={<Navigate to="/recruiter" replace />} />
-                    <Route path="*" element={<Navigate to="/" replace />} />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
+                </main>
             </BrowserRouter>
         </AuthProvider>
     );

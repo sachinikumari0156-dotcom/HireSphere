@@ -1,5 +1,14 @@
 # HireSphere — Implementation Changelog
 
+## Phase 9.1 — 2026-07-21
+
+**Commit message:** `feat(ui): establish accessible HireSphere design system`
+
+- Design tokens, design-system CSS, SkipLink, RoleShell mobile nav
+- Core UI primitives (Button, Input, Modal, Alert, StatusBadge, Empty/Error, Tabs, Accordion, Pagination, FileUpload)
+- Not Found page; Admin/Recruiter/Hiring Manager layouts use RoleShell
+- Vitest design-system coverage; docs under `docs/ui/` and accessibility standard
+
 ## Phase 8 verification — 2026-07-21
 
 **Commit message:** `test(platform): verify AI integrations calendar and storage workflows`

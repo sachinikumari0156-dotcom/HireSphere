@@ -1,28 +1,27 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import RoleShell from "../../components/layout/RoleShell";
 import "./AdminPortal.css";
+
+const LINKS = [
+    { to: "/admin", label: "Dashboard", end: true },
+    { to: "/admin/users", label: "Users" },
+    { to: "/admin/recruiter-requests", label: "Recruiter requests" },
+    { to: "/admin/organizations", label: "Organizations" },
+    { to: "/admin/departments", label: "Departments" },
+    { to: "/admin/roles", label: "Roles" },
+    { to: "/admin/hiring-managers", label: "Hiring Manager assignment" },
+    { to: "/admin/audit", label: "Audit" },
+    { to: "/admin/monitoring", label: "Monitoring" },
+    { to: "/admin/integrations", label: "Integrations" },
+    { to: "/admin/storage", label: "Storage" },
+    { to: "/admin/analytics", label: "Analytics" },
+    { to: "/admin/final-decisions", label: "Final decisions" }
+];
 
 export default function AdminLayout() {
     return (
-        <div className="admin-shell">
-            <header className="admin-top">
-                <h1 className="admin-brand">Administrator portal</h1>
-                <nav className="admin-nav" aria-label="Administrator">
-                    <NavLink to="/admin" end>Dashboard</NavLink>
-                    <NavLink to="/admin/users">Users</NavLink>
-                    <NavLink to="/admin/recruiter-requests">Recruiter requests</NavLink>
-                    <NavLink to="/admin/organizations">Organizations</NavLink>
-                    <NavLink to="/admin/departments">Departments</NavLink>
-                    <NavLink to="/admin/roles">Roles</NavLink>
-                    <NavLink to="/admin/hiring-managers">HM assignment</NavLink>
-                    <NavLink to="/admin/audit">Audit</NavLink>
-                    <NavLink to="/admin/monitoring">Monitoring</NavLink>
-                    <NavLink to="/admin/integrations">Integrations</NavLink>
-                    <NavLink to="/admin/storage">Storage</NavLink>
-                    <NavLink to="/admin/analytics">Analytics</NavLink>
-                    <NavLink to="/admin/final-decisions">Final decisions</NavLink>
-                </nav>
-            </header>
+        <RoleShell title="Administrator portal" navLabel="Administrator" links={LINKS}>
             <Outlet />
-        </div>
+        </RoleShell>
     );
 }
