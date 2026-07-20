@@ -6,10 +6,10 @@ function Navbar() {
     const navigate = useNavigate();
     const { user, isAuthenticated, logout, roleHome } = useAuth();
 
-    async function handleLogout() {
+    const handleLogout = async () => {
         await logout();
         navigate("/login");
-    }
+    };
 
     return (
         <nav className="navbar">
@@ -19,21 +19,37 @@ function Navbar() {
                 </Link>
 
                 <div className="navbar-links">
+                    <Link to="/" className="navbar-link">
+                        Home
+                    </Link>
+
                     {isAuthenticated && user ? (
                         <>
-                            <Link to={roleHome(user.role)} className="navbar-link">
+                            <Link
+                                to={roleHome(user.role)}
+                                className="navbar-link"
+                            >
                                 Dashboard
                             </Link>
 
                             {user.role === "Candidate" && (
-                                <Link to="/candidate/profile" className="navbar-link">
+                                <Link
+                                    to="/candidate/profile"
+                                    className="navbar-link"
+                                >
                                     My Profile
                                 </Link>
                             )}
 
-                            <span className="navbar-user">{user.fullName}</span>
+                            <span className="navbar-user">
+                                {user.fullName}
+                            </span>
 
-                            <button className="navbar-logout" onClick={handleLogout}>
+                            <button
+                                type="button"
+                                className="navbar-logout"
+                                onClick={handleLogout}
+                            >
                                 Logout
                             </button>
                         </>

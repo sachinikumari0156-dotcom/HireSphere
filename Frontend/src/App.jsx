@@ -168,8 +168,9 @@ function App() {
                     />
 
                     <Route path="/candidate-dashboard" element={<Navigate to="/candidate" replace />} />
-                    <Route path="/recruiter-dashboard" element={<Navigate to="/recruiter" replace />} />
                     <Route path="/candidate-profile" element={<Navigate to="/candidate/profile" replace />} />
+                    <Route path="/recruiter-dashboard" element={<Navigate to="/recruiter" replace />} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>
