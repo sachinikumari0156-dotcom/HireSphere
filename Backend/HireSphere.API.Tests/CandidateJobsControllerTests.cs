@@ -353,7 +353,7 @@ public class CandidateJobsControllerTests : IClassFixture<TestWebApplicationFact
             body.GetProperty("missingSkills").EnumerateArray().Select(x => x.GetString()),
             s => string.Equals(s, "SQL", StringComparison.OrdinalIgnoreCase));
         Assert.False(string.IsNullOrWhiteSpace(body.GetProperty("explanation").GetString()));
-        Assert.Contains("human", body.GetProperty("humanReviewNotice").GetString()!, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("AI-generated insight", body.GetProperty("humanReviewNotice").GetString()!, StringComparison.OrdinalIgnoreCase);
         Assert.False(
             string.Equals(body.GetProperty("provider").GetString(), "ExternalAI", StringComparison.OrdinalIgnoreCase));
     }

@@ -35,6 +35,11 @@ builder.Services.AddScoped<IResourceAuthorizationService, ResourceAuthorizationS
 builder.Services.AddScoped<ILocalFileStorageService, LocalFileStorageService>();
 builder.Services.AddScoped<ICandidateProfileService, CandidateProfileService>();
 builder.Services.AddScoped<IJobMatchingProvider, DeterministicJobMatchingProvider>();
+builder.Services.AddScoped<HireSphere.API.Services.Ai.ISkillExtractionProvider, HireSphere.API.Services.Ai.DeterministicSkillExtractionProvider>();
+builder.Services.AddScoped<HireSphere.API.Services.Ai.DeterministicResumeParsingProvider>();
+builder.Services.AddScoped<HireSphere.API.Services.Ai.ExternalAiResumeParsingProvider>();
+builder.Services.AddScoped<HireSphere.API.Services.Ai.IRecruitmentInsightProvider, HireSphere.API.Services.Ai.DeterministicRecruitmentInsightProvider>();
+builder.Services.AddScoped<ICandidateAiService, CandidateAiService>();
 builder.Services.AddScoped<ICandidateJobService, CandidateJobService>();
 builder.Services.AddScoped<ICandidateApplicationService, CandidateApplicationService>();
 builder.Services.AddScoped<ICandidateAssessmentService, CandidateAssessmentService>();

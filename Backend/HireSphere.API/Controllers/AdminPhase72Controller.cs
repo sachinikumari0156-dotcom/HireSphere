@@ -68,6 +68,20 @@ public sealed class AdminPhase72Controller : ControllerBase
         return ok && result is not null ? Ok(result) : MapFailure(error);
     }
 
+    [HttpGet("analytics/skill-trends")]
+    public async Task<IActionResult> SkillTrends([FromQuery] AdminAnalyticsFilter filter)
+    {
+        var (ok, error, result) = await _service.GetSkillTrendsAsync(filter);
+        return ok && result is not null ? Ok(result) : MapFailure(error);
+    }
+
+    [HttpGet("integrations/ai/status")]
+    public async Task<IActionResult> AiStatus()
+    {
+        var (ok, error, result) = await _service.GetAiStatusAsync();
+        return ok && result is not null ? Ok(result) : MapFailure(error);
+    }
+
     [HttpGet("final-decisions/pending")]
     public async Task<IActionResult> PendingFinalDecisions()
     {

@@ -41,6 +41,51 @@ export default function AdminMonitoringPage() {
                 <li>Storage: {data.storageProviderStatus}</li>
             </ul>
             <p className="admin-muted">{data.providerNotes}</p>
+            <AiStatusPanel />
         </main>
+    );
+}
+
+function AiStatusPanel() {
+    const [ai, setAi] = useState(null);
+    const [trends, setTrends] = useState(null);
+    useEffect(() => {
+        let alive = true;
+        (async () => {
+            try {
+                const [a, t] = await Promise.all([
+                    api.get("/admin/integrations/ai/status"),
+                    api.get("/admin/analytics/skill-trends")
+                ]);
+                if (!alive) return;
+                setAi(a.data);
+                setTrends(t.data);
+            } catch {
+                /* monitoring page still useful without AI panel */
+            }
+        })();
+        return () => { alive = false; };
+    }, []);
+    if (!ai) return null;
+    return (
+        <section>
+            <h3>AI provider status</h3>
+            <p>Deterministic: {ai.deterministicStatus}</p>
+            <p>External AI: {ai.externalAiStatus}</p>
+            <p className="admin-muted">{ai.insightKind}: {ai.notes}</p>
+            {trends && (
+                <>
+                    <h4>Skill trends (descriptive)</h4>
+                    {(trends.mostRequestedSkills || []).length === 0 && (
+                        <p className="admin-muted">{trends.emptyStateNote || "No skill trend data."}</p>
+                    )}
+                    <ul>
+                        {(trends.mostRequestedSkills || []).slice(0, 5).map((x) => (
+                            <li key={x.skillName}>{x.skillName}: {x.count}</li>
+                        ))}
+                    </ul>
+                </>
+            )}
+        </section>
     );
 }

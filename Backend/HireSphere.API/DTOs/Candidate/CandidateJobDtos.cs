@@ -92,7 +92,7 @@ public sealed class JobMatchResultDto
     public string Provider { get; set; } = "Deterministic";
     public DateTime ComputedAtUtc { get; set; }
     public string HumanReviewNotice { get; set; } =
-        "This match score is produced by a deterministic rules engine and should be reviewed by a human recruiter. It is not an external AI decision.";
+        "AI-generated insight. Final recruitment decisions must be reviewed by authorized users.";
 }
 
 public sealed class ExperienceComparisonDto

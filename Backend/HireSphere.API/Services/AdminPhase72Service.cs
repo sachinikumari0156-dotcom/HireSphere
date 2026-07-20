@@ -18,6 +18,8 @@ public interface IAdminPhase72Service
     Task<(bool Ok, string? Error, AdminRecruitmentAnalyticsDto? Result)> GetRecruitmentAnalyticsAsync(AdminAnalyticsFilter filter);
     Task<(bool Ok, string? Error, AdminDepartmentAnalyticsDto? Result)> GetDepartmentAnalyticsAsync(AdminAnalyticsFilter filter);
     Task<(bool Ok, string? Error, AdminSkillAnalyticsDto? Result)> GetSkillAnalyticsAsync(AdminAnalyticsFilter filter);
+    Task<(bool Ok, string? Error, HireSphere.API.DTOs.Ai.SkillTrendDto? Result)> GetSkillTrendsAsync(AdminAnalyticsFilter filter);
+    Task<(bool Ok, string? Error, HireSphere.API.DTOs.Ai.AdminAiStatusDto? Result)> GetAiStatusAsync();
     Task<(bool Ok, string? Error, IReadOnlyList<AdminFinalDecisionListItemDto>? Result)> ListPendingFinalDecisionsAsync();
     Task<(bool Ok, string? Error, AdminFinalDecisionDetailDto? Result)> GetFinalDecisionDetailAsync(int applicationId);
     Task<(bool Ok, string? Error, HiringDecisionHistoryItemLiteDto? Result)> RecordFinalDecisionAsync(int applicationId, AdminFinalDecisionRequestDto dto);
@@ -30,15 +32,18 @@ public sealed class AdminPhase72Service : IAdminPhase72Service
     private readonly ApplicationDbContext _db;
     private readonly ICurrentUserService _currentUser;
     private readonly INotificationWriter _notifications;
+    private readonly HireSphere.API.Services.Ai.ExternalAiResumeParsingProvider _externalAi;
 
     public AdminPhase72Service(
         ApplicationDbContext db,
         ICurrentUserService currentUser,
-        INotificationWriter notifications)
+        INotificationWriter notifications,
+        HireSphere.API.Services.Ai.ExternalAiResumeParsingProvider externalAi)
     {
         _db = db;
         _currentUser = currentUser;
         _notifications = notifications;
+        _externalAi = externalAi;
     }
 
     private bool TryAdmin(out int adminId, out string? error)
@@ -280,6 +285,42 @@ public sealed class AdminPhase72Service : IAdminPhase72Service
             SkillDemandFromJobs = demand,
             CandidateSkillAvailability = availability
         });
+    }
+
+    public async Task<(bool Ok, string? Error, HireSphere.API.DTOs.Ai.SkillTrendDto? Result)> GetSkillTrendsAsync(
+        AdminAnalyticsFilter filter)
+    {
+        if (!TryAdmin(out _, out var error)) return (false, error, null);
+        var skills = await GetSkillAnalyticsAsync(filter);
+        if (!skills.Ok || skills.Result is null) return (false, skills.Error, null);
+        var dto = new HireSphere.API.DTOs.Ai.SkillTrendDto
+        {
+            InsightKind = "Descriptive insight",
+            MostRequestedSkills = skills.Result.SkillDemandFromJobs
+                .Select(x => new HireSphere.API.DTOs.Ai.SkillTrendItemDto { SkillName = x.Name, Count = x.Count })
+                .ToList(),
+            CommonCandidateSkills = skills.Result.CandidateSkillAvailability
+                .Select(x => new HireSphere.API.DTOs.Ai.SkillTrendItemDto { SkillName = x.Name, Count = x.Count })
+                .ToList()
+        };
+        if (dto.MostRequestedSkills.Count == 0 && dto.CommonCandidateSkills.Count == 0)
+            dto.EmptyStateNote = "No skill trend data in LocalDB for the selected scope.";
+        return (true, null, dto);
+    }
+
+    public Task<(bool Ok, string? Error, HireSphere.API.DTOs.Ai.AdminAiStatusDto? Result)> GetAiStatusAsync()
+    {
+        if (!TryAdmin(out _, out var error))
+            return Task.FromResult<(bool, string?, HireSphere.API.DTOs.Ai.AdminAiStatusDto?)>((false, error, null));
+
+        var external = _externalAi.GetStatus();
+        return Task.FromResult<(bool, string?, HireSphere.API.DTOs.Ai.AdminAiStatusDto?)>((true, null, new HireSphere.API.DTOs.Ai.AdminAiStatusDto
+        {
+            DeterministicStatus = "Healthy",
+            ExternalAiStatus = external.Status,
+            InsightKind = "Descriptive insight",
+            Notes = external.Detail ?? "External AI remains NotConfigured without verified credentials."
+        }));
     }
 
     public async Task<(bool Ok, string? Error, IReadOnlyList<AdminFinalDecisionListItemDto>? Result)> ListPendingFinalDecisionsAsync()

@@ -1,5 +1,16 @@
 # HireSphere — Implementation Changelog
 
+## Phase 8.1 — 2026-07-21
+
+**Commit message:** `feat(ai): add resume parsing matching ranking and trend insights`
+
+- Deterministic resume parsing (PDF/DOCX) with ExtractedSkill review/confirm
+- External AI adapter remains NotConfigured without verified credentials
+- Candidate consent for external processing; prompt-injection sanitization
+- Admin AI status + descriptive skill-trend insights
+- Migration `AddAiPortalPhase81`
+- Phase 8 IN PROGRESS (integrations/storage pending)
+
 ## Phase 7 verification — 2026-07-20
 
 **Commit message:** `test(admin): verify complete administrator portal workflows`

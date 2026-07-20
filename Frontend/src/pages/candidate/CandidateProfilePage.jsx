@@ -343,7 +343,8 @@ export default function CandidateProfilePage() {
                         <li key={item.id}>
                             {item.fileName}
                             {item.isPrimary ? " (primary)" : ""}
-                            {item.storageKey ? ` · key: ${item.storageKey}` : ""}
+                            {" "}
+                            <Link to={`/candidate/resumes/${item.id}/analysis`}>Analyze</Link>
                         </li>
                     ))}
                     {resumes.length === 0 && <li className="empty-state">No resumes uploaded yet.</li>}

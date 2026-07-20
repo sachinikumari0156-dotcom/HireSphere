@@ -10,6 +10,7 @@ import AccessDenied from "./pages/AccessDenied";
 import SessionExpired from "./pages/SessionExpired";
 import CandidateHome from "./pages/candidate/CandidateHome";
 import CandidateProfilePage from "./pages/candidate/CandidateProfilePage";
+import CandidateResumeAnalysisPage from "./pages/candidate/CandidateResumeAnalysisPage";
 import CandidateJobsPage from "./pages/candidate/CandidateJobsPage";
 import CandidateJobDetailPage from "./pages/candidate/CandidateJobDetailPage";
 import CandidateRecommendationsPage from "./pages/candidate/CandidateRecommendationsPage";
@@ -91,6 +92,14 @@ function App() {
                         element={
                             <ProtectedRoute roles={["Candidate"]}>
                                 <CandidateProfilePage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/resumes/:id/analysis"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateResumeAnalysisPage />
                             </ProtectedRoute>
                         }
                     />

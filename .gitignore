@@ -24,6 +24,9 @@ Frontend/playwright/.cache/
 # Local candidate document uploads (dev storage provider)
 Backend/HireSphere.API/App_Data/
 
+# Local dotnet tool installs
+Backend/.tools/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

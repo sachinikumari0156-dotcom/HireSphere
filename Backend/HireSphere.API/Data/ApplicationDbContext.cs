@@ -50,6 +50,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<HiringDecision> HiringDecisions => Set<HiringDecision>();
     public DbSet<CandidateJobMatch> CandidateJobMatches => Set<CandidateJobMatch>();
     public DbSet<ResumeAnalysis> ResumeAnalyses => Set<ResumeAnalysis>();
+
+    public DbSet<ExtractedSkill> ExtractedSkills => Set<ExtractedSkill>();
     public DbSet<AIInsight> AIInsights => Set<AIInsight>();
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();

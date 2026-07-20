@@ -38,6 +38,11 @@ public class CandidateProfile
 
     public string? GitHubUrl { get; set; }
 
+    /// <summary>When false, resume content must not be sent to an external AI provider.</summary>
+    public bool AllowExternalAiProcessing { get; set; }
+
+    public DateTime? ExternalAiConsentAtUtc { get; set; }
+
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 
     public DateTime? UpdatedAtUtc { get; set; }
