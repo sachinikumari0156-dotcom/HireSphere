@@ -1,5 +1,25 @@
 # HireSphere — Implementation Changelog
 
+## Phase 6 verification — 2026-07-20
+
+**Commit message:** `test(manager): verify complete hiring manager portal workflows`
+
+- Playwright Hiring Manager journey PASS against live API + Vite + LocalDB
+- Evidence pack: 21 screenshots under `docs/evidence/phase6-hiring-manager/`
+- Docs: HIRING_MANAGER_E2E_RESULTS, UAT, TEST_EVIDENCE; decision workflow; matrices updated
+- E2E seed `POST /api/e2e/ensure-hiring-manager-portal`
+- Phase 6 marked **VERIFIED**; Phase 7 not started
+- Backend 75/75; Vitest 47/47; Playwright 8/8
+
+## Phase 6.2 — 2026-07-20
+
+**Commit message:** `feat(manager): add interview feedback evaluations and hiring decisions`
+
+- Structured interview feedback, Candidate evaluation Draft/Submitted, recommendations
+- FinalHire/FinalReject blocked for Hiring Manager; withdrawn apps reject decisions
+- Migration `AddHiringManagerPortalPhase62`
+- Frontend interviews / evaluation / recommendation pages
+
 ## Phase 6.1 — 2026-07-20
 
 **Commit message:** `feat(manager): add assigned vacancies and candidate review workspace`
@@ -9,7 +29,7 @@
 - Register/Login submit button contrast fix (dark ink on amber)
 - Migration `AddHiringManagerPortalPhase61`
 - Frontend `/hiring-manager` pages + Vitest coverage
-- Phase 6 remains IN PROGRESS until 6.2 + browser E2E
+- Phase 6 remained IN PROGRESS until 6.2 + browser E2E
 
 ## Phase 5 verification — 2026-07-20
 

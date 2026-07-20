@@ -189,6 +189,7 @@ describe('Feedback and evaluation forms', () => {
     });
 });
 
+describe('Protected hiring manager route', () => {
     it('denies Candidate', async () => {
         render(
             <AuthContext.Provider value={authStub({

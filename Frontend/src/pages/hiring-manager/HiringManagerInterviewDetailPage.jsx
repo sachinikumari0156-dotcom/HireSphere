@@ -103,9 +103,9 @@ export default function HiringManagerInterviewDetailPage() {
             </p>
             {error && <p className="hm-error" role="alert">{error}</p>}
             {success && <p className="hm-success" role="status">{success}</p>}
-            {detail.myFeedback && <p className="hm-success">Feedback submitted.</p>}
             <form className="hm-form" onSubmit={submit}>
                 <h3>Structured feedback</h3>
+                {detail.myFeedback && <p className="hm-muted">Existing feedback loaded — submitting updates it.</p>}
                 {[
                     ["technicalCompetency", "Technical competency"],
                     ["communication", "Communication"],

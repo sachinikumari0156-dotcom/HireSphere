@@ -16,7 +16,9 @@
 | Ranking / screening / assessments (recruiter mgmt) | No | Yes (org) | No | Yes (admin policy) |
 | Assessment take / submit (assigned) | Yes (own) | No | No | No |
 | Application messaging | Own thread | Org applications | No | Yes (admin policy) |
-| Interview schedule / conflicts | Respond own | Yes (org) | Participant | Yes (admin policy) |
+| Interview schedule / conflicts | Respond own | Yes (org) | Participant / assigned HM | Yes (admin policy) |
+| Assigned vacancies / candidate review | No | No | Yes (assigned) | Yes (wider policy) |
+| Interview feedback / evaluations / recommendations | No | Final decisions (policy) | Feedback + recommendations | Final decisions |
 | Recruiter reports / CSV | No | Yes (org) | No | Yes (admin policy) |
 | List all users | No | No | No | Yes |
 | Approve/reject recruiter requests | No | No | No | Yes |
@@ -29,6 +31,14 @@
 ## Permission claims
 
 Role-permission catalog is seeded. JWT may include `permission` claims from `RolePermissions`. Endpoint authorization primarily uses role policies; Recruiter APIs additionally enforce organization ownership via resource authorization services.
+
+## Phase 6 notes
+
+- Hiring Manager access is assignment-scoped (`Job.HiringManagerUserId` / interview participation).
+- Cross-scope access returns sanitized 404/403.
+- Private panel comments never appear on Candidate APIs/UI.
+- Hiring Manager recommendations do not auto-finalize hire/reject.
+- FinalHire / FinalReject require Recruiter or Administrator.
 
 ## Phase 5 notes
 

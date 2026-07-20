@@ -35,25 +35,39 @@ export default function HiringManagerApplicationPage() {
         <main className="hm-page">
             <h2>Candidate review</h2>
             <p className="hm-muted">{detail.candidateName} · {detail.jobTitle} · {detail.status}</p>
-            <p>Match score: {detail.matchScore ?? "—"}</p>
-            <p>{detail.matchExplanation}</p>
-            <p className="hm-notice" role="note">{detail.humanReviewNotice}</p>
+
+            <section aria-labelledby="hm-ranking-heading">
+                <h3 id="hm-ranking-heading">Ranking explanation</h3>
+                <p>Match score: {detail.matchScore ?? "—"}</p>
+                <p>{detail.matchExplanation}</p>
+                <p className="hm-notice" role="note">{detail.humanReviewNotice}</p>
+            </section>
+
             <h3>Summary</h3>
             <p>{detail.professionalSummary || "—"}</p>
             <h3>Skills</h3>
             <p>{(detail.skills || []).join(", ") || "—"}</p>
             <p><strong>Missing required:</strong> {(detail.missingRequiredSkills || []).join(", ") || "None"}</p>
-            <h3>Resumes</h3>
-            <ul>
-                {(detail.resumes || []).map((r) => (
-                    <li key={r.documentId}>{r.fileName}{r.isPrimary ? " (primary)" : ""}</li>
-                ))}
-            </ul>
-            {(!detail.resumes || detail.resumes.length === 0) && <p className="hm-muted">No resume metadata.</p>}
+
+            <section aria-labelledby="hm-resume-heading">
+                <h3 id="hm-resume-heading">Resume review</h3>
+                <ul>
+                    {(detail.resumes || []).map((r) => (
+                        <li key={r.documentId}>{r.fileName}{r.isPrimary ? " (primary)" : ""}</li>
+                    ))}
+                </ul>
+                {(!detail.resumes || detail.resumes.length === 0) && <p className="hm-muted">No resume metadata.</p>}
+            </section>
+
             {hasPathLeak && <p className="hm-error">Unexpected sensitive field exposure.</p>}
-            <Link className="hm-btn secondary" to={`/hiring-manager/jobs/${detail.jobId}/candidates`}>
-                Back to candidates
-            </Link>
+
+            <div className="hm-actions">
+                <Link className="hm-btn" to={`/hiring-manager/applications/${id}/evaluation`}>Evaluation</Link>
+                <Link className="hm-btn" to={`/hiring-manager/applications/${id}/recommendation`}>Recommendation</Link>
+                <Link className="hm-btn secondary" to={`/hiring-manager/jobs/${detail.jobId}/candidates`}>
+                    Back to candidates
+                </Link>
+            </div>
         </main>
     );
 }

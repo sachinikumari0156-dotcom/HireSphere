@@ -1,7 +1,7 @@
 # HireSphere — Coursework Requirement Matrix
 
 **Course:** SE205.3 Software Architecture 2026
-**Last updated:** 2026-07-20 (Phase 5 Recruiter browser E2E VERIFIED)
+**Last updated:** 2026-07-20 (Phase 6 Hiring Manager browser E2E VERIFIED)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED — EXTERNAL CREDENTIAL | DEFERRED — OPTIONAL BONUS
 
 ---
@@ -14,7 +14,7 @@
 |----|-------------|--------|------------------|
 | M-R01 | Candidate Portal | VERIFIED | Playwright E2E 2026-07-20 + API/Vitest; screenshots in `docs/evidence/phase4-candidate/` |
 | M-R02 | Recruiter Portal | VERIFIED | Playwright E2E 2026-07-20; screenshots in `docs/evidence/phase5-recruiter/` |
-| M-R03 | Hiring Manager Dashboard | IN PROGRESS | Protected `/hiring-manager/*` shell |
+| M-R03 | Hiring Manager Dashboard | VERIFIED | Playwright E2E 2026-07-20; screenshots in `docs/evidence/phase6-hiring-manager/` |
 | M-R04 | Administrator Dashboard | IN PROGRESS | Protected `/admin/*` shell + admin APIs |
 
 ### Candidate features
@@ -43,10 +43,10 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-HM01 | Review shortlisted candidates | NOT STARTED | — |
-| M-HM02 | Interview feedback | NOT STARTED | Model exists; API pending |
-| M-HM03 | Candidate evaluation and scoring | NOT STARTED | Model exists; API pending |
-| M-HM04 | Hiring decision management | NOT STARTED | Model exists; API pending |
+| M-HM01 | Review shortlisted candidates | VERIFIED | Assignment-scoped review + compare; E2E |
+| M-HM02 | Interview feedback | VERIFIED | Structured ratings + private panel comments; E2E |
+| M-HM03 | Candidate evaluation and scoring | VERIFIED | Draft/Submitted evaluation; advisory scores |
+| M-HM04 | Hiring decision management | VERIFIED | Recommendations; finals require Recruiter/Admin |
 
 ### Administrator features
 

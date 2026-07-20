@@ -1,7 +1,7 @@
 # HireSphere — Phase Status
 
 **Last updated:** 2026-07-20
-**Overall readiness:** NOT READY (Phases 6–11 pending)
+**Overall readiness:** NOT READY (Phases 7–11 pending)
 
 | Phase | Name | Status | Commit | Push | Notes |
 |-------|------|--------|--------|------|-------|
@@ -9,15 +9,36 @@
 | 1 | Security foundation | VERIFIED | `9c50d56` | SUCCESS | BCrypt, CORS, secrets externalized |
 | 2 | SQL Server and data model | VERIFIED | `1e4c688` + `e84eeb5` | SUCCESS | Applied on LocalDB this host; Express optional |
 | 3 | Auth and RBAC | VERIFIED | `3c0ae38` + verification | SUCCESS | Four-role live UAT 26/26 |
-| 4 | Candidate workflows | VERIFIED | Phase 4 E2E commit | SUCCESS | Browser Playwright 6/6; 23 screenshots; LocalDB |
-| 5 | Recruiter workflows | VERIFIED | `4099d3f` + `677a425` + `d605c57` + E2E verify | SUCCESS | Playwright recruiter journey PASS; 26 screenshots; LocalDB |
-| 6 | Hiring Manager | IN PROGRESS | Phase 6.1 pending push | — | Assigned vacancies + candidate review in progress |
+| 4 | Candidate workflows | VERIFIED | Phase 4 E2E commit | SUCCESS | Browser Playwright; LocalDB |
+| 5 | Recruiter workflows | VERIFIED | Phase 5 feature + E2E verify | SUCCESS | Playwright recruiter journey PASS; LocalDB |
+| 6 | Hiring Manager | VERIFIED | `4bafce2` + `da285d2` + verify | SUCCESS | Playwright HM journey PASS; 21 screenshots; LocalDB |
 | 7 | Administrator | NOT STARTED | — | — | — |
 | 8 | AI and integrations | NOT STARTED | — | — | Cloud storage deferred here |
 | 9 | UI design system | NOT STARTED | — | — | — |
 | 10 | Quality and evidence | NOT STARTED | — | — | — |
 | 11 | Submission pack | NOT STARTED | — | — | — |
-| 12 | Pull request | NOT STARTED | — | — | — |
+
+---
+
+## Phase 6 verification (closed)
+
+### Evidence
+
+- Playwright Hiring Manager journey: **PASS** (`docs/testing/HIRING_MANAGER_E2E_RESULTS.md`)
+- Full Playwright suite: **8/8 PASS** (Candidate + Recruiter + Hiring Manager)
+- Screenshots: `docs/evidence/phase6-hiring-manager/` (21 files) + `docs/report/SCREENSHOT_INDEX.md`
+- Backend tests: **75/75 PASS**
+- Frontend Vitest: **47/47 PASS**
+- Database: `(localdb)\MSSQLLocalDB` / `HireSphereDev` — migrations through `AddHiringManagerPortalPhase62`
+- Recommendation vs final decision separation verified
+- Private panel comments hidden from Candidate
+- Calendar/email providers: NotConfigured / deferred Phase 8
+
+### Focused commits
+
+1. `4bafce2` — assigned vacancies and candidate review workspace
+2. `da285d2` — interview feedback, evaluations and hiring decisions
+3. Verification — complete hiring manager portal workflows
 
 ---
 
@@ -26,37 +47,12 @@
 ### Evidence
 
 - Playwright Recruiter journey: **PASS** (`docs/testing/RECRUITER_E2E_RESULTS.md`)
-- Full Playwright suite: **7/7 PASS** (Candidate + Recruiter)
-- Screenshots: `docs/evidence/phase5-recruiter/` (26 files) + `docs/report/SCREENSHOT_INDEX.md`
-- Backend tests: **69/69 PASS**
-- Frontend Vitest: **38/38 PASS**
-- Database: `(localdb)\MSSQLLocalDB` / `HireSphereDev` — migrations through `AddRecruiterPortalPhase53`
-- Calendar providers: NotConfigured (Phase 8)
-- External email/SMS: pending Phase 8
+- Screenshots: `docs/evidence/phase5-recruiter/`
+- Backend / Vitest / Playwright recorded in Phase 5 docs
 
 ### Focused commits
 
-1. `4099d3f` — job management and applicant pipeline
-2. `677a425` — screening, ranking, assessments, communication
-3. `d605c57` — interview scheduling and recruitment reports
-
----
-
-## Phase 4 verification (closed)
-
-### Evidence
-
-- Playwright Candidate journey + authz + responsive + a11y: **6/6 PASS** (`docs/testing/CANDIDATE_E2E_RESULTS.md`)
-- Screenshots: `docs/evidence/phase4-candidate/` (23 files) + `docs/report/SCREENSHOT_INDEX.md`
-- Backend tests: **58/58 PASS**
-- Frontend Vitest: **22/22 PASS**
-- Database: `(localdb)\MSSQLLocalDB` / `HireSphereDev` (SQL Express not available on verification host)
-- Storage: local abstraction only; cloud object storage remains Phase 8
-
-### Defects fixed during verification
-
-- CORS allowlist includes `127.0.0.1` Vite origins
-- Profile resume metadata list + education start date fields
-- Mobile navbar/dashboard wrapping
-- Form label associations for Login/Register/profile subforms
-- ProtectedRoute: unauthenticated → `/login`; expired session → `/session-expired`
+1. Job management and applicant pipeline
+2. Screening, ranking, assessments, communication
+3. Interview scheduling and recruitment reports
+4. Recruiter E2E verification

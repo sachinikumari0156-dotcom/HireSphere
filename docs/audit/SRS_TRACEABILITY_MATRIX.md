@@ -1,7 +1,7 @@
 # HireSphere — SRS Traceability Matrix
 
 **Source:** HireSphere SRS (local-spec; not committed)
-**Last updated:** 2026-07-20 (Phase 5 Recruiter browser E2E VERIFIED)
+**Last updated:** 2026-07-20 (Phase 6 Hiring Manager browser E2E VERIFIED)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED
 
 | SRS Area | Requirement summary | Matrix ID | Status | Phase evidence |
@@ -17,15 +17,15 @@
 | Candidate | Jobs / applications / tracking | M-C04–M-C06 | VERIFIED | Playwright journey + duplicate/timeline evidence |
 | Candidate | Assessments / interviews | M-R01 (partial) | VERIFIED (candidate) | Candidate E2E; recruiter assign/schedule VERIFIED in Phase 5 |
 | Recruiter | Jobs / applications | M-RC01–M-RC06 | VERIFIED | Phase 5 Playwright + 26 screenshots; org scoping |
-| Hiring Manager | Evaluation / decisions | M-HM01–M-HM04 | NOT STARTED | Models in DB; APIs pending |
+| Hiring Manager | Evaluation / decisions | M-HM01–M-HM04 | VERIFIED | Phase 6 Playwright + 21 screenshots; assignment authz |
 | Administrator | Users / orgs / analytics | M-A01–M-A05 | IN PROGRESS | UsersController secured; org models seeded |
 | Database | SQL Server deliverable | M-B02 | VERIFIED | Applied on LocalDB `HireSphereDev`; migration history confirmed |
 | Database | Core entity model | M-B03 | IMPLEMENTED | 35+ entities, fluent configs, ER diagram; Phase 5 recruiter fields |
 | AI | Matching / ranking / recs | M-AI01–M-AI09 | IN PROGRESS | Deterministic match/recs/ranking; external AI Phase 8 |
 | Integrations | Email / SMS / calendar / storage | M-I01–M-I07 | IN PROGRESS | In-app notifications + internal interviews; email/SMS/calendar/cloud pending |
 | Frontend | Branding / API config | M-F03, M-F05 | IN PROGRESS | HireSphere branding; centralized `VITE_API_BASE_URL` |
-| Testing | Automated tests | M-T01 | IN PROGRESS | BE 69; FE Vitest 38; Playwright 7/7 |
-| Report | Diagrams / contribution / demo | M-D01–M-D05 | IN PROGRESS | ER diagram + data dictionary + Phase 4/5 evidence |
+| Testing | Automated tests | M-T01 | IN PROGRESS | BE 75; FE Vitest 47; Playwright 8/8 |
+| Report | Diagrams / contribution / demo | M-D01–M-D05 | IN PROGRESS | ER diagram + data dictionary + Phase 4/5/6 evidence |
 
 **Notes**
 
