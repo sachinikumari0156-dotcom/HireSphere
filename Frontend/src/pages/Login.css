@@ -206,9 +206,10 @@
     font-family: inherit;
     font-weight: 600;
     font-size: 14.5px;
-    color: #fff;
+    /* Dark ink on amber meets WCAG AA (white on amber-dark failed contrast). */
+    color: var(--ink);
     cursor: pointer;
-    background: var(--amber-dark);
+    background: var(--amber);
     transition: background 0.15s ease, opacity 0.15s ease;
     margin-top: 6px;
 }

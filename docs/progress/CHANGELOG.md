@@ -1,5 +1,16 @@
 # HireSphere — Implementation Changelog
 
+## Phase 6.1 — 2026-07-20
+
+**Commit message:** `feat(manager): add assigned vacancies and candidate review workspace`
+
+- Hiring Manager portal APIs: dashboard, assigned jobs, candidates, compare, review comments
+- Assignment-scoped authorization (`HiringManagerCanAccess*`)
+- Register/Login submit button contrast fix (dark ink on amber)
+- Migration `AddHiringManagerPortalPhase61`
+- Frontend `/hiring-manager` pages + Vitest coverage
+- Phase 6 remains IN PROGRESS until 6.2 + browser E2E
+
 ## Phase 5 verification — 2026-07-20
 
 **Commit message:** `test(recruiter): verify complete recruiter portal browser workflow`

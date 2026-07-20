@@ -97,6 +97,57 @@ public sealed class ResourceAuthorizationService : IResourceAuthorizationService
         return _currentUser.OrganizationId is int orgId && job.OrganizationId == orgId;
     }
 
+    public async Task<bool> HiringManagerCanAccessJobAsync(int jobId)
+    {
+        if (_currentUser.IsInRole("Admin"))
+        {
+            return true;
+        }
+
+        if (_currentUser.UserId is not int userId || !_currentUser.IsInRole("HiringManager"))
+        {
+            return false;
+        }
+
+        return await _db.Jobs.AsNoTracking()
+            .AnyAsync(j => j.Id == jobId && j.HiringManagerUserId == userId);
+    }
+
+    public async Task<bool> HiringManagerCanAccessApplicationAsync(int applicationId)
+    {
+        if (_currentUser.IsInRole("Admin"))
+        {
+            return true;
+        }
+
+        if (_currentUser.UserId is not int userId || !_currentUser.IsInRole("HiringManager"))
+        {
+            return false;
+        }
+
+        return await _db.Applications.AsNoTracking()
+            .AnyAsync(a => a.Id == applicationId && a.Job.HiringManagerUserId == userId);
+    }
+
+    public async Task<bool> HiringManagerCanAccessInterviewAsync(int interviewId)
+    {
+        if (_currentUser.IsInRole("Admin"))
+        {
+            return true;
+        }
+
+        if (_currentUser.UserId is not int userId || !_currentUser.IsInRole("HiringManager"))
+        {
+            return false;
+        }
+
+        return await _db.Interviews.AsNoTracking()
+            .AnyAsync(i => i.Id == interviewId
+                && (i.HiringManagerUserId == userId
+                    || i.Application.Job.HiringManagerUserId == userId
+                    || i.Participants.Any(p => p.UserId == userId)));
+    }
+
     public async Task EnsureCandidateOwnsApplicationAsync(int applicationId)
     {
         // Helper used by controllers; throws InvalidOperationException when denied.

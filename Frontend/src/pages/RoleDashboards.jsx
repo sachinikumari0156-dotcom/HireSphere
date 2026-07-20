@@ -18,15 +18,6 @@ function RoleShell({ title, description }) {
     );
 }
 
-export function HiringManagerDashboard() {
-    return (
-        <RoleShell
-            title="Hiring Manager workspace"
-            description="Review assigned vacancies and candidate evaluations."
-        />
-    );
-}
-
 export function AdminDashboard() {
     return (
         <RoleShell

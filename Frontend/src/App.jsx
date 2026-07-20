@@ -38,7 +38,14 @@ import RecruiterInterviewsPage from "./pages/recruiter/RecruiterInterviewsPage";
 import RecruiterScheduleInterviewPage from "./pages/recruiter/RecruiterScheduleInterviewPage";
 import RecruiterInterviewDetailPage from "./pages/recruiter/RecruiterInterviewDetailPage";
 import RecruiterReportsPage from "./pages/recruiter/RecruiterReportsPage";
-import { AdminDashboard, HiringManagerDashboard } from "./pages/RoleDashboards";
+import HiringManagerLayout from "./pages/hiring-manager/HiringManagerLayout";
+import HiringManagerHome from "./pages/hiring-manager/HiringManagerHome";
+import HiringManagerJobsPage from "./pages/hiring-manager/HiringManagerJobsPage";
+import HiringManagerJobDetailPage from "./pages/hiring-manager/HiringManagerJobDetailPage";
+import HiringManagerCandidatesPage from "./pages/hiring-manager/HiringManagerCandidatesPage";
+import HiringManagerApplicationPage from "./pages/hiring-manager/HiringManagerApplicationPage";
+import HiringManagerComparePage from "./pages/hiring-manager/HiringManagerComparePage";
+import { AdminDashboard } from "./pages/RoleDashboards";
 import "./App.css";
 
 function App() {
@@ -186,13 +193,20 @@ function App() {
                         <Route path="compare" element={<RecruiterComparePage />} />
                     </Route>
                     <Route
-                        path="/hiring-manager/*"
+                        path="/hiring-manager"
                         element={
                             <ProtectedRoute roles={["HiringManager"]}>
-                                <HiringManagerDashboard />
+                                <HiringManagerLayout />
                             </ProtectedRoute>
                         }
-                    />
+                    >
+                        <Route index element={<HiringManagerHome />} />
+                        <Route path="jobs" element={<HiringManagerJobsPage />} />
+                        <Route path="jobs/:id" element={<HiringManagerJobDetailPage />} />
+                        <Route path="jobs/:id/candidates" element={<HiringManagerCandidatesPage />} />
+                        <Route path="applications/:id" element={<HiringManagerApplicationPage />} />
+                        <Route path="compare" element={<HiringManagerComparePage />} />
+                    </Route>
                     <Route
                         path="/admin/*"
                         element={

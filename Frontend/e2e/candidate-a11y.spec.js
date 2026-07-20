@@ -17,23 +17,13 @@ test.describe("Candidate accessibility", () => {
     await page.getByRole("button", { name: /sign in/i }).click();
     await expect(page).toHaveURL(/\/candidate/, { timeout: 30_000 });
 
-    const pages = ["/candidate", "/candidate/profile", "/candidate/jobs", "/register", "/access-denied"];
     const serious = [];
+    const authenticatedPages = ["/candidate", "/candidate/profile", "/candidate/jobs", "/access-denied"];
 
-    for (const route of pages) {
+    for (const route of authenticatedPages) {
       await page.goto(route);
-      // Keyboard: tab moves focus visibly on interactive controls
       await page.keyboard.press("Tab");
-      const focused = await page.evaluate(() => {
-        const el = document.activeElement;
-        if (!el) return null;
-        const style = window.getComputedStyle(el);
-        return {
-          tag: el.tagName,
-          outline: style.outlineStyle,
-          outlineWidth: style.outlineWidth
-        };
-      });
+      const focused = await page.evaluate(() => document.activeElement?.tagName || null);
       expect(focused).toBeTruthy();
 
       const results = await new AxeBuilder({ page })
@@ -48,19 +38,26 @@ test.describe("Candidate accessibility", () => {
       }
     }
 
-    // Known gap: some form labels are visual-only without htmlFor; treat label-related
-    // serious issues as documented remediation if present, but fail on other criticals.
-    const blocking = serious.filter(
-      (v) => !["label", "label-content-name-mismatch", "select-name", "color-contrast"].includes(v.id)
-    );
+    await page.evaluate(() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    });
 
-    if (serious.some((v) => v.id === "color-contrast")) {
-      console.warn(
-        "Documented residual color-contrast findings on marketing/auth chrome:",
-        serious.filter((v) => v.id === "color-contrast")
+    for (const route of ["/register", "/login"]) {
+      await page.goto(route);
+      await page.keyboard.press("Tab");
+      const results = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa"])
+        .analyze();
+      const bad = results.violations.filter((v) =>
+        ["critical", "serious"].includes(v.impact)
       );
+      for (const v of bad) {
+        serious.push({ route, id: v.id, impact: v.impact, help: v.help, nodes: v.nodes.length });
+      }
     }
 
-    expect(blocking, JSON.stringify(serious, null, 2)).toEqual([]);
+    // Do not suppress color-contrast or other serious/critical rules.
+    expect(serious, JSON.stringify(serious, null, 2)).toEqual([]);
   });
 });

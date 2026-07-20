@@ -1,7 +1,7 @@
 # HireSphere — Phase Status
 
 **Last updated:** 2026-07-20
-**Overall readiness:** NOT READY (Phases 6–12 pending)
+**Overall readiness:** NOT READY (Phases 6–11 pending)
 
 | Phase | Name | Status | Commit | Push | Notes |
 |-------|------|--------|--------|------|-------|
@@ -11,7 +11,7 @@
 | 3 | Auth and RBAC | VERIFIED | `3c0ae38` + verification | SUCCESS | Four-role live UAT 26/26 |
 | 4 | Candidate workflows | VERIFIED | Phase 4 E2E commit | SUCCESS | Browser Playwright 6/6; 23 screenshots; LocalDB |
 | 5 | Recruiter workflows | VERIFIED | `4099d3f` + `677a425` + `d605c57` + E2E verify | SUCCESS | Playwright recruiter journey PASS; 26 screenshots; LocalDB |
-| 6 | Hiring Manager | NOT STARTED | — | — | — |
+| 6 | Hiring Manager | IN PROGRESS | Phase 6.1 pending push | — | Assigned vacancies + candidate review in progress |
 | 7 | Administrator | NOT STARTED | — | — | — |
 | 8 | AI and integrations | NOT STARTED | — | — | Cloud storage deferred here |
 | 9 | UI design system | NOT STARTED | — | — | — |

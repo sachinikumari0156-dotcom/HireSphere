@@ -34,6 +34,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<ApplicationAnswer> ApplicationAnswers => Set<ApplicationAnswer>();
     public DbSet<ApplicationStatusHistory> ApplicationStatusHistories => Set<ApplicationStatusHistory>();
     public DbSet<ApplicationNote> ApplicationNotes => Set<ApplicationNote>();
+    public DbSet<JobReviewComment> JobReviewComments => Set<JobReviewComment>();
     public DbSet<ApplicationMessage> ApplicationMessages => Set<ApplicationMessage>();
     public DbSet<RankingReview> RankingReviews => Set<RankingReview>();
     public DbSet<SkillAssessment> SkillAssessments => Set<SkillAssessment>();
