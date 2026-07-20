@@ -128,7 +128,7 @@ function Login() {
             <div className="reg-brand">
 
                 <div className="reg-brand-mark">
-                    hire<span>flow</span>
+                    Hire<span>Sphere</span>
                 </div>
 
                 <div className="reg-brand-copy">
@@ -150,7 +150,7 @@ function Login() {
                 </div>
 
                 <div className="reg-brand-footer">
-                    &copy; {new Date().getFullYear()} Hireflow
+                    &copy; {new Date().getFullYear()} HireSphere
                 </div>
 
             </div>

@@ -1,7 +1,7 @@
 # HireSphere — Coursework Requirement Matrix
 
 **Course:** SE205.3 Software Architecture 2026  
-**Last updated:** 2026-07-20 (Phase 0 baseline)  
+**Last updated:** 2026-07-20 (Phase 1 security)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED — EXTERNAL CREDENTIAL | DEFERRED — OPTIONAL BONUS
 
 ---
@@ -21,7 +21,7 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-C01 | Registration and secure authentication | IN PROGRESS | Register/login exist; passwords not hashed |
+| M-C01 | Registration and secure authentication | IN PROGRESS | Phase 1: BCrypt hashing; Candidate-only public register; full RBAC later |
 | M-C02 | Professional profile management | IN PROGRESS | `CandidateProfilesController`; no full UI |
 | M-C03 | CV/resume upload and management | NOT STARTED | `ResumePath` field only; no upload API |
 | M-C04 | Job search and application submission | IN PROGRESS | API + partial dashboard |
@@ -72,14 +72,14 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-S01 | JWT authentication | IN PROGRESS | Token issued; validation configured |
-| M-S02 | RBAC | IN PROGRESS | Role claims; incomplete enforcement |
-| M-S03 | Secure password hashing | NOT STARTED | Plaintext storage |
+| M-S01 | JWT authentication | IN PROGRESS | Token issued; validation configured; key via secrets/env |
+| M-S02 | RBAC | IN PROGRESS | Role claims; public privileged registration blocked |
+| M-S03 | Secure password hashing | IMPLEMENTED | BCrypt hash on register; verify on login |
 | M-S04 | HTTPS-ready configuration | IN PROGRESS | Dev HTTPS profile exists |
 | M-S05 | Audit logging | NOT STARTED | — |
 | M-S06 | Data privacy measures | NOT STARTED | — |
 | M-S07 | Resource ownership checks | IN PROGRESS | Partial in applications/jobs |
-| M-S08 | Secure secret and document handling | NOT STARTED | Secrets in appsettings.json |
+| M-S08 | Secure secret and document handling | IMPLEMENTED | Tracked secrets replaced with placeholders; rotation documented |
 
 ### AI and analytics
 
@@ -113,10 +113,10 @@
 |----|-------------|--------|------------------|
 | M-F01 | Desktop, tablet, mobile responsive | IN PROGRESS | Partial CSS; not verified |
 | M-F02 | Accessibility | NOT STARTED | Not audited |
-| M-F03 | Consistent UX / design system | NOT STARTED | Hireflow branding remains |
+| M-F03 | Consistent UX / design system | IN PROGRESS | HireSphere branding on auth pages; design system later |
 | M-F04 | Client-side validation | IN PROGRESS | Login/register forms |
-| M-F05 | Secure authentication workflow | IN PROGRESS | Token stored; no guards |
-| M-F06 | Error handling and user feedback | IN PROGRESS | Basic form errors |
+| M-F05 | Secure authentication workflow | IN PROGRESS | Token stored; centralized API URL; no route guards yet |
+| M-F06 | Error handling and user feedback | IN PROGRESS | Basic form errors; API global exception handler added |
 | M-F07 | Usability testing evidence | NOT STARTED | — |
 
 ### Testing and evidence
@@ -147,7 +147,7 @@
 | Q-01 | Refresh-token rotation | DEFERRED — OPTIONAL BONUS |
 | Q-02 | Account lockout | NOT STARTED |
 | Q-03 | Password reset and email verification | NOT STARTED |
-| Q-04 | Health checks, structured logging, global errors | NOT STARTED |
+| Q-04 | Health checks, structured logging, global errors | IN PROGRESS | Global exception handler added in Phase 1 |
 | Q-05 | Pagination/filtering/sorting | NOT STARTED |
 | Q-06 | CI and Docker dev environment | NOT STARTED |
 | Q-07 | Playwright E2E | NOT STARTED |

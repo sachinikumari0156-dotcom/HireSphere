@@ -2,34 +2,25 @@
 
 **Severity:** CRITICAL  
 **Discovered:** 2026-07-20 Phase 0 audit  
-**Status:** OPEN — rotate before any public deployment or shared demo
+**Status:** MITIGATED IN CODE — tracked placeholders only; **local credential rotation still required**
 
 ---
 
-## Exposed secrets (tracked in repository)
+## Previously exposed secrets (now removed from tracked config)
 
-### 1. Database password — `Backend/HireSphere.API/appsettings.json`
+Historical values previously existed in git history for:
 
-```json
-"DefaultConnection": "Server=localhost;Database=HireSphereDB;User=root;Password=sachini@2003;"
-```
+1. Database connection password in `Backend/HireSphere.API/appsettings.json`
+2. JWT signing key in `Backend/HireSphere.API/appsettings.json`
 
-**Actions:**
-1. Change the MySQL/SQL Server password immediately if this instance is or was reachable
-2. Remove password from tracked `appsettings.json`
-3. Store connection string in User Secrets (`dotnet user-secrets`) or environment variable
-4. Use SQL Server auth appropriate for coursework (Windows auth or SQL login via secrets)
+Tracked files now contain placeholders only (for example `__CHANGE_ME__` / `__SET_VIA_USER_SECRETS_OR_ENV__`). Do not reintroduce real secret values into git.
 
-### 2. JWT signing key — `Backend/HireSphere.API/appsettings.json`
-
-```json
-"Key": "HireSphereSuperSecretKey123456789"
-```
-
-**Actions:**
-1. Generate a cryptographically strong key (≥ 256 bits, base64 or long random string)
-2. Store in User Secrets / environment only
-3. Invalidate existing JWTs after rotation (users re-login)
+**Mandatory local actions:**
+1. Rotate any previously used database password on the local/server instance
+2. Generate a new strong JWT signing key (≥ 256 bits)
+3. Store connection string and JWT key in User Secrets or environment variables
+4. Invalidate existing JWTs by forcing re-login after key rotation
+5. Re-create or re-hash any accounts created before Phase 1 password hashing
 
 ---
 

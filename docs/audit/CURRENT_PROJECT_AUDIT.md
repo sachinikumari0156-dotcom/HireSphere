@@ -120,7 +120,7 @@ dotnet test                           → N/A (no test project)
 | Risk | Severity | Location | Detail |
 |------|----------|----------|--------|
 | Plain-text passwords | **CRITICAL** | `AuthController.cs` | `PasswordHash = dto.Password`; login compares plaintext |
-| Hard-coded DB password | **CRITICAL** | `appsettings.json` | `Password=sachini@2003` committed |
+| Hard-coded DB password | **CRITICAL** | `appsettings.json` | `Password=__REDACTED__` committed |
 | Weak JWT secret | **HIGH** | `appsettings.json` | Short static key in repo |
 | Unrestricted CORS | **HIGH** | `Program.cs` | `AllowAnyOrigin()` |
 | Open role registration | **HIGH** | `AuthController.Register` | Any role including Admin can self-register |

@@ -5,8 +5,8 @@
 
 | Phase | Name | Status | Commit | Push | Notes |
 |-------|------|--------|--------|------|-------|
-| 0 | Audit and planning | IN PROGRESS | — | BLOCKED | Docs created locally; identity gate failed |
-| 1 | Security foundation | NOT STARTED | — | — | — |
+| 0 | Audit and planning | VERIFIED | `07080b1` | SUCCESS | Docs committed and pushed |
+| 1 | Security foundation | VERIFIED | pending | pending | Buildable; committing now |
 | 2 | SQL Server and data model | NOT STARTED | — | — | — |
 | 3 | Auth and RBAC | NOT STARTED | — | — | — |
 | 4 | Candidate workflows | NOT STARTED | — | — | — |
@@ -25,34 +25,27 @@
 
 ### Completed
 
-- Git remote verified (`sachinikumari0156-dotcom/HireSphere`)
-- Backend build verified (`dotnet build HireSphere.API.csproj` — SUCCESS)
-- Security baseline documented
-- Requirement matrix (Tier M/Q/B) created
-- Planning and risk documents created
-- `.gitignore` updated for `local-spec/` and local secrets
-
-### Blocked
-
-- **GitHub CLI missing** — cannot confirm `kalanirashmika` authentication
-- **Git user.name / user.email not set**
-- **Wrong branch** — on `main`, not `kalanirashmika/coursework-completion`
-- **Node.js missing** — frontend lint/build/test not executed
-- **Commit/push** — withheld per master prompt identity gate
-
-### Next actions (Kalani)
-
-1. Install GitHub CLI and Node.js LTS
-2. Authenticate and configure git identity
-3. Pull main, create feature branch, push
-4. Reply in Cursor to resume Phase 0 commit and Phase 1
+- Identity gate verified as `kalanirashmika`
+- Audit/planning/security docs committed
+- Push to `kalanirashmika/coursework-completion` succeeded (`07080b1`)
 
 ---
 
-## Build/test snapshot (Phase 0)
+## Phase 1 detail
 
-| Command | Result |
-|---------|--------|
-| `dotnet build HireSphere.API.csproj` | PASS (16 warnings) |
-| `dotnet test` | N/A (no test project) |
-| `npm ci` / `npm run lint` / `npm run build` | NOT RUN (Node not installed) |
+### Scope completed in code (pending commit)
+
+- Secrets removed from tracked config
+- BCrypt password hashing/verification
+- Privileged public registration blocked
+- CORS restricted by configuration
+- Global API exception handler
+- Frontend API base URL centralized
+- Hireflow → HireSphere on auth pages
+- Matrices / risk / changelog / SRS traceability updated
+
+### Remaining after Phase 1
+
+- SQL Server migration (Phase 2)
+- Full four-role RBAC workflows (Phase 3+)
+- Automated test project (Phase 10)

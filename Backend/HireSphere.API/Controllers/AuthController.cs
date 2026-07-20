@@ -33,6 +33,13 @@ namespace HireSphere.API.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
+            // Phase 1: only allow public candidate registration.
+            // Privileged roles (Recruiter/HiringManager/Admin) must be assigned via admin-approved workflows later.
+            if (!string.Equals(dto.Role, "Candidate", System.StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest("Only Candidate registration is allowed publicly.");
+            }
+
             var existingUser = await _context.Users
                 .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
@@ -47,8 +54,8 @@ namespace HireSphere.API.Controllers
             {
                 FullName = dto.FullName,
                 Email = dto.Email,
-                PasswordHash = dto.Password,
-                Role = dto.Role
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                Role = "Candidate"
             };
 
 
@@ -73,13 +80,9 @@ namespace HireSphere.API.Controllers
         public async Task<IActionResult> Login(LoginDto dto)
         {
             var user = await _context.Users
-                .FirstOrDefaultAsync(u =>
-                    u.Email == dto.Email &&
-                    u.PasswordHash == dto.Password);
+                .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
-
-
-            if (user == null)
+            if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             {
                 return Unauthorized("Invalid email or password");
             }
@@ -91,6 +94,11 @@ namespace HireSphere.API.Controllers
             {
                 new Claim(
                     JwtRegisteredClaimNames.Sub,
+                    user.Id.ToString()
+                ),
+
+                new Claim(
+                    ClaimTypes.NameIdentifier,
                     user.Id.ToString()
                 ),
 
@@ -131,7 +139,7 @@ namespace HireSphere.API.Controllers
 
                 claims: claims,
 
-                expires: DateTime.Now.AddHours(2),
+                expires: DateTime.UtcNow.AddHours(2),
 
                 signingCredentials: credentials
             );

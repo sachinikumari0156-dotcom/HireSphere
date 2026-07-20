@@ -16,29 +16,30 @@
 
 ---
 
-## Phase 0 — Audit and planning (current)
+## Phase 0 — Audit and planning
 
-**Commit:** `chore(audit): document baseline gaps and coursework plan`
+**Commit:** `chore(audit): document baseline gaps and coursework plan` (`07080b1`)
 
-- [x] Identity gate assessment (blocked items recorded)
+- [x] Identity gate assessment
 - [x] `CURRENT_PROJECT_AUDIT.md`
 - [x] `COURSEWORK_REQUIREMENT_MATRIX.md`
 - [x] `IMPLEMENTATION_PLAN.md`, `DEFINITION_OF_DONE.md`, `RISK_REGISTER.md`
 - [x] `PHASE_STATUS.md`, `SECRET_ROTATION_REQUIRED.md`
-- [ ] Commit and push (blocked until identity gate passes)
+- [x] Commit and push
 
 ---
 
-## Phase 1 — Security foundation
+## Phase 1 — Security foundation (current)
 
 **Commit:** `fix(security): secure credentials authentication and API configuration`
 
-1. Remove secrets from tracked `appsettings.json`; use User Secrets + env vars
-2. Implement BCrypt/ASP.NET Identity password hasher for register/login
-3. Restrict CORS to configured frontend origin(s)
-4. Disable public registration for Admin/HiringManager/Recruiter (admin approval flow stub)
-5. Add `appsettings.Development.json` template without real secrets
-6. Global exception middleware + sanitized error responses
+1. [x] Remove secrets from tracked `appsettings.json`; use User Secrets + env vars
+2. [x] Implement BCrypt password hasher for register/login
+3. [x] Restrict CORS to configured frontend origin(s)
+4. [x] Disable public registration for Admin/HiringManager/Recruiter
+5. [x] Add `appsettings.Development.json` template without real secrets
+6. [x] Global exception middleware + sanitized error responses
+7. [x] Centralize frontend API base URL; replace Hireflow branding on auth pages
 
 **Exit criteria:** No plaintext passwords; no secrets in git; CORS restricted; build passes.
 
