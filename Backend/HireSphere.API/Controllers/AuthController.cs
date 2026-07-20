@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using HireSphere.API.Data;
 using HireSphere.API.Models;
+using HireSphere.API.Models.Enums;
 using HireSphere.API.DTOs;
+using HireSphere.API.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -35,13 +37,15 @@ namespace HireSphere.API.Controllers
         {
             // Phase 1: only allow public candidate registration.
             // Privileged roles (Recruiter/HiringManager/Admin) must be assigned via admin-approved workflows later.
-            if (!string.Equals(dto.Role, "Candidate", System.StringComparison.OrdinalIgnoreCase))
+            if (!AuthRegistrationRules.IsPublicRegistrationAllowed(dto.Role))
             {
                 return BadRequest("Only Candidate registration is allowed publicly.");
             }
 
+            var normalizedEmail = dto.Email.Trim().ToUpperInvariant();
+
             var existingUser = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == dto.Email);
+                .FirstOrDefaultAsync(u => u.NormalizedEmail == normalizedEmail);
 
 
             if (existingUser != null)
@@ -53,15 +57,30 @@ namespace HireSphere.API.Controllers
             var user = new User
             {
                 FullName = dto.FullName,
-                Email = dto.Email,
+                Email = dto.Email.Trim(),
+                NormalizedEmail = normalizedEmail,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-                Role = "Candidate"
+                Role = "Candidate",
+                Status = UserStatus.Active,
+                CreatedAtUtc = DateTime.UtcNow
             };
 
 
             _context.Users.Add(user);
 
             await _context.SaveChangesAsync();
+
+            var candidateRole = await _context.Roles
+                .FirstOrDefaultAsync(r => r.Name == "Candidate");
+            if (candidateRole != null)
+            {
+                _context.UserRoles.Add(new UserRole
+                {
+                    UserId = user.Id,
+                    RoleId = candidateRole.Id
+                });
+                await _context.SaveChangesAsync();
+            }
 
 
             return Ok(new
@@ -79,8 +98,10 @@ namespace HireSphere.API.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
+            var normalizedEmail = dto.Email.Trim().ToUpperInvariant();
+
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == dto.Email);
+                .FirstOrDefaultAsync(u => u.NormalizedEmail == normalizedEmail);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             {

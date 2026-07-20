@@ -2,7 +2,7 @@
 
 ## Phase 0 — 2026-07-20
 
-**Commit:** `07080b12733b9af5d07b1e5cb90d5b55a588bdd4`  
+**Commit:** `07080b12733b9af5d07b1e5cb90d5b55a588bdd4`
 `chore(audit): document baseline gaps and coursework plan`
 
 - Baseline audit, requirement matrix, implementation plan, DoD, risk register, phase status, secret-rotation doc
@@ -10,7 +10,8 @@
 
 ## Phase 1 — 2026-07-20
 
-**Commit message:** `fix(security): secure credentials authentication and API configuration`
+**Commit:** `9c50d56`
+`fix(security): secure credentials authentication and API configuration`
 
 - Removed hard-coded DB password and JWT key from tracked config (placeholders only)
 - Added CORS allowed-origins configuration
@@ -24,3 +25,23 @@
 - Backend build: PASS (0 warnings)
 - Backend tests: N/A — no test project
 - Frontend lint/build: PASS; test script missing
+
+## Phase 2 — 2026-07-20
+
+**Commit message:** `refactor(data): migrate persistence to SQL Server and complete core model`
+**Status:** TESTED (migration apply BLOCKED without SQL Server)
+
+- Switched EF Core provider from MySQL to SQL Server 8.0.11
+- Removed legacy MySQL migrations; added `InitialSqlServerCoreModel` SQL Server baseline
+- Expanded `ApplicationDbContext` to full recruitment domain model (35+ entities)
+- Fluent configurations for indexes, string lengths, and delete behaviors
+- History-preserving deletes: Job→Applications Restrict; Application→Interviews Restrict
+- `UsersController`: Admin-only mutations, BCrypt password hashing, safe DTO responses
+- `AuthRegistrationRules` helper + registration validation tests
+- Created `Backend/HireSphere.API.Tests` (xUnit, SQLite, WebApplicationFactory)
+- 14 automated tests: unique constraints, UserDto privacy, privileged registration block
+- Documentation: DATA_DICTIONARY, ER_DIAGRAM, SQL_SERVER_SETUP, MYSQL_TO_SQLSERVER_MIGRATION_NOTES, DATABASE_ARCHITECTURE
+- Backend build: PASS
+- Backend tests: PASS (14/14)
+- Frontend lint/build: PASS; frontend test script still missing
+- Migration apply: BLOCKED — SQL Server not available locally

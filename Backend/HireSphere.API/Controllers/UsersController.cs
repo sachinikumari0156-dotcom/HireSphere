@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using HireSphere.API.Data;
 using HireSphere.API.Models;
+using HireSphere.API.Models.Enums;
 using HireSphere.API.DTOs;
-
 
 namespace HireSphere.API.Controllers
 {
@@ -15,13 +15,10 @@ namespace HireSphere.API.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-
         public UsersController(ApplicationDbContext context)
         {
             _context = context;
         }
-
-
 
         // GET: api/Users
         [HttpGet]
@@ -38,12 +35,8 @@ namespace HireSphere.API.Controllers
                 })
                 .ToListAsync();
 
-
             return users;
         }
-
-
-
 
         // GET: api/Users/1
         [HttpGet("{id}")]
@@ -61,57 +54,76 @@ namespace HireSphere.API.Controllers
                 })
                 .FirstOrDefaultAsync();
 
+            if (user == null)
+            {
+                return NotFound();
+            }
 
+            return user;
+        }
+
+        // POST: api/Users
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<UserDto>> CreateUser(CreateUserDto dto)
+        {
+            var normalizedEmail = dto.Email.Trim().ToUpperInvariant();
+
+            var existingUser = await _context.Users
+                .AnyAsync(u => u.NormalizedEmail == normalizedEmail);
+
+            if (existingUser)
+            {
+                return BadRequest("Email already exists");
+            }
+
+            var user = new User
+            {
+                FullName = dto.FullName.Trim(),
+                Email = dto.Email.Trim(),
+                NormalizedEmail = normalizedEmail,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                Role = dto.Role.Trim(),
+                Status = UserStatus.Active,
+                CreatedAtUtc = DateTime.UtcNow
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            var response = new UserDto
+            {
+                Id = user.Id,
+                FullName = user.FullName,
+                Email = user.Email,
+                Role = user.Role
+            };
+
+            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, response);
+        }
+
+        // PUT: api/Users/1
+        [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateUser(int id, UpdateUserDto dto)
+        {
+            var user = await _context.Users.FindAsync(id);
 
             if (user == null)
             {
                 return NotFound();
             }
 
+            user.FullName = dto.FullName.Trim();
+            user.Email = dto.Email.Trim();
+            user.NormalizedEmail = dto.Email.Trim().ToUpperInvariant();
+            user.Role = dto.Role.Trim();
+            user.UpdatedAtUtc = DateTime.UtcNow;
 
-            return user;
-        }
-
-
-
-
-
-        // POST: api/Users
-        [HttpPost]
-        public async Task<ActionResult<User>> CreateUser(User user)
-        {
-            _context.Users.Add(user);
-
-            await _context.SaveChangesAsync();
-
-
-
-            return CreatedAtAction(
-                nameof(GetUser),
-                new { id = user.Id },
-                user
-            );
-        }
-
-
-
-
-
-        // PUT: api/Users/1
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, User user)
-        {
-            if (id != user.Id)
+            if (!string.IsNullOrWhiteSpace(dto.PasswordHash))
             {
-                return BadRequest();
+                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.PasswordHash);
             }
-
-
-
-            _context.Entry(user).State =
-                EntityState.Modified;
-
-
 
             try
             {
@@ -119,44 +131,31 @@ namespace HireSphere.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Users.Any(e => e.Id == id))
+                if (!await _context.Users.AnyAsync(e => e.Id == id))
                 {
                     return NotFound();
                 }
 
-
                 throw;
             }
-
-
 
             return NoContent();
         }
 
-
-
-
-
         // DELETE: api/Users/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
-
-
 
             if (user == null)
             {
                 return NotFound();
             }
 
-
-
             _context.Users.Remove(user);
-
             await _context.SaveChangesAsync();
-
-
 
             return NoContent();
         }

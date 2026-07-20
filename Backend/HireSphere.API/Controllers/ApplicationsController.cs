@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using HireSphere.API.Data;
 using HireSphere.API.Models;
 using HireSphere.API.DTOs;
+using HireSphere.API.Models.Enums;
 using System.Security.Claims;
 
 namespace HireSphere.API.Controllers
@@ -40,7 +41,7 @@ namespace HireSphere.API.Controllers
                     CandidateId = a.CandidateId,
                     JobId = a.JobId,
                     AppliedDate = a.AppliedDate,
-                    Status = a.Status,
+                    Status = a.Status.ToString(),
                     CoverLetter = a.CoverLetter
 
                 })
@@ -93,7 +94,7 @@ namespace HireSphere.API.Controllers
                     CandidateId = a.CandidateId,
                     JobId = a.JobId,
                     AppliedDate = a.AppliedDate,
-                    Status = a.Status,
+                    Status = a.Status.ToString(),
                     CoverLetter = a.CoverLetter
 
                 })
@@ -176,7 +177,7 @@ namespace HireSphere.API.Controllers
 
                     AppliedDate = a.AppliedDate,
 
-                    Status = a.Status,
+                    Status = a.Status.ToString(),
 
                     CoverLetter = a.CoverLetter
 
@@ -224,7 +225,7 @@ namespace HireSphere.API.Controllers
                     CandidateId = a.CandidateId,
                     JobId = a.JobId,
                     AppliedDate = a.AppliedDate,
-                    Status = a.Status,
+                    Status = a.Status.ToString(),
                     CoverLetter = a.CoverLetter
 
                 })
@@ -262,7 +263,7 @@ namespace HireSphere.API.Controllers
                     CandidateId = a.CandidateId,
                     JobId = a.JobId,
                     AppliedDate = a.AppliedDate,
-                    Status = a.Status,
+                    Status = a.Status.ToString(),
                     CoverLetter = a.CoverLetter
 
                 })
@@ -326,7 +327,8 @@ namespace HireSphere.API.Controllers
 
             application.AppliedDate = DateTime.Now;
 
-            application.Status = "Pending";
+            application.Status = ApplicationStatus.Pending;
+            application.CreatedAtUtc = DateTime.UtcNow;
 
 
 

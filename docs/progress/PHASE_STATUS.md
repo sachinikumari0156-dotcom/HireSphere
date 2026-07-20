@@ -1,13 +1,13 @@
 # HireSphere — Phase Status
 
-**Last updated:** 2026-07-20  
+**Last updated:** 2026-07-20
 **Overall readiness:** NOT READY
 
 | Phase | Name | Status | Commit | Push | Notes |
 |-------|------|--------|--------|------|-------|
 | 0 | Audit and planning | VERIFIED | `07080b1` | SUCCESS | Docs committed and pushed |
-| 1 | Security foundation | VERIFIED | pending | pending | Buildable; committing now |
-| 2 | SQL Server and data model | NOT STARTED | — | — | — |
+| 1 | Security foundation | VERIFIED | `9c50d56` | SUCCESS | BCrypt, CORS, secrets externalized |
+| 2 | SQL Server and data model | TESTED | pending | pending | Provider + model + tests; DB apply BLOCKED |
 | 3 | Auth and RBAC | NOT STARTED | — | — | — |
 | 4 | Candidate workflows | NOT STARTED | — | — | — |
 | 5 | Recruiter workflows | NOT STARTED | — | — | — |
@@ -33,7 +33,7 @@
 
 ## Phase 1 detail
 
-### Scope completed in code (pending commit)
+### Completed
 
 - Secrets removed from tracked config
 - BCrypt password hashing/verification
@@ -43,9 +43,29 @@
 - Frontend API base URL centralized
 - Hireflow → HireSphere on auth pages
 - Matrices / risk / changelog / SRS traceability updated
+- **Commit:** `9c50d56` — push SUCCESS
 
-### Remaining after Phase 1
+---
 
-- SQL Server migration (Phase 2)
-- Full four-role RBAC workflows (Phase 3+)
-- Automated test project (Phase 10)
+## Phase 2 detail
+
+### Completed
+
+- Removed Pomelo/MySQL provider and obsolete MySQL migrations
+- SQL Server EF Core 8.0.11 configured with connection-string placeholders
+- Core coursework domain model (identity, org, candidate, recruitment, assessments, interviews, AI stubs)
+- Fluent API configurations, unique constraints, indexes, Restrict delete for history
+- Idempotent `DbSeeder` for roles, org, skills, and four-role demo users
+- Migration `InitialSqlServerCoreModel` generated and reviewed
+- `HireSphere.API.Tests` — 14 tests passing (SQLite relational constraints + auth)
+- Data dictionary, ER diagram, SQL Server setup, migration notes, DB architecture docs
+
+### Blocked / not verified
+
+- `dotnet ef database update` against an empty SQL Server instance — **BLOCKED** (no local SQL Server/Docker/LocalDB)
+- Therefore M-B02 migration apply remains **IMPLEMENTED / TESTED**, not VERIFIED
+
+### Next
+
+- Install/start SQL Server (or Docker), apply migration, re-seed, then promote Phase 2 to VERIFIED
+- Phase 3: full role-based account workflows

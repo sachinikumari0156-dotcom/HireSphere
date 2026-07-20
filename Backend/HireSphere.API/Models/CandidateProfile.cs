@@ -1,31 +1,42 @@
-﻿namespace HireSphere.API.Models
+﻿namespace HireSphere.API.Models;
+
+public class CandidateProfile
 {
-    public class CandidateProfile
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
+    public int UserId { get; set; }
 
-        // Foreign Key
-        public int UserId { get; set; }
+    public string FullName { get; set; } = string.Empty;
 
+    public string PhoneNumber { get; set; } = string.Empty;
 
-        public string FullName { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
 
+    public string Skills { get; set; } = string.Empty;
 
-        public string PhoneNumber { get; set; } = string.Empty;
+    public string ResumePath { get; set; } = string.Empty;
 
+    public string? Summary { get; set; }
 
-        public string Address { get; set; } = string.Empty;
+    public string? Location { get; set; }
 
+    public int? YearsOfExperience { get; set; }
 
-        public string Skills { get; set; } = string.Empty;
+    public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 
+    public DateTime? UpdatedAtUtc { get; set; }
 
-        public string ResumePath { get; set; } = string.Empty;
+    public User User { get; set; } = null!;
 
+    public ICollection<WorkExperience> WorkExperiences { get; set; } = new List<WorkExperience>();
 
+    public ICollection<Education> Educations { get; set; } = new List<Education>();
 
-        // Navigation
-        public User User { get; set; } = null!;
-    }
+    public ICollection<CandidateSkill> CandidateSkills { get; set; } = new List<CandidateSkill>();
+
+    public ICollection<Certification> Certifications { get; set; } = new List<Certification>();
+
+    public ICollection<Resume> Resumes { get; set; } = new List<Resume>();
+
+    public ICollection<CandidateDocument> Documents { get; set; } = new List<CandidateDocument>();
 }

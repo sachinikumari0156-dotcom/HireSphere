@@ -1,35 +1,32 @@
-﻿using System;
+﻿using HireSphere.API.Models.Enums;
 
-namespace HireSphere.API.Models
+namespace HireSphere.API.Models;
+
+public class Application
 {
-    public class Application
-    {
-        public int Id { get; set; }
+    public int Id { get; set; }
 
+    public int CandidateId { get; set; }
 
-        // Candidate FK
-        public int CandidateId { get; set; }
+    public int JobId { get; set; }
 
+    public DateTime AppliedDate { get; set; } = DateTime.UtcNow;
 
-        // Job FK
-        public int JobId { get; set; }
+    public ApplicationStatus Status { get; set; } = ApplicationStatus.Pending;
 
+    public string CoverLetter { get; set; } = string.Empty;
 
-        public DateTime AppliedDate { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 
+    public DateTime? UpdatedAtUtc { get; set; }
 
-        public string Status { get; set; } = string.Empty;
+    public User Candidate { get; set; } = null!;
 
+    public Job Job { get; set; } = null!;
 
-        public string CoverLetter { get; set; } = string.Empty;
+    public ICollection<ApplicationAnswer> Answers { get; set; } = new List<ApplicationAnswer>();
 
+    public ICollection<ApplicationStatusHistory> StatusHistory { get; set; } = new List<ApplicationStatusHistory>();
 
-
-        // Navigation Properties
-
-        public User Candidate { get; set; } = null!;
-
-
-        public Job Job { get; set; } = null!;
-    }
+    public ICollection<Interview> Interviews { get; set; } = new List<Interview>();
 }
