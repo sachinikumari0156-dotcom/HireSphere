@@ -11,5 +11,6 @@ public class CertificationConfiguration : IEntityTypeConfiguration<Certification
         builder.Property(c => c.Name).HasMaxLength(200);
         builder.Property(c => c.IssuingOrganization).HasMaxLength(200);
         builder.Property(c => c.CredentialId).HasMaxLength(200);
+        builder.Property(c => c.CredentialUrl).HasMaxLength(500);
     }
 }

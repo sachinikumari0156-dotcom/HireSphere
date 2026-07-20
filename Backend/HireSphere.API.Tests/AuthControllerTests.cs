@@ -18,10 +18,11 @@ namespace HireSphere.API.Tests;
 
 public class TestWebApplicationFactory : WebApplicationFactory<Program>, IDisposable
 {
-    private readonly SqliteConnection _connection = new("Data Source=hiresphere-tests;Mode=Memory;Cache=Shared");
+    private readonly SqliteConnection _connection;
 
     public TestWebApplicationFactory()
     {
+        _connection = new SqliteConnection($"Data Source=hiresphere-tests-{Guid.NewGuid():N};Mode=Memory;Cache=Shared");
         _connection.Open();
     }
 

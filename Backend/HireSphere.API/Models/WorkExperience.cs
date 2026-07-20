@@ -18,6 +18,8 @@ public class WorkExperience
 
     public string? Location { get; set; }
 
+    public bool IsCurrentRole { get; set; }
+
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 
     public CandidateProfile CandidateProfile { get; set; } = null!;

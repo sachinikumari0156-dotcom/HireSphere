@@ -29,6 +29,8 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 builder.Services.AddScoped<IResourceAuthorizationService, ResourceAuthorizationService>();
+builder.Services.AddScoped<ILocalFileStorageService, LocalFileStorageService>();
+builder.Services.AddScoped<ICandidateProfileService, CandidateProfileService>();
 
 builder.Services.AddCors(options =>
 {

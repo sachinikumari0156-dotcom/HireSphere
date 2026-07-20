@@ -18,6 +18,8 @@ public class Education
 
     public string? Grade { get; set; }
 
+    public bool IsCurrentStudy { get; set; }
+
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 
     public CandidateProfile CandidateProfile { get; set; } = null!;

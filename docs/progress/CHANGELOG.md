@@ -87,3 +87,14 @@
 - Evidence: `docs/testing/PHASE3_LIVE_UAT.md`, `PHASE3_AUTH_TEST_EVIDENCE.md`, `FRONTEND_TEST_RESULTS.md`
 - Backend: 33 tests PASS; build 0 errors / 0 advisory warnings
 - Frontend: lint PASS, build PASS
+
+## Phase 4.1 — 2026-07-20
+
+**Commit message:** `feat(candidate): complete profile resume and document workflows`
+
+- Candidate portal APIs under `/api/candidate` (dashboard, profile, experience, education, skills, certifications, resumes, documents)
+- Local secure file storage with MIME/extension/size validation
+- Migration `AddCandidateProfilePortalFields` applied to HireSphereDev
+- Frontend `/candidate` dashboard + `/candidate/profile` page
+- Backend tests: 43 passed; Frontend Vitest: auth 13 + candidate portal tests
+- Cloud storage verification: pending (local provider only)

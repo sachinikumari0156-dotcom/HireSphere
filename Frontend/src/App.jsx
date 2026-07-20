@@ -8,7 +8,8 @@ import Register from "./pages/Register";
 import RecruiterRequest from "./pages/RecruiterRequest";
 import AccessDenied from "./pages/AccessDenied";
 import SessionExpired from "./pages/SessionExpired";
-import CandidateDashboard from "./pages/CandidateDashboard";
+import CandidateHome from "./pages/candidate/CandidateHome";
+import CandidateProfilePage from "./pages/candidate/CandidateProfilePage";
 import RecruiterDashboard from "./pages/RecruiterDashboard";
 import { AdminDashboard, HiringManagerDashboard } from "./pages/RoleDashboards";
 import "./App.css";
@@ -27,10 +28,18 @@ function App() {
                     <Route path="/session-expired" element={<SessionExpired />} />
 
                     <Route
-                        path="/candidate/*"
+                        path="/candidate"
                         element={
                             <ProtectedRoute roles={["Candidate"]}>
-                                <CandidateDashboard />
+                                <CandidateHome />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/profile"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateProfilePage />
                             </ProtectedRoute>
                         }
                     />

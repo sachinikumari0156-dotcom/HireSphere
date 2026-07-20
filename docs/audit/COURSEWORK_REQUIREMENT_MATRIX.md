@@ -1,7 +1,7 @@
 # HireSphere — Coursework Requirement Matrix
 
 **Course:** SE205.3 Software Architecture 2026
-**Last updated:** 2026-07-20 (Phase 3 auth/RBAC)
+**Last updated:** 2026-07-20 (Phase 4.1 candidate profile/resume)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED — EXTERNAL CREDENTIAL | DEFERRED — OPTIONAL BONUS
 
 ---
@@ -12,7 +12,7 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-R01 | Candidate Portal | IN PROGRESS | Protected `/candidate/*` shell + dashboard; Phase 4 expands features |
+| M-R01 | Candidate Portal | IN PROGRESS | `/candidate` dashboard + `/candidate/profile`; jobs/apply pending 4.2–4.3 |
 | M-R02 | Recruiter Portal | IN PROGRESS | Protected `/recruiter/*` shell + dashboard; request flow added |
 | M-R03 | Hiring Manager Dashboard | IN PROGRESS | Protected `/hiring-manager/*` shell |
 | M-R04 | Administrator Dashboard | IN PROGRESS | Protected `/admin/*` shell + admin APIs |
@@ -22,11 +22,11 @@
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
 | M-C01 | Registration and secure authentication | VERIFIED | Phase 3 live UAT + FE/BE tests |
-| M-C02 | Professional profile management | IN PROGRESS | `CandidateProfilesController`; no full UI |
-| M-C03 | CV/resume upload and management | NOT STARTED | `ResumePath` field only; no upload API |
-| M-C04 | Job search and application submission | IN PROGRESS | API + partial dashboard |
-| M-C05 | AI-powered job recommendations | NOT STARTED | No AI services |
-| M-C06 | Application tracking dashboard | IN PROGRESS | Partial list in dashboard |
+| M-C02 | Professional profile management | TESTED | `/api/candidate` profile/experience/education/skills/certs; FE profile page |
+| M-C03 | CV/resume upload and management | TESTED | Local secure storage + upload/download/delete; cloud storage pending |
+| M-C04 | Job search and application submission | IN PROGRESS | Pre-existing job APIs; candidate discovery UI pending 4.2 |
+| M-C05 | AI-powered job recommendations | NOT STARTED | Deterministic matching planned in 4.2 |
+| M-C06 | Application tracking dashboard | IN PROGRESS | Dashboard summary counts; timeline pending 4.3 |
 
 ### Recruiter features
 

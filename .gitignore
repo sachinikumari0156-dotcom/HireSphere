@@ -15,6 +15,9 @@ appsettings.Development.local.json
 appsettings.local.json
 **/secrets.json
 
+# Local candidate document uploads (dev storage provider)
+Backend/HireSphere.API/App_Data/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

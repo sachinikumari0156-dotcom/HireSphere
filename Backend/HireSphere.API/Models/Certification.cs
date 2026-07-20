@@ -16,6 +16,8 @@ public class Certification
 
     public string? CredentialId { get; set; }
 
+    public string? CredentialUrl { get; set; }
+
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 
     public CandidateProfile CandidateProfile { get; set; } = null!;
