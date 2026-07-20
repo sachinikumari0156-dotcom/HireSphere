@@ -1,5 +1,6 @@
 import "./CandidateDashboard.css";
 import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../api/config";
 
 
 function CandidateDashboard() {
@@ -11,9 +12,6 @@ function CandidateDashboard() {
 
 
     const token = localStorage.getItem("token");
-
-
-    const API_URL = "https://localhost:7000/api";
 
 
 
@@ -36,7 +34,7 @@ function CandidateDashboard() {
 
 
                 const response = await fetch(
-                    `${API_URL}/Jobs`
+                    `${API_BASE_URL}/Jobs`
                 );
 
 
@@ -84,7 +82,7 @@ function CandidateDashboard() {
 
                 const response = await fetch(
 
-                    `${API_URL}/Applications/MyApplications`,
+                    `${API_BASE_URL}/Applications/MyApplications`,
 
                     {
 
@@ -165,7 +163,7 @@ function CandidateDashboard() {
 
             const response = await fetch(
 
-                `${API_URL}/Applications`,
+                `${API_BASE_URL}/Applications`,
 
                 {
 

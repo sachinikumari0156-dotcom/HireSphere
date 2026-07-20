@@ -7,11 +7,6 @@ const ROLES = [
         id: "Candidate",
         title: "Candidate",
         desc: "Find and apply to jobs"
-    },
-    {
-        id: "Recruiter",
-        title: "Recruiter",
-        desc: "Post jobs, hire talent"
     }
 ];
 
@@ -133,7 +128,7 @@ function Register() {
             <div className="reg-brand" data-role={user.role}>
 
                 <div className="reg-brand-mark">
-                    hire<span>flow</span>
+                    Hire<span>Sphere</span>
                 </div>
 
                 <div className="reg-brand-copy">
@@ -157,7 +152,7 @@ function Register() {
                 </div>
 
                 <div className="reg-brand-footer">
-                    &copy; {new Date().getFullYear()} Hireflow
+                    &copy; {new Date().getFullYear()} HireSphere
                 </div>
 
             </div>

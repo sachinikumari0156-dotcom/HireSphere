@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using System;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,14 +19,20 @@ builder.Services.AddControllers()
             ReferenceHandler.IgnoreCycles;
     });
 
-
-// CORS - Allow React Frontend
+// CORS - restrict via configuration (Phase 1)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
+        var allowedOrigins = builder.Configuration
+            .GetSection("Cors:AllowedOrigins")
+            .Get<string[]>() ?? Array.Empty<string>();
+
         policy
-            .AllowAnyOrigin()
+            .SetIsOriginAllowed(origin =>
+                allowedOrigins.Contains(
+                    origin,
+                    StringComparer.OrdinalIgnoreCase))
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -123,6 +130,22 @@ builder.Services.AddSwaggerGen(options =>
 
 
 var app = builder.Build();
+
+// Standard exception handler (sanitized response)
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        context.Response.StatusCode = 500;
+        context.Response.ContentType = "application/json";
+
+        await context.Response.WriteAsJsonAsync(new
+        {
+            message = "An unexpected error occurred.",
+            traceId = context.TraceIdentifier
+        });
+    });
+});
 
 
 // Swagger Middleware

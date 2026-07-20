@@ -8,12 +8,12 @@
 
         public DateTime InterviewDate { get; set; }
 
-        public string InterviewType { get; set; }
+        public string InterviewType { get; set; } = string.Empty;
 
-        public string MeetingLink { get; set; }
+        public string MeetingLink { get; set; } = string.Empty;
 
-        public string Status { get; set; }
+        public string Status { get; set; } = string.Empty;
 
-        public Application Application { get; set; }
+        public Application Application { get; set; } = null!;
     }
 }
