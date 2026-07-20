@@ -48,6 +48,9 @@ export default function CandidateHome() {
                 <p>Welcome{user?.fullName ? `, ${user.fullName}` : ""}.</p>
                 <nav className="dash-nav">
                     <Link to="/candidate/profile">Profile &amp; documents</Link>
+                    <Link to="/candidate/jobs">Browse jobs</Link>
+                    <Link to="/candidate/recommendations">Recommendations</Link>
+                    <Link to="/candidate/applications">My applications</Link>
                 </nav>
             </header>
 

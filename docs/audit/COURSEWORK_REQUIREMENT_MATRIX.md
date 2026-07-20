@@ -1,7 +1,7 @@
 # HireSphere — Coursework Requirement Matrix
 
 **Course:** SE205.3 Software Architecture 2026
-**Last updated:** 2026-07-20 (Phase 4.1 candidate profile/resume)
+**Last updated:** 2026-07-20 (Phase 4.2 candidate jobs/recommendations/applications)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED — EXTERNAL CREDENTIAL | DEFERRED — OPTIONAL BONUS
 
 ---
@@ -12,7 +12,7 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-R01 | Candidate Portal | IN PROGRESS | `/candidate` dashboard + `/candidate/profile`; jobs/apply pending 4.2–4.3 |
+| M-R01 | Candidate Portal | IN PROGRESS | `/candidate` dashboard, profile, jobs, recommendations, applications; assessments/interviews pending 4.3 |
 | M-R02 | Recruiter Portal | IN PROGRESS | Protected `/recruiter/*` shell + dashboard; request flow added |
 | M-R03 | Hiring Manager Dashboard | IN PROGRESS | Protected `/hiring-manager/*` shell |
 | M-R04 | Administrator Dashboard | IN PROGRESS | Protected `/admin/*` shell + admin APIs |
@@ -24,9 +24,9 @@
 | M-C01 | Registration and secure authentication | VERIFIED | Phase 3 live UAT + FE/BE tests |
 | M-C02 | Professional profile management | TESTED | `/api/candidate` profile/experience/education/skills/certs; FE profile page |
 | M-C03 | CV/resume upload and management | TESTED | Local secure storage + upload/download/delete; cloud storage pending |
-| M-C04 | Job search and application submission | IN PROGRESS | Pre-existing job APIs; candidate discovery UI pending 4.2 |
-| M-C05 | AI-powered job recommendations | NOT STARTED | Deterministic matching planned in 4.2 |
-| M-C06 | Application tracking dashboard | IN PROGRESS | Dashboard summary counts; timeline pending 4.3 |
+| M-C04 | Job search and application submission | TESTED | `/api/candidate/jobs` + apply wizard APIs; FE jobs/apply routes; automated tests |
+| M-C05 | AI-powered job recommendations | TESTED | Deterministic provider (not external AI); recommendations API + UI; incomplete-profile handling |
+| M-C06 | Application tracking dashboard | IN PROGRESS | Applications list/detail + dashboard counts; richer timeline pending 4.3 |
 
 ### Recruiter features
 
@@ -87,13 +87,13 @@
 |----|-------------|--------|------------------|
 | M-AI01 | Resume parsing | NOT STARTED | ResumeAnalysis model only |
 | M-AI02 | Skill extraction | NOT STARTED | — |
-| M-AI03 | Candidate-job matching | NOT STARTED | CandidateJobMatch model only |
+| M-AI03 | Candidate-job matching | TESTED | DeterministicJobMatchingProvider; match API; CandidateJobMatch persistence |
 | M-AI04 | Candidate ranking/scoring | NOT STARTED | — |
-| M-AI05 | Job recommendations | NOT STARTED | — |
+| M-AI05 | Job recommendations | TESTED | `/api/candidate/recommendations` highest-match sort; not external AI |
 | M-AI06 | Automated feedback | NOT STARTED | — |
 | M-AI07 | Recruitment performance analytics | NOT STARTED | — |
 | M-AI08 | Hiring trend analysis | NOT STARTED | — |
-| M-AI09 | Explainable AI + human-review notice | NOT STARTED | — |
+| M-AI09 | Explainable AI + human-review notice | IN PROGRESS | Deterministic match explanation + human-review notice in 4.2; broader AI explainability pending |
 
 ### External integrations
 

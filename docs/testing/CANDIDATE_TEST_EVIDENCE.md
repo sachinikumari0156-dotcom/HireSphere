@@ -1,31 +1,42 @@
-# Candidate UAT / Test Evidence (Phase 4.1)
+# Candidate UAT / Test Evidence
 
 **Date:** 2026-07-20  
-**Backend tests:** `CandidatePortalControllerTests` included in `dotnet test` — suite **43 passed**  
-**Frontend tests:** Vitest candidate suite **3** + auth **13** = **16 passed**  
-**SQL:** Migration `AddCandidateProfilePortalFields` applied to `HireSphereDev`
+**Phases covered:** 4.1 + 4.2 (automated).
 
-## Automated coverage (backend)
+## Automated results (this session)
 
-- Own-profile access
-- Cross-candidate access blocked
-- Experience date validation
-- Duplicate skills blocked
-- Unsafe / unsupported / oversized file rejected
-- Resume metadata has no absolute path
-- Password hash not serialized
-- Recruiter cannot access candidate portal
+| Suite | Result |
+|-------|--------|
+| Backend `dotnet test` | **52 passed** / 52 (0 errors, 0 warnings on build) |
+| Frontend Vitest `npm run test:run` | **19 passed** / 19 (auth 13 + candidate 6) |
+| Frontend `npm run lint` | PASS |
+| Frontend `npm run build` | PASS |
+| `git diff --check` | PASS (after trailing-whitespace trim) |
 
-## Automated coverage (frontend)
+## Backend coverage (Phase 4.2) — `CandidateJobsControllerTests`
 
-- Dashboard empty state from API summary
-- Dashboard error state
-- Profile page loads desired job title from API
+- Job search/filter/pagination
+- Active-only job visibility (closed/draft hidden)
+- Deterministic match score (matched/missing skills, provider = Deterministic)
+- Recommendation ordering by match score
+- Incomplete-profile recommendations empty handling
+- Successful application with screening answers + status history
+- Duplicate application rejection
+- Closed-job application rejection
+- Cross-candidate application access blocked
+- Unit-level deterministic skill-overlap scoring
+
+## Frontend coverage (Phase 4.2)
+
+- Jobs list from API
+- Recommendations incomplete-profile message
+- Application wizard submit payload (terms + screening answers)
 
 ## Manual / live
 
-Full candidate end-to-end (jobs → apply → assessment → interview) is **not claimed** until Phases 4.2–4.3 complete.
+- Full browser screenshot pack: **not captured**
+- Migration `AddApplicationResumeId`: **applied** to HireSphereDev on 2026-07-20
 
 ## Screenshots
 
-None captured for 4.1. Do not invent screenshot evidence.
+None captured for 4.2. Do not invent screenshot evidence.

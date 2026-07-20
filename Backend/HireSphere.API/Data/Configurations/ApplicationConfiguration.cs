@@ -13,6 +13,11 @@ public class ApplicationConfiguration : IEntityTypeConfiguration<Application>
 
         builder.Property(a => a.CoverLetter).HasMaxLength(4000);
 
+        builder.HasOne(a => a.Resume)
+            .WithMany()
+            .HasForeignKey(a => a.ResumeId)
+            .OnDelete(DeleteBehavior.SetNull);
+
         builder.HasMany(a => a.Answers)
             .WithOne(ans => ans.Application)
             .HasForeignKey(ans => ans.ApplicationId)

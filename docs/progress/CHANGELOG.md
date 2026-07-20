@@ -98,3 +98,17 @@
 - Frontend `/candidate` dashboard + `/candidate/profile` page
 - Backend tests: 43 passed; Frontend Vitest: auth 13 + candidate portal tests
 - Cloud storage verification: pending (local provider only)
+
+## Phase 4.2 — 2026-07-20
+
+**Commit message:** `feat(candidate): add job discovery recommendations and applications`
+
+- Candidate job discovery under `/api/candidate/jobs` (filters, pagination, sorting, Open-only)
+- Deterministic matching provider (`DeterministicJobMatchingProvider`) with explanation + human-review notice
+- Recommendations endpoint with highest-match ordering + incomplete-profile empty handling
+- Application wizard APIs: resume selection, cover letter, screening answers, terms, duplicate/closed-job guards, status history, withdraw
+- Migration `AddApplicationResumeId`
+- Frontend routes: jobs, job detail, recommendations, apply wizard, applications list/detail
+- Docs updated for API/portal/UAT/evidence/matrices
+- Backend/frontend verification: BE **52** tests PASS; FE Vitest **19** PASS; lint/build PASS
+- Migration `AddApplicationResumeId` applied to HireSphereDev (SQL Express)

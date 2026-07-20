@@ -10,6 +10,12 @@ import AccessDenied from "./pages/AccessDenied";
 import SessionExpired from "./pages/SessionExpired";
 import CandidateHome from "./pages/candidate/CandidateHome";
 import CandidateProfilePage from "./pages/candidate/CandidateProfilePage";
+import CandidateJobsPage from "./pages/candidate/CandidateJobsPage";
+import CandidateJobDetailPage from "./pages/candidate/CandidateJobDetailPage";
+import CandidateRecommendationsPage from "./pages/candidate/CandidateRecommendationsPage";
+import CandidateApplyPage from "./pages/candidate/CandidateApplyPage";
+import CandidateApplicationsPage from "./pages/candidate/CandidateApplicationsPage";
+import CandidateApplicationDetailPage from "./pages/candidate/CandidateApplicationDetailPage";
 import RecruiterDashboard from "./pages/RecruiterDashboard";
 import { AdminDashboard, HiringManagerDashboard } from "./pages/RoleDashboards";
 import "./App.css";
@@ -40,6 +46,54 @@ function App() {
                         element={
                             <ProtectedRoute roles={["Candidate"]}>
                                 <CandidateProfilePage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/jobs"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateJobsPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/jobs/:id"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateJobDetailPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/jobs/:id/apply"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateApplyPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/recommendations"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateRecommendationsPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/applications"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateApplicationsPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/applications/:id"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateApplicationDetailPage />
                             </ProtectedRoute>
                         }
                     />

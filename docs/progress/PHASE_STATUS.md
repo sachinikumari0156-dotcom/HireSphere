@@ -9,7 +9,7 @@
 | 1 | Security foundation | VERIFIED | `9c50d56` | SUCCESS | BCrypt, CORS, secrets externalized |
 | 2 | SQL Server and data model | VERIFIED | `1e4c688` + `e84eeb5` | SUCCESS | Applied on `localhost\SQLEXPRESS` |
 | 3 | Auth and RBAC | VERIFIED | `3c0ae38` + verification commit | SUCCESS | Four-role live UAT 26/26; FE 13; BE 33 |
-| 4 | Candidate workflows | IN PROGRESS | 4.1 pending push | pending | 4.1 profile/resume/docs implemented; 4.2–4.3 pending |
+| 4 | Candidate workflows | IN PROGRESS | `aac86d5` (4.1); 4.2 committing | SUCCESS 4.1 | 4.3 pending; Phase 4 not VERIFIED |
 | 5 | Recruiter workflows | NOT STARTED | — | — | — |
 | 6 | Hiring Manager | NOT STARTED | — | — | — |
 | 7 | Administrator | NOT STARTED | — | — | — |

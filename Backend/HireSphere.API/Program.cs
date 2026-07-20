@@ -18,6 +18,7 @@ builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         options.JsonSerializerOptions.ReferenceHandler =
             ReferenceHandler.IgnoreCycles;
     });
@@ -31,6 +32,9 @@ builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 builder.Services.AddScoped<IResourceAuthorizationService, ResourceAuthorizationService>();
 builder.Services.AddScoped<ILocalFileStorageService, LocalFileStorageService>();
 builder.Services.AddScoped<ICandidateProfileService, CandidateProfileService>();
+builder.Services.AddScoped<IJobMatchingProvider, DeterministicJobMatchingProvider>();
+builder.Services.AddScoped<ICandidateJobService, CandidateJobService>();
+builder.Services.AddScoped<ICandidateApplicationService, CandidateApplicationService>();
 
 builder.Services.AddCors(options =>
 {
