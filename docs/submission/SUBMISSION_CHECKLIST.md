@@ -14,13 +14,13 @@
 | References verified (IEEE list in report) | COMPLETE |
 | Demo script complete | COMPLETE |
 | README finalised | COMPLETE |
-| Report PDF generated | PENDING (Pandoc/PDF engine unavailable) |
-| Report DOCX generated | PENDING (Phase 11.3 attempt) |
+| Report PDF generated | COMPLETE (local Word export; user should polish typesetting) |
+| Report DOCX generated | COMPLETE (local Word import from Markdown) |
 | Demo video recorded | PENDING USER |
 | Demo video uploaded | PENDING USER |
 | Link permission checked | PENDING USER |
-| Submission ZIP generated | PENDING (Phase 11.3 script) |
-| ZIP extracted and verified | PENDING |
+| Submission ZIP generated | COMPLETE (local `artifacts/submission/`) |
+| ZIP extracted and verified | COMPLETE |
 | File-size limits checked | PENDING USER |
 | NLEARN fields completed | PENDING USER |
 | Final upload performed | PENDING USER |

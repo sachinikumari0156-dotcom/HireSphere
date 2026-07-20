@@ -1,5 +1,16 @@
 # HireSphere — Implementation Changelog
 
+# HireSphere — Implementation Changelog
+
+## Phase 11.3 — 2026-07-21
+
+**Commit message:** `docs(submission): finalize architecture report and submission pack`
+
+- Submission package script; clean-clone + requirement closure docs
+- DOCX/PDF generated locally via Word; ZIP + SHA256 under artifacts/ (gitignored)
+- `.gitignore` exception for `docs/release/`; Playwright 14/14 reconfirmed
+- Phase 11 complete; no Phase 12
+
 ## Phase 11.2 — 2026-07-21
 
 **Commit message:** `docs(evidence): finalize verified coursework evidence and demo pack`

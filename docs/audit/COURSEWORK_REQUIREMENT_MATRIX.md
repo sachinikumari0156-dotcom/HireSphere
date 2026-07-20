@@ -123,20 +123,20 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-T01 | Unit / API / auth tests | VERIFIED | BE 33 + FE 13 + live UAT 26 |
-| M-T02 | Integration tests | NOT STARTED | — |
-| M-T03 | UAT scenarios (18 mandatory) | NOT STARTED | — |
-| M-T04 | Postman and Swagger evidence | NOT STARTED | Swagger only |
+| M-T01 | Unit / API / auth tests | VERIFIED | BE 132 + FE 89 + Playwright 14 |
+| M-T02 | Integration tests | VERIFIED | Phase 10 LocalDB API integration + migration tests |
+| M-T03 | UAT scenarios (18 mandatory) | VERIFIED | Four-role automated UAT + docs (participant usability separate) |
+| M-T04 | Postman and Swagger evidence | VERIFIED | Postman collection + Swagger tests/docs |
 
 ### Report and submission
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-D01 | Use Case / Class / Deployment diagrams | NOT STARTED | ER diagram added in Phase 2 |
-| M-D02 | Design patterns and ADR discussion | NOT STARTED | — |
-| M-D03 | Screenshots and evidence pack | NOT STARTED | — |
-| M-D04 | Individual contribution (Kalani) | NOT STARTED | — |
-| M-D05 | Demo video script and submission checklist | NOT STARTED | — |
+| M-D01 | Use Case / Class / Deployment diagrams | IMPLEMENTED | Mermaid sources in `docs/architecture/diagrams/source/` (17); rendered PNG PENDING |
+| M-D02 | Design patterns and ADR discussion | VERIFIED | ADR-001..012 + final report Ch.3 |
+| M-D03 | Screenshots and evidence pack | VERIFIED | `docs/evidence/EVIDENCE_MASTER_INDEX.md` (185 PNGs) |
+| M-D04 | Individual contribution | VERIFIED | `docs/contribution/*` (Kalani authorship preserved) |
+| M-D05 | Demo video script and submission checklist | PARTIALLY VERIFIED | Scripts COMPLETE; video/NLEARN PENDING USER |
 
 ---
 
@@ -174,4 +174,4 @@
 | IMPLEMENTED | ~6 |
 | TESTED / VERIFIED | 0 |
 
-**Submission readiness:** NOT READY — majority of mandatory rows are NOT STARTED or unverified.
+**Submission readiness:** PARTIAL — Phase 11 packaging complete; real usability participants PENDING; title-page placeholders and NLEARN upload PENDING USER; **not** Production Ready.

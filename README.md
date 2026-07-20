@@ -1,20 +1,20 @@
-# HireSphere
+﻿# HireSphere
 
 AI-assisted recruitment and talent management platform for Software Architecture coursework (SE205.3).
 
-HireSphere provides four role portals — **Candidate**, **Recruiter**, **Hiring Manager**, and **Administrator** — backed by an ASP.NET Core API and SQL Server (LocalDB in verified development).
+HireSphere provides four role portals â€” **Candidate**, **Recruiter**, **Hiring Manager**, and **Administrator** â€” backed by an ASP.NET Core API and SQL Server (LocalDB in verified development).
 
 ## Overview
 
-- End-to-end hiring lifecycle: profile → apply → screen → assess → interview → evaluate → final decision  
-- JWT authentication and RBAC with organisation scoping  
-- Deterministic AI assistance with human-review notices (external AI **Not Configured** unless you configure it)  
-- Modular email / SMS / calendar / storage providers with truthful status  
+- End-to-end hiring lifecycle: profile â†’ apply â†’ screen â†’ assess â†’ interview â†’ evaluate â†’ final decision
+- JWT authentication and RBAC with organisation scoping
+- Deterministic AI assistance with human-review notices (external AI **Not Configured** unless you configure it)
+- Modular email / SMS / calendar / storage providers with truthful status
 - Responsive, accessible UI foundation (Phase 9)
 
 ## Architecture summary
 
-Modular monolith: React (Vite) SPA ↔ ASP.NET Core Web API ↔ EF Core / SQL Server + local secure file storage.  
+Modular monolith: React (Vite) SPA â†” ASP.NET Core Web API â†” EF Core / SQL Server + local secure file storage.
 See `docs/report/HIRESPHERE_FINAL_REPORT.md` and `docs/architecture/`.
 
 ## Technology stack
@@ -46,11 +46,11 @@ scripts/                    Verification helpers
 
 ## Secure local setup
 
-1. Clone the repository.  
+1. Clone the repository.
 2. Configure **ignored** local settings / .NET User Secrets / environment variables for:
    - `ConnectionStrings:DefaultConnection`
    - `Jwt:Key` (long random development key)
-   - Optional seed flags (`Seed__Enabled`, admin email/password via env — **never commit**)
+   - Optional seed flags (`Seed__Enabled`, admin email/password via env â€” **never commit**)
 3. Do **not** commit `.env`, `appsettings.*.local.json`, or user-secret values.
 
 Example LocalDB connection (local only):
@@ -118,17 +118,17 @@ Set `VITE_API_BASE_URL=http://127.0.0.1:5167/api` for local API.
 
 ## Documentation
 
-- Final report: `docs/report/HIRESPHERE_FINAL_REPORT.md`  
-- ADRs: `docs/architecture/adr/`  
-- API: `docs/api/`  
-- Evidence: `docs/evidence/EVIDENCE_MASTER_INDEX.md`  
-- Demo: `docs/demo/`  
-- Contribution: `docs/contribution/`  
+- Final report: `docs/report/HIRESPHERE_FINAL_REPORT.md`
+- ADRs: `docs/architecture/adr/`
+- API: `docs/api/`
+- Evidence: `docs/evidence/EVIDENCE_MASTER_INDEX.md`
+- Demo: `docs/demo/`
+- Contribution: `docs/contribution/`
 - Known limitations: `docs/release/FINAL_KNOWN_LIMITATIONS.md`
 
 ## Screenshots
 
-Indexed under `docs/evidence/phase4-candidate` … `phase10-quality` and `docs/report/SCREENSHOT_INDEX.md`.
+Indexed under `docs/evidence/phase4-candidate` â€¦ `phase10-quality` and `docs/report/SCREENSHOT_INDEX.md`.
 
 ## Known limitations
 
@@ -141,3 +141,4 @@ Historical authorship (including Kalani Rashmika) is preserved in Git. See `docs
 ## Academic use notice
 
 This repository is a coursework artefact. It is not a warranty of production fitness. Do not upload real candidate PII or production secrets to demos.
+

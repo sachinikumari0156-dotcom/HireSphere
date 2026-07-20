@@ -1,53 +1,24 @@
 # HireSphere — Risk Register
 
-**Last updated:** 2026-07-20 (Phase 7 E2E)
+**Last updated:** 2026-07-21 (Phase 11)
 
 | ID | Risk | Likelihood | Impact | Mitigation | Owner | Status |
 |----|------|------------|--------|------------|-------|--------|
-| R-01 | GitHub CLI / login mismatch | Low | High | Verified `kalanirashmika` | Kalani | CLOSED |
-| R-02 | Git author misconfiguration | Low | High | Local author set to Kalani Rashmika | Kalani | CLOSED |
-| R-03 | Working on wrong branch | Low | Medium | On `kalanirashmika/coursework-completion` | Kalani | CLOSED |
-| R-04 | Local main divergence | Low | Medium | Feature branch based and pushed | Kalani | CLOSED |
-| R-05 | Plain-text password storage | Low | Critical | Phase 1 BCrypt hashing | Agent | CLOSED |
-| R-06 | Committed DB/JWT secrets | Medium | Critical | Placeholders in tracked config; rotate local credentials | Kalani/Agent | MITIGATED — rotate local values |
-| R-07 | MySQL vs SQL Server mismatch | High | High | Phase 2 provider swap + new migration | Agent | MITIGATED / CLOSED |
-| R-08 | Node.js unavailable | Low | Medium | Node installed; use explicit path if PATH stale | Kalani | CLOSED |
-| R-09 | Split API URLs | Low | Medium | Centralized `VITE_API_BASE_URL` / `api/config.js` | Agent | CLOSED |
-| R-10 | Open privileged self-registration | Low | High | Candidate-only public register + tests | Agent | CLOSED |
-| R-11 | Unrestricted CORS | Low | High | Configured allowed origins | Agent | CLOSED |
-| R-12 | No automated tests | Low | High | BE 75 + FE 47 + Playwright 8 | Agent | CLOSED |
-| R-13 | Large scope vs deadline | High | High | Mandatory-first tiers | Team | OPEN |
-| R-14 | External integration credentials | Medium | Medium | Adapters + truthful NotConfigured; Phase 8 development path verified | Kalani | OPEN — external verification pending |
-| R-25 | Cloud document storage not verified | Medium | Medium | Local provider verified Phase 8.3; Azure Blob NotConfigured | Agent | MITIGATED — Azure pending |
-| R-33 | Phase 8 claimed fully VERIFIED without external providers | Low | High | Status set to IMPLEMENTED — EXTERNAL PROVIDER VERIFICATION PENDING 2026-07-21 | Chinthaka | CLOSED |
-| R-15 | EF package/version mismatch | Low | Low | Aligned to EF Core 10.0.10 / net10.0 | Agent | CLOSED |
-| R-16 | Hireflow branding inconsistency | Low | Low | Phase 9 brand/tokens applied | Agent | CLOSED |
-| R-34 | Phase 9 a11y claimed without evidence | Low | High | Playwright axe + screenshots 2026-07-21 | Chinthaka | CLOSED |
-| R-36 | Real usability participants unavailable | High | Medium | Heuristic + automated UAT; schedule participants | Chinthaka | OPEN — Phase 10 partial |
-| R-17 | Placeholder recruiter/manager/admin UIs | Low | High | Recruiter + HM + Admin portals VERIFIED | Agent | CLOSED |
-| R-32 | Phase 7 claimed VERIFIED without Admin E2E | Low | High | Playwright journey + 28 screenshots 2026-07-20 | Chinthaka | CLOSED |
-| R-18 | Coursework/SRS in public repo | Low | Medium | Moved to ignored `local-spec/` | Kalani | CLOSED |
-| R-19 | Academic integrity attribution | Low | Critical | Kalani history preserved; Chinthaka authors new commits only | Team | MONITORING |
-| R-22 | SQL Server unavailable locally | Low | Medium | LocalDB used for Phase 4–6 E2E when Express missing | Chinthaka | MITIGATED |
-| R-28 | Phase 4 claimed VERIFIED without E2E | Low | High | Browser E2E + screenshots completed 2026-07-20 | Chinthaka | CLOSED |
-| R-29 | Residual register color-contrast | Low | Low | Fixed dark ink on amber; axe contrast not suppressed | Chinthaka | CLOSED |
-| R-30 | Phase 5 claimed VERIFIED without Recruiter E2E | Low | High | Playwright journey + 26 screenshots 2026-07-20 | Chinthaka | CLOSED |
-| R-31 | Phase 6 claimed VERIFIED without HM E2E | Low | High | Playwright journey + 21 screenshots 2026-07-20 | Chinthaka | CLOSED |
+| R-01 | GitHub CLI / login mismatch | Low | High | Verified push account `jkchinthaka` | Team | CLOSED |
+| R-02 | Git author misconfiguration | Low | High | Local author Chinthaka for new commits; Kalani history preserved | Team | CLOSED |
+| R-13 | Large scope vs deadline | Medium | Medium | Phases 0–11 delivered; residual optional items deferred | Team | MITIGATED |
+| R-14 | External integration credentials | Medium | Medium | Adapters + truthful NotConfigured | Team | OPEN — external verification pending |
+| R-19 | Academic integrity attribution | Low | Critical | Kalani history preserved; AI disclosure present | Team | MONITORING |
+| R-21 | Existing users with plaintext passwords | Medium | High | BCrypt for new hashes; migrate legacy if any | Team | OPEN |
+| R-23 | Missing password reset / email verify | Medium | Medium | Documented deferred quality | Team | OPEN |
+| R-25 | Cloud document storage not verified | Medium | Medium | Local verified; Azure Blob NotConfigured | Team | OPEN |
+| R-36 | Real usability participants unavailable | High | Medium | Heuristic + automated UAT; schedule participants | Chinthaka | OPEN — blocks full coursework VERIFIED |
+| R-37 | NLEARN / video / title-page placeholders | High | Medium | Checklist marks PENDING USER | Chinthaka | OPEN — manual submission steps |
+| R-38 | Production readiness mistaken for LocalDB demo | Medium | High | Explicit NOT PRODUCTION READY in release docs | Chinthaka | MITIGATED |
 
-| R-20 | Runtime/SDK alignment | Low | Low | Retargeted API/tests to net10.0 for installed runtime | Agent | CLOSED |
-| R-21 | Existing users with plaintext passwords | High | High | Re-register or migrate hashes after deploy | Kalani | OPEN |
-| R-22 | SQL Server unavailable locally | Low | Medium | Express installed; migrations applied to HireSphereDev | Kalani | CLOSED |
-| R-23 | Missing password reset / email verify | Medium | Medium | Documented deferred quality | Agent | OPEN |
-| R-24 | Frontend test tooling missing | Low | Medium | Vitest + RTL added in Phase 3 verification | Agent | CLOSED |
-| R-25 | Cloud document storage not verified | Medium | Medium | Local secure provider for 4.1; cloud verification deferred | Agent | OPEN |
-| R-26 | Assessment answer-key leakage | Medium | High | Candidate DTOs omit CorrectAnswerKey; automated assertion | Agent | MITIGATED |
-| R-27 | Meeting links before confirm | Medium | Medium | RequireConfirmForMeetingInfo + ownership checks | Agent | MITIGATED |
-| R-28 | Phase 4 claimed VERIFIED without E2E | Medium | High | Docs mark TESTED only; screenshots not invented | Agent | MONITORING |
-
----
+Additional historical risks from earlier phases remain in git history; closed verification risks R-28–R-34 stay CLOSED.
 
 ## Risk response summary
 
-**Closed in Phase 1–6:** R-01–R-05, R-07–R-12, R-15, R-18, R-20, R-22, R-24, R-28–R-31
-**Mitigated / monitoring:** R-06, R-16, R-17, R-19, R-26, R-27
-**Next focus:** R-13 (scope), Phase 7 Administrator portal, R-21 (password migration), R-23 (reset/verify), R-25 (cloud storage), Phase 8 calendars/email
+**Closed / mitigated through Phase 11:** core auth, portals, LocalDB, Phase 8–10 verification honesty, architecture packaging.  
+**Remain open:** external providers (R-14/R-25), usability participants (R-36), portal submission steps (R-37), legacy password migration (R-21), password reset (R-23).
