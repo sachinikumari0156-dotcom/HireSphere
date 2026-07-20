@@ -36,6 +36,7 @@ export default function CandidateProfilePage() {
     const [message, setMessage] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [resumes, setResumes] = useState([]);
 
     useEffect(() => {
         let alive = true;
@@ -43,9 +44,10 @@ export default function CandidateProfilePage() {
             setLoading(true);
             setError(null);
             try {
-                const [profileRes, skillsRes] = await Promise.all([
+                const [profileRes, skillsRes, resumesRes] = await Promise.all([
                     api.get("/candidate/profile"),
-                    api.get("/candidate/skills/catalog").catch(() => ({ data: [] }))
+                    api.get("/candidate/skills/catalog").catch(() => ({ data: [] })),
+                    api.get("/candidate/resumes").catch(() => ({ data: [] }))
                 ]);
                 if (!alive) return;
                 const data = profileRes.data;
@@ -66,6 +68,7 @@ export default function CandidateProfilePage() {
                     gitHubUrl: data.gitHubUrl || ""
                 });
                 setSkillsCatalog(Array.isArray(skillsRes.data) ? skillsRes.data : []);
+                setResumes(Array.isArray(resumesRes.data) ? resumesRes.data : []);
             } catch (err) {
                 if (alive) {
                     setError(err.response?.data?.message || "Could not load profile.");
@@ -80,13 +83,15 @@ export default function CandidateProfilePage() {
     const reloadProfile = async () => {
         setError(null);
         try {
-            const [profileRes, skillsRes] = await Promise.all([
+            const [profileRes, skillsRes, resumesRes] = await Promise.all([
                 api.get("/candidate/profile"),
-                api.get("/candidate/skills/catalog").catch(() => ({ data: [] }))
+                api.get("/candidate/skills/catalog").catch(() => ({ data: [] })),
+                api.get("/candidate/resumes").catch(() => ({ data: [] }))
             ]);
             const data = profileRes.data;
             setDetail(data);
             setSkillsCatalog(Array.isArray(skillsRes.data) ? skillsRes.data : []);
+            setResumes(Array.isArray(resumesRes.data) ? resumesRes.data : []);
         } catch (err) {
             setError(err.response?.data?.message || "Could not reload profile.");
         }
@@ -255,10 +260,10 @@ export default function CandidateProfilePage() {
                     {(detail?.workExperiences || []).length === 0 && <li className="empty-state">No experience yet.</li>}
                 </ul>
                 <form onSubmit={addExperience}>
-                    <input placeholder="Company" value={experience.companyName} onChange={(e) => setExperience({ ...experience, companyName: e.target.value })} required />
-                    <input placeholder="Title" value={experience.jobTitle} onChange={(e) => setExperience({ ...experience, jobTitle: e.target.value })} required />
-                    <input type="date" value={experience.startDate} onChange={(e) => setExperience({ ...experience, startDate: e.target.value })} required />
-                    <input type="date" value={experience.endDate} onChange={(e) => setExperience({ ...experience, endDate: e.target.value })} disabled={experience.isCurrentRole} />
+                    <input placeholder="Company" aria-label="Company" value={experience.companyName} onChange={(e) => setExperience({ ...experience, companyName: e.target.value })} required />
+                    <input placeholder="Title" aria-label="Job title" value={experience.jobTitle} onChange={(e) => setExperience({ ...experience, jobTitle: e.target.value })} required />
+                    <input type="date" aria-label="Experience start date" value={experience.startDate} onChange={(e) => setExperience({ ...experience, startDate: e.target.value })} required />
+                    <input type="date" aria-label="Experience end date" value={experience.endDate} onChange={(e) => setExperience({ ...experience, endDate: e.target.value })} disabled={experience.isCurrentRole} />
                     <label>
                         <input type="checkbox" checked={experience.isCurrentRole} onChange={(e) => setExperience({ ...experience, isCurrentRole: e.target.checked })} />
                         Current role
@@ -282,6 +287,8 @@ export default function CandidateProfilePage() {
                     <input placeholder="Institution" value={education.institution} onChange={(e) => setEducation({ ...education, institution: e.target.value })} required />
                     <input placeholder="Qualification" value={education.degree} onChange={(e) => setEducation({ ...education, degree: e.target.value })} required />
                     <input placeholder="Field of study" value={education.fieldOfStudy} onChange={(e) => setEducation({ ...education, fieldOfStudy: e.target.value })} />
+                    <input type="date" aria-label="Education start date" value={education.startDate} onChange={(e) => setEducation({ ...education, startDate: e.target.value })} />
+                    <input type="date" aria-label="Education end date" value={education.endDate} onChange={(e) => setEducation({ ...education, endDate: e.target.value })} disabled={education.isCurrentStudy} />
                     <label>
                         <input type="checkbox" checked={education.isCurrentStudy} onChange={(e) => setEducation({ ...education, isCurrentStudy: e.target.checked })} />
                         Currently studying
@@ -299,12 +306,15 @@ export default function CandidateProfilePage() {
                     {(detail?.skills || []).length === 0 && <li className="empty-state">No skills yet.</li>}
                 </ul>
                 <form onSubmit={addSkill}>
-                    <select value={skill.skillId} onChange={(e) => setSkill({ ...skill, skillId: e.target.value })} required>
-                        <option value="">Select skill</option>
-                        {skillsCatalog.map((s) => (
-                            <option key={s.id} value={s.id}>{s.name}</option>
-                        ))}
-                    </select>
+                    <label>
+                        Skill
+                        <select value={skill.skillId} onChange={(e) => setSkill({ ...skill, skillId: e.target.value })} required>
+                            <option value="">Select skill</option>
+                            {skillsCatalog.map((s) => (
+                                <option key={s.id} value={s.id}>{s.name}</option>
+                            ))}
+                        </select>
+                    </label>
                     <button type="submit">Add skill</button>
                 </form>
             </section>
@@ -318,9 +328,9 @@ export default function CandidateProfilePage() {
                     {(detail?.certifications || []).length === 0 && <li className="empty-state">No certifications yet.</li>}
                 </ul>
                 <form onSubmit={addCertification}>
-                    <input placeholder="Name" value={cert.name} onChange={(e) => setCert({ ...cert, name: e.target.value })} required />
-                    <input placeholder="Issuer" value={cert.issuingOrganization} onChange={(e) => setCert({ ...cert, issuingOrganization: e.target.value })} required />
-                    <input type="date" value={cert.issueDate} onChange={(e) => setCert({ ...cert, issueDate: e.target.value })} required />
+                    <input placeholder="Name" aria-label="Certification name" value={cert.name} onChange={(e) => setCert({ ...cert, name: e.target.value })} required />
+                    <input placeholder="Issuer" aria-label="Certification issuer" value={cert.issuingOrganization} onChange={(e) => setCert({ ...cert, issuingOrganization: e.target.value })} required />
+                    <input type="date" aria-label="Certification issue date" value={cert.issueDate} onChange={(e) => setCert({ ...cert, issueDate: e.target.value })} required />
                     <button type="submit">Add certification</button>
                 </form>
             </section>
@@ -328,7 +338,20 @@ export default function CandidateProfilePage() {
             <section>
                 <h2>Resume upload</h2>
                 <p>PDF, DOC, DOCX, PNG, or JPEG. Max 5 MB. Cloud storage verification pending — local storage used.</p>
-                <input type="file" accept=".pdf,.doc,.docx,.png,.jpeg,.jpg" onChange={uploadResume} />
+                <ul>
+                    {resumes.map((item) => (
+                        <li key={item.id}>
+                            {item.fileName}
+                            {item.isPrimary ? " (primary)" : ""}
+                            {item.storageKey ? ` · key: ${item.storageKey}` : ""}
+                        </li>
+                    ))}
+                    {resumes.length === 0 && <li className="empty-state">No resumes uploaded yet.</li>}
+                </ul>
+                <label>
+                    Upload resume
+                    <input type="file" accept=".pdf,.doc,.docx,.png,.jpeg,.jpg" onChange={uploadResume} />
+                </label>
             </section>
         </main>
     );

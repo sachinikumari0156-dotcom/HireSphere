@@ -109,6 +109,7 @@ describe('Candidate profile page', () => {
                     documents: []
                 }
             })
+            .mockResolvedValueOnce({ data: [] })
             .mockResolvedValueOnce({ data: [] });
 
         renderWithAuth(<CandidateProfilePage />);
@@ -118,6 +119,7 @@ describe('Candidate profile page', () => {
             expect(screen.getByDisplayValue('Developer')).toBeInTheDocument();
         });
         expect(api.get).toHaveBeenCalledWith('/candidate/profile');
+        expect(api.get).toHaveBeenCalledWith('/candidate/resumes');
     });
 });
 

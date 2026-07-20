@@ -1,6 +1,6 @@
 # HireSphere — Risk Register
 
-**Last updated:** 2026-07-20 (Phase 4.3)
+**Last updated:** 2026-07-20 (Phase 4 E2E)
 
 | ID | Risk | Likelihood | Impact | Mitigation | Owner | Status |
 |----|------|------------|--------|------------|-------|--------|
@@ -22,7 +22,11 @@
 | R-16 | Hireflow branding inconsistency | Low | Low | Auth pages updated; remaining UI in Phase 9 | Agent | MITIGATED |
 | R-17 | Placeholder recruiter/manager/admin UIs | Medium | High | Phase 3 shells + policies; features in Phases 5–7 | Agent | MITIGATED — shells only |
 | R-18 | Coursework/SRS in public repo | Low | Medium | Moved to ignored `local-spec/` | Kalani | CLOSED |
-| R-19 | Academic integrity attribution | Low | Critical | Only Kalani SHAs for new work | Agent | MONITORING |
+| R-19 | Academic integrity attribution | Low | Critical | Kalani history preserved; Chinthaka authors new commits only | Team | MONITORING |
+| R-22 | SQL Server unavailable locally | Low | Medium | LocalDB used for Phase 4 E2E when Express missing | Chinthaka | MITIGATED |
+| R-28 | Phase 4 claimed VERIFIED without E2E | Low | High | Browser E2E + screenshots completed 2026-07-20 | Chinthaka | CLOSED |
+| R-29 | Residual register color-contrast | Low | Low | Documented; non-blocking after label remediation | Chinthaka | OPEN |
+
 | R-20 | Runtime/SDK alignment | Low | Low | Retargeted API/tests to net10.0 for installed runtime | Agent | CLOSED |
 | R-21 | Existing users with plaintext passwords | High | High | Re-register or migrate hashes after deploy | Kalani | OPEN |
 | R-22 | SQL Server unavailable locally | Low | Medium | Express installed; migrations applied to HireSphereDev | Kalani | CLOSED |

@@ -48,8 +48,11 @@
 
 ## Not claimed as complete
 
-- Recruiter-side assign/schedule UIs (Phase 5) — assignments/interviews are created via data/API seeding for candidate flows
+- Recruiter-side assign/schedule UIs (Phase 5) — E2E uses Development-only `/api/e2e/*` seed helpers when enabled
 - External email/SMS/calendar providers (Phase 8+)
 - External/cloud AI matching (deterministic only)
-- Cloud object storage
-- Full browser E2E / screenshot pack — Phase 4 is **not VERIFIED** without that
+- Cloud object storage (local abstraction in use)
+
+## Phase 4 verification
+
+Phase 4 is **VERIFIED** after Playwright browser E2E (2026-07-20): see `docs/testing/CANDIDATE_E2E_RESULTS.md` and `docs/evidence/phase4-candidate/`.

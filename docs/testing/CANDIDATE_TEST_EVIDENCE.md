@@ -1,40 +1,34 @@
 # Candidate UAT / Test Evidence
 
 **Date:** 2026-07-20
-**Phases covered:** 4.1 + 4.2 + 4.3 (automated). Phase 4 **not VERIFIED** (no full browser E2E / screenshot pack).
+**Phases covered:** 4.1 + 4.2 + 4.3 + browser E2E
+**Phase 4 status:** **VERIFIED**
 
-## Automated results (this session)
+## Automated results
 
 | Suite | Result |
 |-------|--------|
 | Backend `dotnet test` | **58 passed** / 58 |
-| Frontend Vitest `npm run test:run` | **22 passed** / 22 (auth 13 + candidate 9) |
+| Frontend Vitest `npm run test:run` | **22 passed** / 22 |
+| Playwright `npm run e2e` | **6 passed** / 6 |
 | Frontend `npm run lint` | PASS |
 | Frontend `npm run build` | PASS |
 | `git diff --check` | PASS |
 
-## Backend coverage (Phase 4.3) — `CandidatePhase43ControllerTests`
+## Browser E2E
 
-- Assigned assessment accessible; unassigned/other candidate → 404
-- Start blocked when expired; attempt limit enforced after submit
-- Submit calculates score; `correctAnswerKey` not present in payloads
-- Interview ownership blocked cross-candidate
-- Confirm exposes meeting link; reschedule request with reason
-- Application status timeline ordered; `nextAction` present
-- In-app notification created on application submit; mark-read path
+- Full Candidate journey executed against live API + LocalDB
+- Evidence: `docs/testing/CANDIDATE_E2E_RESULTS.md`
+- Screenshots: `docs/evidence/phase4-candidate/` (23 files)
+- Index: `docs/report/SCREENSHOT_INDEX.md`
 
-## Frontend coverage (Phase 4.3)
+## Database
 
-- Assessments empty state
-- Interviews list from API
-- Notifications unread count + item
+- Provider: SQL Server LocalDB `(localdb)\MSSQLLocalDB`
+- Database: `HireSphereDev`
+- SQL Express: not installed on verification machine
 
-## Manual / live
+## Storage
 
-- Full browser screenshot pack: **not captured**
-- Migration `AddPhase43AssessmentsInterviewsNotifications`: **applied** to HireSphereDev on 2026-07-20
-- Recruiter assign/schedule UI: **not implemented** (candidate APIs tested via seeded data)
-
-## Screenshots
-
-None captured for 4.3. Do not invent screenshot evidence.
+- Local secure upload abstraction under `App_Data/uploads`
+- Cloud object storage: Phase 8

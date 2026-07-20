@@ -5,7 +5,7 @@
     --ink-soft: #1f2d52;
     --paper: #f7f5f0;
     --slate: #3a3f4a;
-    --slate-soft: #7a8090;
+    --slate-soft: #4b5568;
     --amber: #e8a33d;
     --amber-dark: #c8822b;
     --teal: #2e8b7a;
@@ -91,7 +91,7 @@
 .reg-brand-footer {
     z-index: 1;
     font-size: 13px;
-    color: #8992ad;
+    color: #4b5568;
 }
 
 /* ---------- Right form panel ---------- */

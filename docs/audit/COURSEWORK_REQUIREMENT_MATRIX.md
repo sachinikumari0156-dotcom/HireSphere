@@ -1,7 +1,7 @@
 # HireSphere — Coursework Requirement Matrix
 
 **Course:** SE205.3 Software Architecture 2026
-**Last updated:** 2026-07-20 (Phase 4.3 candidate assessments/interviews/tracking/notifications)
+**Last updated:** 2026-07-20 (Phase 4 browser E2E VERIFIED)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED — EXTERNAL CREDENTIAL | DEFERRED — OPTIONAL BONUS
 
 ---
@@ -12,7 +12,7 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-R01 | Candidate Portal | TESTED | `/candidate` profile, jobs, recs, applications, assessments, interviews, notifications; not VERIFIED (no full E2E) |
+| M-R01 | Candidate Portal | VERIFIED | Playwright E2E 2026-07-20 + API/Vitest; screenshots in `docs/evidence/phase4-candidate/` |
 | M-R02 | Recruiter Portal | IN PROGRESS | Protected `/recruiter/*` shell + dashboard; request flow added |
 | M-R03 | Hiring Manager Dashboard | IN PROGRESS | Protected `/hiring-manager/*` shell |
 | M-R04 | Administrator Dashboard | IN PROGRESS | Protected `/admin/*` shell + admin APIs |
@@ -22,11 +22,11 @@
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
 | M-C01 | Registration and secure authentication | VERIFIED | Phase 3 live UAT + FE/BE tests |
-| M-C02 | Professional profile management | TESTED | `/api/candidate` profile/experience/education/skills/certs; FE profile page |
-| M-C03 | CV/resume upload and management | TESTED | Local secure storage + upload/download/delete; cloud storage pending |
-| M-C04 | Job search and application submission | TESTED | `/api/candidate/jobs` + apply wizard APIs; FE jobs/apply routes; automated tests |
-| M-C05 | AI-powered job recommendations | TESTED | Deterministic provider (not external AI); recommendations API + UI; incomplete-profile handling |
-| M-C06 | Application tracking dashboard | TESTED | Timeline + next action + linked interviews/assessments; automated ordering tests; live E2E pending |
+| M-C02 | Professional profile management | VERIFIED | Browser E2E + API tests |
+| M-C03 | CV/resume upload and management | VERIFIED | Local secure storage; cloud pending Phase 8 |
+| M-C04 | Job search and application submission | VERIFIED | Browser E2E apply wizard + duplicate rejection |
+| M-C05 | AI-powered job recommendations | VERIFIED | Deterministic provider; E2E recommendations |
+| M-C06 | Application tracking dashboard | VERIFIED | Timeline E2E + automated ordering tests |
 
 ### Recruiter features
 

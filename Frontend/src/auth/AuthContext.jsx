@@ -113,6 +113,7 @@ export function AuthProvider({ children }) {
             // Client still clears local session.
         } finally {
             clearSession();
+            setSessionExpired(false);
         }
     }, [clearSession, token]);
 

@@ -15,6 +15,12 @@ appsettings.Development.local.json
 appsettings.local.json
 **/secrets.json
 
+# Playwright artifacts
+Frontend/playwright-report/
+Frontend/test-results/
+Frontend/blob-report/
+Frontend/playwright/.cache/
+
 # Local candidate document uploads (dev storage provider)
 Backend/HireSphere.API/App_Data/
 

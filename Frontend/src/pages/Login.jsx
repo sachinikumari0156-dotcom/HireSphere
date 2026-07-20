@@ -91,22 +91,24 @@ function Login() {
 
                     <form onSubmit={handleLogin} noValidate>
                         <div className="field">
-                            <label>Email</label>
+                            <label htmlFor="login-email">Email</label>
                             <input
+                                id="login-email"
                                 type="email"
                                 placeholder="jane@example.com"
                                 value={user.email}
                                 onChange={updateField("email")}
                             />
                             {errors.email && (
-                                <div className="field-error-msg">{errors.email}</div>
+                                <div className="field-error-msg" role="alert">{errors.email}</div>
                             )}
                         </div>
 
                         <div className="field">
-                            <label>Password</label>
+                            <label htmlFor="login-password">Password</label>
                             <div className="password-wrap">
                                 <input
+                                    id="login-password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Enter your password"
                                     value={user.password}
@@ -121,7 +123,7 @@ function Login() {
                                 </button>
                             </div>
                             {errors.password && (
-                                <div className="field-error-msg">{errors.password}</div>
+                                <div className="field-error-msg" role="alert">{errors.password}</div>
                             )}
                         </div>
 

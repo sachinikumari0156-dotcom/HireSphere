@@ -72,7 +72,7 @@ describe('Recruiter request validation', () => {
 });
 
 describe('Protected routes and role guards', () => {
-    it('redirects unauthenticated users to session expired', async () => {
+    it('redirects unauthenticated users to login', async () => {
         render(
             <AuthContext.Provider value={authStub()}>
                 <MemoryRouter initialEntries={['/candidate']}>
@@ -85,13 +85,14 @@ describe('Protected routes and role guards', () => {
                                 </ProtectedRoute>
                             )}
                         />
+                        <Route path="/login" element={<div>Login Page</div>} />
                         <Route path="/session-expired" element={<div>Session Expired Page</div>} />
                     </Routes>
                 </MemoryRouter>
             </AuthContext.Provider>
         );
 
-        expect(await screen.findByText(/session expired page/i)).toBeInTheDocument();
+        expect(await screen.findByText(/login page/i)).toBeInTheDocument();
         expect(screen.queryByText(/candidate ok/i)).not.toBeInTheDocument();
     });
 

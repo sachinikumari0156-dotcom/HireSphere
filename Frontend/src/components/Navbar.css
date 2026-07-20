@@ -12,7 +12,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 64px;
+    gap: 1rem;
+    min-height: 64px;
+    height: auto;
+    padding: 0.5rem 0;
+    flex-wrap: wrap;
 }
 
 .navbar-brand {
@@ -29,7 +33,18 @@
 .navbar-links {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 12px 20px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 12px;
+    }
+
+    .navbar-links {
+        width: 100%;
+    }
 }
 
 .navbar-link {

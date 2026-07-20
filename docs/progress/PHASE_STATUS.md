@@ -1,19 +1,19 @@
 # HireSphere — Phase Status
 
 **Last updated:** 2026-07-20
-**Overall readiness:** NOT READY (Phases 4–12 pending)
+**Overall readiness:** NOT READY (Phases 5–12 pending)
 
 | Phase | Name | Status | Commit | Push | Notes |
 |-------|------|--------|--------|------|-------|
 | 0 | Audit and planning | VERIFIED | `07080b1` | SUCCESS | Docs committed and pushed |
 | 1 | Security foundation | VERIFIED | `9c50d56` | SUCCESS | BCrypt, CORS, secrets externalized |
-| 2 | SQL Server and data model | VERIFIED | `1e4c688` + `e84eeb5` | SUCCESS | Applied on `localhost\SQLEXPRESS` |
-| 3 | Auth and RBAC | VERIFIED | `3c0ae38` + verification commit | SUCCESS | Four-role live UAT 26/26; FE 13; BE 33 |
-| 4 | Candidate workflows | IN PROGRESS | `aac86d5` `5c448d2` + 4.3 committing | SUCCESS 4.1–4.2 | 4.3 implemented + automated tests; **not VERIFIED** (no full browser E2E/screenshots) |
+| 2 | SQL Server and data model | VERIFIED | `1e4c688` + `e84eeb5` | SUCCESS | Applied on LocalDB this host; Express optional |
+| 3 | Auth and RBAC | VERIFIED | `3c0ae38` + verification | SUCCESS | Four-role live UAT 26/26 |
+| 4 | Candidate workflows | VERIFIED | Phase 4 E2E commit | SUCCESS | Browser Playwright 6/6; 23 screenshots; LocalDB |
 | 5 | Recruiter workflows | NOT STARTED | — | — | — |
 | 6 | Hiring Manager | NOT STARTED | — | — | — |
 | 7 | Administrator | NOT STARTED | — | — | — |
-| 8 | AI and integrations | NOT STARTED | — | — | — |
+| 8 | AI and integrations | NOT STARTED | — | — | Cloud storage deferred here |
 | 9 | UI design system | NOT STARTED | — | — | — |
 | 10 | Quality and evidence | NOT STARTED | — | — | — |
 | 11 | Submission pack | NOT STARTED | — | — | — |
@@ -21,17 +21,21 @@
 
 ---
 
-## Phase 3 verification (closed)
+## Phase 4 verification (closed)
 
 ### Evidence
 
-- Live API UAT against `HireSphereDev`: 26/26 PASS (`docs/testing/PHASE3_LIVE_UAT.md`)
-- Frontend Vitest auth suite: 13/13 PASS
-- Backend tests: 33/33 PASS; NU1903 cleared via SQLitePCLRaw 3.0.3 override
-- Axios 401 → session-expired only when a token was present
-- Not implemented (honest): password reset, email verification, refresh rotation, lockout
+- Playwright Candidate journey + authz + responsive + a11y: **6/6 PASS** (`docs/testing/CANDIDATE_E2E_RESULTS.md`)
+- Screenshots: `docs/evidence/phase4-candidate/` (23 files) + `docs/report/SCREENSHOT_INDEX.md`
+- Backend tests: **58/58 PASS**
+- Frontend Vitest: **22/22 PASS**
+- Database: `(localdb)\MSSQLLocalDB` / `HireSphereDev` (SQL Express not available on verification host)
+- Storage: local abstraction only; cloud object storage remains Phase 8
 
-### Remaining quality (deferred)
+### Defects fixed during verification
 
-- Full browser screenshot pack for all four portals
-- Password reset / email verification
+- CORS allowlist includes `127.0.0.1` Vite origins
+- Profile resume metadata list + education start date fields
+- Mobile navbar/dashboard wrapping
+- Form label associations for Login/Register/profile subforms
+- ProtectedRoute: unauthenticated → `/login`; expired session → `/session-expired`

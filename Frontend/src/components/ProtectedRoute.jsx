@@ -9,8 +9,12 @@ export default function ProtectedRoute({ children, roles }) {
         return <div className="auth-loading">Loading session…</div>;
     }
 
-    if (sessionExpired || !isAuthenticated) {
+    if (sessionExpired) {
         return <Navigate to="/session-expired" replace state={{ from: location }} />;
+    }
+
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace state={{ from: location }} />;
     }
 
     if (roles?.length && !roles.includes(user?.role)) {

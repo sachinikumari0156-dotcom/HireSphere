@@ -126,3 +126,18 @@
 - Frontend routes: assessments, interviews, notifications + dashboard links + application timeline UI
 - Verification: BE **58** PASS; FE Vitest **22** PASS; lint/build PASS
 - Phase 4 remains **IN PROGRESS / not VERIFIED** — no full browser E2E or screenshot pack; recruiter assign/schedule UI is Phase 5
+
+## Phase 4 browser E2E verification — 2026-07-20
+
+**Commit message:** `test(candidate): verify complete candidate portal browser workflow`
+**Author:** Chinthaka Jayaweera
+
+- Playwright Candidate journey, authorization, responsive, accessibility suites
+- Development-only `/api/e2e` catalog/journey seed helpers (disabled unless `HIRESPHERE_E2E_SEED_ENABLED`)
+- CORS allowlist includes `127.0.0.1` Vite origins
+- Profile resume metadata list; education dates; mobile wrap; form labels
+- ProtectedRoute: unauthenticated → `/login`; expired → `/session-expired`
+- Evidence: 23 screenshots under `docs/evidence/phase4-candidate/`
+- Verification host used LocalDB `(localdb)\MSSQLLocalDB` / `HireSphereDev` (SQL Express unavailable)
+- Results: Playwright **6/6**, BE **58/58**, FE Vitest **22/22**, lint/build PASS
+- Phase 4 marked **VERIFIED**

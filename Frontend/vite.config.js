@@ -7,7 +7,14 @@ export default defineConfig({
         environment: 'jsdom',
         globals: true,
         setupFiles: './src/test/setup.js',
-        css: true
+        css: true,
+        exclude: [
+            '**/node_modules/**',
+            '**/e2e/**',
+            '**/dist/**',
+            '**/playwright-report/**',
+            '**/test-results/**'
+        ]
     },
     server: {
         watch: {

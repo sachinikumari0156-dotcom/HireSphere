@@ -114,37 +114,39 @@ function Register() {
 
                     <form onSubmit={handleRegister} noValidate>
                         <div className="field">
-                            <label>First name</label>
-                            <input value={user.firstName} onChange={updateField("firstName")} />
+                            <label htmlFor="reg-first-name">First name</label>
+                            <input id="reg-first-name" value={user.firstName} onChange={updateField("firstName")} />
                             {errors.firstName && (
-                                <div className="field-error-msg">{errors.firstName}</div>
+                                <div className="field-error-msg" role="alert">{errors.firstName}</div>
                             )}
                         </div>
 
                         <div className="field">
-                            <label>Last name</label>
-                            <input value={user.lastName} onChange={updateField("lastName")} />
+                            <label htmlFor="reg-last-name">Last name</label>
+                            <input id="reg-last-name" value={user.lastName} onChange={updateField("lastName")} />
                             {errors.lastName && (
-                                <div className="field-error-msg">{errors.lastName}</div>
+                                <div className="field-error-msg" role="alert">{errors.lastName}</div>
                             )}
                         </div>
 
                         <div className="field">
-                            <label>Email</label>
+                            <label htmlFor="reg-email">Email</label>
                             <input
+                                id="reg-email"
                                 type="email"
                                 value={user.email}
                                 onChange={updateField("email")}
                             />
                             {errors.email && (
-                                <div className="field-error-msg">{errors.email}</div>
+                                <div className="field-error-msg" role="alert">{errors.email}</div>
                             )}
                         </div>
 
                         <div className="field">
-                            <label>Password</label>
+                            <label htmlFor="reg-password">Password</label>
                             <div className="password-wrap">
                                 <input
+                                    id="reg-password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="At least 8 characters"
                                     value={user.password}
@@ -159,25 +161,27 @@ function Register() {
                                 </button>
                             </div>
                             {errors.password && (
-                                <div className="field-error-msg">{errors.password}</div>
+                                <div className="field-error-msg" role="alert">{errors.password}</div>
                             )}
                         </div>
 
                         <div className="field">
-                            <label>Confirm password</label>
+                            <label htmlFor="reg-confirm-password">Confirm password</label>
                             <input
+                                id="reg-confirm-password"
                                 type="password"
                                 value={user.confirmPassword}
                                 onChange={updateField("confirmPassword")}
                             />
                             {errors.confirmPassword && (
-                                <div className="field-error-msg">{errors.confirmPassword}</div>
+                                <div className="field-error-msg" role="alert">{errors.confirmPassword}</div>
                             )}
                         </div>
 
                         <div className="field">
-                            <label>
+                            <label htmlFor="reg-accept-terms">
                                 <input
+                                    id="reg-accept-terms"
                                     type="checkbox"
                                     checked={user.acceptTerms}
                                     onChange={updateField("acceptTerms")}
@@ -185,7 +189,7 @@ function Register() {
                                 I accept the privacy and terms of use.
                             </label>
                             {errors.acceptTerms && (
-                                <div className="field-error-msg">{errors.acceptTerms}</div>
+                                <div className="field-error-msg" role="alert">{errors.acceptTerms}</div>
                             )}
                         </div>
 
