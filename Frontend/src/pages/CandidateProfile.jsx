@@ -11,6 +11,9 @@ function CandidateProfile() {
     const [skills, setSkills] = useState("");
     const [resumePath, setResumePath] = useState("");
 
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [uploading, setUploading] = useState(false);
+
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [banner, setBanner] = useState(null);
@@ -84,6 +87,55 @@ function CandidateProfile() {
 
     }
 
+    function handleFileChange(e) {
+
+        var file = e.target.files[0];
+        setSelectedFile(file || null);
+
+    }
+
+    function uploadResume() {
+
+        if (!selectedFile) {
+            setBanner({ type: "error", text: "Please choose a file first." });
+            return;
+        }
+
+        setBanner(null);
+        setUploading(true);
+
+        var formData = new FormData();
+        formData.append("file", selectedFile);
+
+        fetch(API_URL + "/CandidateProfile/UploadResume", {
+            method: "POST",
+            headers: {
+                Authorization: "Bearer " + token
+            },
+            body: formData
+        })
+            .then(function (res) {
+                if (res.ok) {
+                    return res.json();
+                }
+                return res.text().then(function (text) {
+                    throw new Error(text);
+                });
+            })
+            .then(function (data) {
+                setResumePath(data.resumePath);
+                setSelectedFile(null);
+                setBanner({ type: "success", text: "Resume uploaded successfully." });
+                setUploading(false);
+            })
+            .catch(function (err) {
+                console.log("Upload Error:", err);
+                setBanner({ type: "error", text: err.message || "Upload failed." });
+                setUploading(false);
+            });
+
+    }
+
     if (loading) {
         return (
             <div className="candidate-page">
@@ -137,20 +189,55 @@ function CandidateProfile() {
                         />
                     </div>
 
-                    <div className="field">
-                        <label>Resume Link</label>
-                        <input
-                            placeholder="https://drive.google.com/your-resume"
-                            value={resumePath}
-                            onChange={function (e) { setResumePath(e.target.value); }}
-                        />
-                    </div>
-
                     <button type="submit" className="reg-submit" disabled={saving}>
                         {saving ? "Saving..." : "Save Profile"}
                     </button>
 
                 </form>
+
+            </div>
+
+            <div className="jobs-section">
+
+                <h2>Resume</h2>
+
+                {resumePath && (
+                    <p>
+                        {"Current resume: "}
+                        {
+                            (function () {
+                                var fileUrl = API_URL.replace("/api", "") + resumePath;
+                                return (
+                                    <a href={fileUrl} target="_blank" rel="noreferrer">
+                                        {"View Resume"}
+                                    </a>
+                                );
+                            })()
+                        }
+                    </p>
+                )}
+
+                {!resumePath && (
+                    <p>No resume uploaded yet.</p>
+                )}
+
+                <div className="field">
+                    <label>Upload New Resume (PDF or Word, max 5MB)</label>
+                    <input
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        onChange={handleFileChange}
+                    />
+                </div>
+
+                <button
+                    type="button"
+                    className="reg-submit"
+                    onClick={uploadResume}
+                    disabled={uploading}
+                >
+                    {uploading ? "Uploading..." : "Upload Resume"}
+                </button>
 
             </div>
 
