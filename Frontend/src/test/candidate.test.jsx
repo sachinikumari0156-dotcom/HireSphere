@@ -8,6 +8,9 @@ import CandidateProfilePage from '../pages/candidate/CandidateProfilePage';
 import CandidateJobsPage from '../pages/candidate/CandidateJobsPage';
 import CandidateRecommendationsPage from '../pages/candidate/CandidateRecommendationsPage';
 import CandidateApplyPage from '../pages/candidate/CandidateApplyPage';
+import CandidateAssessmentsPage from '../pages/candidate/CandidateAssessmentsPage';
+import CandidateInterviewsPage from '../pages/candidate/CandidateInterviewsPage';
+import CandidateNotificationsPage from '../pages/candidate/CandidateNotificationsPage';
 import { AuthContext } from '../auth/auth-context';
 import { authStub } from './authStub';
 
@@ -202,5 +205,70 @@ describe('Candidate jobs and recommendations', () => {
                 screeningAnswers: [{ screeningQuestionId: 11, answerText: 'Yes' }]
             }));
         });
+    });
+});
+
+describe('Candidate assessments page', () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
+
+    it('renders empty state when no assessments assigned', async () => {
+        api.get.mockResolvedValueOnce({ data: [] });
+        renderWithAuth(<CandidateAssessmentsPage />);
+        expect(await screen.findByRole('heading', { name: /skill assessments/i })).toBeInTheDocument();
+        expect(screen.getByText(/no assessments assigned yet/i)).toBeInTheDocument();
+    });
+});
+
+describe('Candidate interviews page', () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
+
+    it('lists scheduled interviews from API', async () => {
+        api.get.mockResolvedValueOnce({
+            data: [{
+                id: 5,
+                applicationId: 2,
+                jobTitle: 'Backend Engineer',
+                interviewDateUtc: '2026-07-25T10:00:00Z',
+                timeZoneId: 'Asia/Colombo',
+                interviewType: 'Video',
+                status: 'Scheduled',
+                candidateResponse: 'Pending',
+                meetingInfoAvailable: false
+            }]
+        });
+        renderWithAuth(<CandidateInterviewsPage />);
+        expect(await screen.findByRole('heading', { name: /interviews/i })).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: /backend engineer/i })).toBeInTheDocument();
+    });
+});
+
+describe('Candidate notifications page', () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
+
+    it('shows unread count and items', async () => {
+        api.get.mockResolvedValueOnce({
+            data: {
+                unreadCount: 1,
+                items: [{
+                    id: 1,
+                    title: 'Application submitted',
+                    message: 'Your application was submitted.',
+                    category: 'ApplicationSubmitted',
+                    isRead: false,
+                    createdAtUtc: '2026-07-20T12:00:00Z',
+                    linkPath: '/candidate/applications/9'
+                }]
+            }
+        });
+        renderWithAuth(<CandidateNotificationsPage />);
+        expect(await screen.findByRole('heading', { name: /notifications/i })).toBeInTheDocument();
+        expect(screen.getByText(/1 unread/i)).toBeInTheDocument();
+        expect(screen.getByText(/application submitted/i)).toBeInTheDocument();
     });
 });

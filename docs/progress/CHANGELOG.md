@@ -112,3 +112,17 @@
 - Docs updated for API/portal/UAT/evidence/matrices
 - Backend/frontend verification: BE **52** tests PASS; FE Vitest **19** PASS; lint/build PASS
 - Migration `AddApplicationResumeId` applied to HireSphereDev (SQL Express)
+
+## Phase 4.3 — 2026-07-20
+
+**Commit message:** `feat(candidate): add assessment interview and tracking experience`
+
+- Assessment assignments: list/start/answer/submit with attempt limits, start/expiry checks, server scoring, no answer-key exposure, audit trail
+- Interviews: list/detail with timezone; confirm / reschedule-request / decline; meeting info gated; no calendar credentials
+- Application tracking: ordered `ApplicationStatusHistory`, latest update, next action, linked interviews/assessments
+- In-app notification foundation (`ApplicationSubmitted`, status updates, assessment/interview categories)
+- Enum additions: `ApplicationStatus.Assessment`, `Interviewed`; `InterviewCandidateResponse`
+- Migration `AddPhase43AssessmentsInterviewsNotifications` **applied** to HireSphereDev
+- Frontend routes: assessments, interviews, notifications + dashboard links + application timeline UI
+- Verification: BE **58** PASS; FE Vitest **22** PASS; lint/build PASS
+- Phase 4 remains **IN PROGRESS / not VERIFIED** — no full browser E2E or screenshot pack; recruiter assign/schedule UI is Phase 5

@@ -37,6 +37,8 @@ public sealed class CandidateApplicationListItemDto
     public DateTime AppliedDate { get; set; }
     public DateTime SubmittedAtUtc { get; set; }
     public bool CanWithdraw { get; set; }
+    public DateTime? LatestUpdateAtUtc { get; set; }
+    public string? NextAction { get; set; }
 }
 
 public sealed class CandidateApplicationDetailDto
@@ -53,8 +55,13 @@ public sealed class CandidateApplicationDetailDto
     public int? ResumeId { get; set; }
     public string? ResumeFileName { get; set; }
     public bool CanWithdraw { get; set; }
+    public DateTime? LatestUpdateAtUtc { get; set; }
+    public string? LatestUpdateNotes { get; set; }
+    public string? NextAction { get; set; }
     public IReadOnlyList<ApplicationAnswerDto> Answers { get; set; } = Array.Empty<ApplicationAnswerDto>();
     public IReadOnlyList<ApplicationStatusHistoryDto> StatusHistory { get; set; } = Array.Empty<ApplicationStatusHistoryDto>();
+    public IReadOnlyList<ApplicationLinkedInterviewDto> Interviews { get; set; } = Array.Empty<ApplicationLinkedInterviewDto>();
+    public IReadOnlyList<ApplicationLinkedAssessmentDto> Assessments { get; set; } = Array.Empty<ApplicationLinkedAssessmentDto>();
 }
 
 public sealed class ApplicationAnswerDto
@@ -70,4 +77,21 @@ public sealed class ApplicationStatusHistoryDto
     public ApplicationStatus Status { get; set; }
     public DateTime ChangedAtUtc { get; set; }
     public string? Notes { get; set; }
+}
+
+public sealed class ApplicationLinkedInterviewDto
+{
+    public int InterviewId { get; set; }
+    public DateTime InterviewDateUtc { get; set; }
+    public string TimeZoneId { get; set; } = string.Empty;
+    public InterviewStatus Status { get; set; }
+    public InterviewCandidateResponse CandidateResponse { get; set; }
+}
+
+public sealed class ApplicationLinkedAssessmentDto
+{
+    public int AssignmentId { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public AssessmentStatus Status { get; set; }
+    public int AttemptsRemaining { get; set; }
 }

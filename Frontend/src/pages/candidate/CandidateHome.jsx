@@ -51,6 +51,9 @@ export default function CandidateHome() {
                     <Link to="/candidate/jobs">Browse jobs</Link>
                     <Link to="/candidate/recommendations">Recommendations</Link>
                     <Link to="/candidate/applications">My applications</Link>
+                    <Link to="/candidate/assessments">Assessments</Link>
+                    <Link to="/candidate/interviews">Interviews</Link>
+                    <Link to="/candidate/notifications">Notifications</Link>
                 </nav>
             </header>
 

@@ -51,20 +51,63 @@ Open jobs only (`JobStatus.Open`). Draft/Closed/Archived are not returned.
 Returns: `matchScore`, `matchedSkills`, `missingSkills`, experience/education/location/work-arrangement factors, `explanation`, `provider` (`Deterministic`), `computedAtUtc`, `humanReviewNotice`.
 This is a **rules engine**, not an external AI call.
 
-## Applications (Phase 4.2)
+## Applications (Phase 4.2 + 4.3 tracking)
 
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | `/api/candidate/jobs/{id}/apply-options` | Resumes + screening questions + `canApply` / `blockReason` |
-| POST | `/api/candidate/applications` | Submit application (resume, cover letter, screening answers, `termsAccepted`). Blocks closed jobs and duplicates. Creates initial status history |
-| GET | `/api/candidate/applications` | Own applications list |
-| GET | `/api/candidate/applications/{id}` | Own application detail (answers + status history). Other candidates → 404 |
-| POST | `/api/candidate/applications/{id}/withdraw` | Withdraw when status is `Pending` or `UnderReview` |
+| POST | `/api/candidate/applications` | Submit application. Creates status history + in-app `ApplicationSubmitted` notification |
+| GET | `/api/candidate/applications` | Own applications list (`latestUpdateAtUtc`, `nextAction`) |
+| GET | `/api/candidate/applications/{id}` | Detail: ordered status timeline, next action, linked interviews/assessments. Other candidates → 404 |
+| POST | `/api/candidate/applications/{id}/withdraw` | Withdraw when `Pending` or `UnderReview`; creates status notification |
+
+### Application status values
+
+`Pending`, `UnderReview`, `Assessment`, `Shortlisted`, `InterviewScheduled`, `Interviewed`, `Offered`, `Hired`, `Rejected`, `Withdrawn`
+(Display aliases sometimes used in docs: Submitted≈Pending, Screening≈UnderReview, Offer≈Offered.)
+
+## Assessments (Phase 4.3)
+
+Assignments only — unassigned assessments are not listed. Answer keys are **never** returned to candidates.
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/candidate/assessments` | Assigned assessments + attempt/status summary |
+| GET | `/api/candidate/assessments/{assignmentId}` | Detail + questions (options only; no correct key) |
+| POST | `/api/candidate/assessments/{assignmentId}/start` | Start attempt (enforces start window, expiry, max attempts) |
+| GET | `/api/candidate/assessments/attempts/{attemptId}` | Attempt + answers; score/feedback only when `RevealResultsToCandidate` |
+| PUT | `/api/candidate/assessments/attempts/{attemptId}/answers` | Save answers while InProgress |
+| POST | `/api/candidate/assessments/attempts/{attemptId}/submit` | Server-side score; audit log entry |
+
+## Interviews (Phase 4.3)
+
+No calendar provider tokens or credentials are exposed.
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/candidate/interviews` | Own interviews (via application ownership) |
+| GET | `/api/candidate/interviews/{id}` | Detail + timezone; meeting link only when authorized (typically after confirm) |
+| POST | `/api/candidate/interviews/{id}/confirm` | Confirm attendance |
+| POST | `/api/candidate/interviews/{id}/reschedule-request` | Body: `reason`, optional `preferredTimesNote` |
+| POST | `/api/candidate/interviews/{id}/decline` | Body: `reason` (required) |
+
+## Notifications (Phase 4.3 — in-app foundation)
+
+External email/SMS remain deferred. Categories in use: `ApplicationSubmitted`, `ApplicationStatusUpdated`, `AssessmentAssigned`, `InterviewScheduled`, `InterviewUpdated`.
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/candidate/notifications` | Inbox + `unreadCount` |
+| POST | `/api/candidate/notifications/{id}/read` | Mark one read |
+| POST | `/api/candidate/notifications/read-all` | Mark all read |
 
 ## Storage
 
 Local development provider stores files under `App_Data/uploads` with randomized keys. MIME/extension/size validation enforced. **Cloud storage verification is pending** for a later phase.
 
-## Migration (4.2)
+## Migrations
 
-`AddApplicationResumeId` — optional `Applications.ResumeId` FK (SetNull on resume delete).
+| Migration | Phase | Notes |
+|-----------|-------|-------|
+| `AddApplicationResumeId` | 4.2 | Optional `Applications.ResumeId` |
+| `AddPhase43AssessmentsInterviewsNotifications` | 4.3 | Assignments, answers, question keys/options, interview response fields, notification category/link fields, `ApplicationStatus` Assessment/Interviewed |

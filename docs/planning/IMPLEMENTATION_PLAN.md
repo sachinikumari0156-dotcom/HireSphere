@@ -77,11 +77,11 @@
 ## Phase 4 — Candidate workflows
 
 **Commits:**
-- `feat(candidate): complete profile resume and document workflows`
-- `feat(candidate): add job discovery recommendations and applications`
-- `feat(candidate): add assessment interview and tracking experience`
+- [x] `feat(candidate): complete profile resume and document workflows`
+- [x] `feat(candidate): add job discovery recommendations and applications`
+- [x] `feat(candidate): add assessment interview and tracking experience` (implemented 2026-07-20; commit pending parent)
 
-Profile UI, resume upload (local then cloud in Phase 8), job search/filter, application wizard, timeline, assessment and interview views.
+Profile UI, resume upload (local then cloud in Phase 8), job search/filter, application wizard, timeline, assessment and interview views. Phase 4 not VERIFIED without full E2E.
 
 ---
 

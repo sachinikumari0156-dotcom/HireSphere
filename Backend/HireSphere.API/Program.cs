@@ -35,6 +35,10 @@ builder.Services.AddScoped<ICandidateProfileService, CandidateProfileService>();
 builder.Services.AddScoped<IJobMatchingProvider, DeterministicJobMatchingProvider>();
 builder.Services.AddScoped<ICandidateJobService, CandidateJobService>();
 builder.Services.AddScoped<ICandidateApplicationService, CandidateApplicationService>();
+builder.Services.AddScoped<ICandidateAssessmentService, CandidateAssessmentService>();
+builder.Services.AddScoped<ICandidateInterviewService, CandidateInterviewService>();
+builder.Services.AddScoped<ICandidateNotificationService, CandidateNotificationService>();
+builder.Services.AddScoped<INotificationWriter, NotificationWriter>();
 
 builder.Services.AddCors(options =>
 {

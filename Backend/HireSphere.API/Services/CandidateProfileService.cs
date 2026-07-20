@@ -102,11 +102,13 @@ public sealed class CandidateProfileService : ICandidateProfileService
         var latestApplicationsCount = await applicationsQuery.CountAsync();
 
         var interviewsCount = await _db.Interviews
-            .Where(i => i.Application.CandidateId == userId)
+            .Where(i => i.Application.CandidateId == userId
+                && (i.Status == InterviewStatus.Scheduled || i.Status == InterviewStatus.Rescheduled))
             .CountAsync();
 
-        var assessmentsCount = await _db.AssessmentAttempts
-            .Where(a => a.CandidateId == userId)
+        var assessmentsCount = await _db.AssessmentAssignments
+            .Where(a => a.CandidateId == userId
+                && (a.Status == AssessmentStatus.Pending || a.Status == AssessmentStatus.InProgress))
             .CountAsync();
 
         var unreadNotificationsCount = await _db.Notifications

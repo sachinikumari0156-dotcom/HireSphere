@@ -61,6 +61,17 @@ export default function CandidateApplicationDetailPage() {
             </header>
 
             <section className="job-box">
+                <h2>Tracking</h2>
+                <p>Next action: {app.nextAction || "—"}</p>
+                {app.latestUpdateAtUtc && (
+                    <p>
+                        Latest update: {new Date(app.latestUpdateAtUtc).toLocaleString()}
+                        {app.latestUpdateNotes ? ` — ${app.latestUpdateNotes}` : ""}
+                    </p>
+                )}
+            </section>
+
+            <section className="job-box">
                 <h2>Cover letter</h2>
                 <p style={{ whiteSpace: "pre-wrap" }}>{app.coverLetter || "—"}</p>
                 {app.resumeFileName && <p>Resume: {app.resumeFileName}</p>}
@@ -80,16 +91,50 @@ export default function CandidateApplicationDetailPage() {
             )}
 
             <section className="job-box">
-                <h2>Status history</h2>
-                <ul>
-                    {(app.statusHistory || []).map((h, index) => (
-                        <li key={`${h.status}-${h.changedAtUtc}-${index}`}>
-                            {h.status} — {new Date(h.changedAtUtc).toLocaleString()}
-                            {h.notes ? ` (${h.notes})` : ""}
-                        </li>
-                    ))}
-                </ul>
+                <h2>Status timeline</h2>
+                {(app.statusHistory || []).length === 0 ? (
+                    <p className="empty-state">No status history yet.</p>
+                ) : (
+                    <ul>
+                        {(app.statusHistory || []).map((h, index) => (
+                            <li key={`${h.status}-${h.changedAtUtc}-${index}`}>
+                                {h.status} — {new Date(h.changedAtUtc).toLocaleString()}
+                                {h.notes ? ` (${h.notes})` : ""}
+                            </li>
+                        ))}
+                    </ul>
+                )}
             </section>
+
+            {app.interviews?.length > 0 && (
+                <section className="job-box">
+                    <h2>Interviews</h2>
+                    <ul>
+                        {app.interviews.map((i) => (
+                            <li key={i.interviewId}>
+                                <Link to={`/candidate/interviews/${i.interviewId}`}>
+                                    {new Date(i.interviewDateUtc).toLocaleString()} ({i.timeZoneId})
+                                </Link>
+                                {" — "}{i.status} / {i.candidateResponse}
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            )}
+
+            {app.assessments?.length > 0 && (
+                <section className="job-box">
+                    <h2>Assessments</h2>
+                    <ul>
+                        {app.assessments.map((a) => (
+                            <li key={a.assignmentId}>
+                                <Link to={`/candidate/assessments/${a.assignmentId}`}>{a.title}</Link>
+                                {" — "}{a.status} · {a.attemptsRemaining} attempts left
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            )}
 
             {app.canWithdraw && (
                 <div className="wizard-actions">

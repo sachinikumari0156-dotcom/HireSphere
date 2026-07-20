@@ -29,11 +29,16 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
 
     private readonly ApplicationDbContext _db;
     private readonly ICurrentUserService _currentUser;
+    private readonly INotificationWriter _notifications;
 
-    public CandidateApplicationService(ApplicationDbContext db, ICurrentUserService currentUser)
+    public CandidateApplicationService(
+        ApplicationDbContext db,
+        ICurrentUserService currentUser,
+        INotificationWriter notifications)
     {
         _db = db;
         _currentUser = currentUser;
+        _notifications = notifications;
     }
 
     public async Task<(bool Ok, string? Error, ApplicationWizardOptionsDto? Result)> GetApplyOptionsAsync(int jobId)
@@ -218,6 +223,15 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
             return (false, "You have already applied to this job.", null);
         }
 
+        await _notifications.CreateAsync(
+            profile.UserId,
+            NotificationCategories.ApplicationSubmitted,
+            "Application submitted",
+            $"Your application for {job.Title} was submitted.",
+            nameof(Application),
+            application.Id,
+            $"/candidate/applications/{application.Id}");
+
         return await GetAsync(application.Id);
     }
 
@@ -232,20 +246,27 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
         var applications = await _db.Applications
             .AsNoTracking()
             .Include(a => a.Job)
+            .Include(a => a.StatusHistory)
             .Where(a => a.CandidateId == profile.UserId)
             .OrderByDescending(a => a.AppliedDate)
             .ToListAsync();
 
-        var items = applications.Select(a => new CandidateApplicationListItemDto
+        var items = applications.Select(a =>
         {
-            Id = a.Id,
-            JobId = a.JobId,
-            JobTitle = a.Job.Title,
-            JobLocation = a.Job.Location,
-            Status = a.Status,
-            AppliedDate = a.AppliedDate,
-            SubmittedAtUtc = a.CreatedAtUtc,
-            CanWithdraw = CanWithdraw(a.Status)
+            var latest = a.StatusHistory.OrderByDescending(h => h.ChangedAtUtc).FirstOrDefault();
+            return new CandidateApplicationListItemDto
+            {
+                Id = a.Id,
+                JobId = a.JobId,
+                JobTitle = a.Job.Title,
+                JobLocation = a.Job.Location,
+                Status = a.Status,
+                AppliedDate = a.AppliedDate,
+                SubmittedAtUtc = a.CreatedAtUtc,
+                CanWithdraw = CanWithdraw(a.Status),
+                LatestUpdateAtUtc = latest?.ChangedAtUtc ?? a.CreatedAtUtc,
+                NextAction = ResolveNextAction(a.Status)
+            };
         }).ToList();
 
         return (true, null, items);
@@ -264,6 +285,7 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
             .Include(a => a.Job)
             .Include(a => a.Answers)
             .Include(a => a.StatusHistory)
+            .Include(a => a.Interviews)
             .FirstOrDefaultAsync(a => a.Id == applicationId && a.CandidateId == profile.UserId);
 
         if (application == null)
@@ -281,7 +303,14 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
                 .FirstOrDefaultAsync();
         }
 
-        return (true, null, MapDetail(application, resumeFileName));
+        var assessments = await _db.AssessmentAssignments
+            .AsNoTracking()
+            .Include(a => a.SkillAssessment)
+            .Include(a => a.Attempts)
+            .Where(a => a.CandidateId == profile.UserId && a.ApplicationId == application.Id)
+            .ToListAsync();
+
+        return (true, null, MapDetail(application, resumeFileName, assessments));
     }
 
     public async Task<(bool Ok, string? Error, CandidateApplicationDetailDto? Result)> WithdrawAsync(
@@ -297,6 +326,7 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
             .Include(a => a.Job)
             .Include(a => a.Answers)
             .Include(a => a.StatusHistory)
+            .Include(a => a.Interviews)
             .FirstOrDefaultAsync(a => a.Id == applicationId && a.CandidateId == profile.UserId);
 
         if (application == null)
@@ -320,6 +350,16 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
             Notes = "Application withdrawn by candidate."
         });
 
+        await _notifications.CreateAsync(
+            profile.UserId,
+            NotificationCategories.ApplicationStatusUpdated,
+            "Application withdrawn",
+            $"Your application for {application.Job.Title} was withdrawn.",
+            nameof(Application),
+            application.Id,
+            $"/candidate/applications/{application.Id}",
+            saveChanges: false);
+
         await _db.SaveChangesAsync();
 
         string? resumeFileName = null;
@@ -332,11 +372,33 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
                 .FirstOrDefaultAsync();
         }
 
-        return (true, null, MapDetail(application, resumeFileName));
+        var assessments = await _db.AssessmentAssignments
+            .AsNoTracking()
+            .Include(a => a.SkillAssessment)
+            .Include(a => a.Attempts)
+            .Where(a => a.CandidateId == profile.UserId && a.ApplicationId == application.Id)
+            .ToListAsync();
+
+        return (true, null, MapDetail(application, resumeFileName, assessments));
     }
 
     private static bool CanWithdraw(ApplicationStatus status) =>
         WithdrawableStatuses.Contains(status);
+
+    private static string ResolveNextAction(ApplicationStatus status) => status switch
+    {
+        ApplicationStatus.Pending => "Wait for recruiter screening.",
+        ApplicationStatus.UnderReview => "Wait for screening to complete.",
+        ApplicationStatus.Assessment => "Complete your assigned skill assessment.",
+        ApplicationStatus.Shortlisted => "Wait for interview scheduling.",
+        ApplicationStatus.InterviewScheduled => "Review and respond to your interview invitation.",
+        ApplicationStatus.Interviewed => "Wait for the hiring decision.",
+        ApplicationStatus.Offered => "Review your offer with the recruiter.",
+        ApplicationStatus.Hired => "No further action required.",
+        ApplicationStatus.Rejected => "No further action required.",
+        ApplicationStatus.Withdrawn => "No further action required.",
+        _ => "Check your application for updates."
+    };
 
     private async Task<(bool Ok, string? Error, CandidateProfile? Profile)> RequireProfileAsync()
     {
@@ -354,8 +416,15 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
         return (true, null, profile);
     }
 
-    private static CandidateApplicationDetailDto MapDetail(Application application, string? resumeFileName)
+    private static CandidateApplicationDetailDto MapDetail(
+        Application application,
+        string? resumeFileName,
+        IReadOnlyList<AssessmentAssignment> assessments)
     {
+        var latest = application.StatusHistory
+            .OrderByDescending(h => h.ChangedAtUtc)
+            .FirstOrDefault();
+
         return new CandidateApplicationDetailDto
         {
             Id = application.Id,
@@ -370,6 +439,9 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
             ResumeId = application.ResumeId,
             ResumeFileName = resumeFileName,
             CanWithdraw = CanWithdraw(application.Status),
+            LatestUpdateAtUtc = latest?.ChangedAtUtc ?? application.CreatedAtUtc,
+            LatestUpdateNotes = latest?.Notes,
+            NextAction = ResolveNextAction(application.Status),
             Answers = application.Answers
                 .OrderBy(a => a.Id)
                 .Select(a => new ApplicationAnswerDto
@@ -382,11 +454,39 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
                 .ToList(),
             StatusHistory = application.StatusHistory
                 .OrderBy(h => h.ChangedAtUtc)
+                .ThenBy(h => h.Id)
                 .Select(h => new ApplicationStatusHistoryDto
                 {
                     Status = h.Status,
                     ChangedAtUtc = h.ChangedAtUtc,
                     Notes = h.Notes
+                })
+                .ToList(),
+            Interviews = application.Interviews
+                .OrderBy(i => i.InterviewDate)
+                .Select(i => new ApplicationLinkedInterviewDto
+                {
+                    InterviewId = i.Id,
+                    InterviewDateUtc = i.InterviewDate,
+                    TimeZoneId = i.TimeZoneId,
+                    Status = i.Status,
+                    CandidateResponse = i.CandidateResponse
+                })
+                .ToList(),
+            Assessments = assessments
+                .OrderByDescending(a => a.AssignedAtUtc)
+                .Select(a =>
+                {
+                    var used = a.Attempts.Count(t =>
+                        t.Status is AssessmentStatus.Completed or AssessmentStatus.Expired
+                            or AssessmentStatus.InProgress);
+                    return new ApplicationLinkedAssessmentDto
+                    {
+                        AssignmentId = a.Id,
+                        Title = a.SkillAssessment.Title,
+                        Status = a.Status,
+                        AttemptsRemaining = Math.Max(0, a.MaxAttempts - used)
+                    };
                 })
                 .ToList()
         };

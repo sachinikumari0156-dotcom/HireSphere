@@ -16,12 +16,18 @@ public enum JobStatus
     Archived
 }
 
+/// <summary>
+/// Candidate-facing application pipeline statuses.
+/// Display mapping: Pending≈Submitted, UnderReview≈Screening, Offered≈Offer.
+/// </summary>
 public enum ApplicationStatus
 {
     Pending,
     UnderReview,
+    Assessment,
     Shortlisted,
     InterviewScheduled,
+    Interviewed,
     Offered,
     Hired,
     Rejected,
@@ -36,6 +42,14 @@ public enum InterviewStatus
     Cancelled,
     Rescheduled,
     NoShow
+}
+
+public enum InterviewCandidateResponse
+{
+    Pending,
+    Confirmed,
+    RescheduleRequested,
+    Declined
 }
 
 public enum AssessmentStatus

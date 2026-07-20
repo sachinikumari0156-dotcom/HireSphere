@@ -10,6 +10,9 @@ public class InterviewConfiguration : IEntityTypeConfiguration<Interview>
     {
         builder.Property(i => i.InterviewType).HasMaxLength(100);
         builder.Property(i => i.MeetingLink).HasMaxLength(500);
+        builder.Property(i => i.TimeZoneId).HasMaxLength(100);
+        builder.Property(i => i.MeetingInstructions).HasMaxLength(2000);
+        builder.Property(i => i.CandidateResponseReason).HasMaxLength(2000);
 
         builder.HasOne(i => i.Application)
             .WithMany(a => a.Interviews)

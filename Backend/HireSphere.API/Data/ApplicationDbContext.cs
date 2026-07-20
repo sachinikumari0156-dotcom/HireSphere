@@ -35,7 +35,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<ApplicationStatusHistory> ApplicationStatusHistories => Set<ApplicationStatusHistory>();
     public DbSet<SkillAssessment> SkillAssessments => Set<SkillAssessment>();
     public DbSet<AssessmentQuestion> AssessmentQuestions => Set<AssessmentQuestion>();
+    public DbSet<AssessmentAssignment> AssessmentAssignments => Set<AssessmentAssignment>();
     public DbSet<AssessmentAttempt> AssessmentAttempts => Set<AssessmentAttempt>();
+    public DbSet<AssessmentAnswer> AssessmentAnswers => Set<AssessmentAnswer>();
     public DbSet<AssessmentResult> AssessmentResults => Set<AssessmentResult>();
     public DbSet<Interview> Interviews => Set<Interview>();
     public DbSet<InterviewParticipant> InterviewParticipants => Set<InterviewParticipant>();

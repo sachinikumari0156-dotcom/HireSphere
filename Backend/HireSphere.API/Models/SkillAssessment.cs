@@ -14,6 +14,12 @@ public class SkillAssessment
 
     public int? DurationMinutes { get; set; }
 
+    public int MaxAttempts { get; set; } = 1;
+
+    public decimal PassingScorePercent { get; set; } = 60m;
+
+    public bool RevealResultsToCandidate { get; set; }
+
     public AssessmentStatus Status { get; set; } = AssessmentStatus.Pending;
 
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
@@ -25,4 +31,6 @@ public class SkillAssessment
     public ICollection<AssessmentQuestion> Questions { get; set; } = new List<AssessmentQuestion>();
 
     public ICollection<AssessmentAttempt> Attempts { get; set; } = new List<AssessmentAttempt>();
+
+    public ICollection<AssessmentAssignment> Assignments { get; set; } = new List<AssessmentAssignment>();
 }

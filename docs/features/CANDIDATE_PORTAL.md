@@ -1,6 +1,6 @@
 # Candidate Portal
 
-**Phase:** 4.1 (profile, resume, documents) + 4.2 (jobs, recommendations, applications)
+**Phase:** 4.1 (profile) + 4.2 (jobs/applications) + 4.3 (assessments/interviews/tracking/notifications)
 **Updated:** 2026-07-20
 
 ## Delivered
@@ -20,6 +20,14 @@
 - Duplicate apply blocked; closed/inactive jobs blocked; status history on submit; withdraw when Pending/UnderReview
 - My applications list + detail
 
+### Phase 4.3
+- Assigned skill assessments: list/detail, start, answer, submit, server-scored results when reveal allowed
+- Attempt limits, start/expiry windows, ownership checks, audit logs; answer keys never exposed to candidates
+- Interviews: list/detail with timezone, confirm / reschedule-request / decline; meeting info gated until authorized
+- Application tracking: ordered status timeline, latest update, next action, linked interviews/assessments
+- In-app notifications foundation (application submitted/status, assessment assigned, interview scheduled/updated)
+- Dashboard nav wired to assessments, interviews, notifications
+
 ## UI routes
 
 | Route | Purpose |
@@ -31,10 +39,17 @@
 | `/candidate/jobs/:id/apply` | Application wizard |
 | `/candidate/recommendations` | Recommended jobs |
 | `/candidate/applications` | My applications |
-| `/candidate/applications/:id` | Application detail |
+| `/candidate/applications/:id` | Application detail + tracking timeline |
+| `/candidate/assessments` | Assigned assessments |
+| `/candidate/assessments/:id` | Take / view assessment |
+| `/candidate/interviews` | Scheduled interviews |
+| `/candidate/interviews/:id` | Interview detail / respond |
+| `/candidate/notifications` | In-app notification inbox |
 
-## Not in 4.2
+## Not claimed as complete
 
-- Assessments / interviews / richer tracking timeline (Phase 4.3)
-- External/cloud AI matching providers (deterministic only; Phase 8)
-- Cloud object storage (local provider only; verification pending)
+- Recruiter-side assign/schedule UIs (Phase 5) — assignments/interviews are created via data/API seeding for candidate flows
+- External email/SMS/calendar providers (Phase 8+)
+- External/cloud AI matching (deterministic only)
+- Cloud object storage
+- Full browser E2E / screenshot pack — Phase 4 is **not VERIFIED** without that

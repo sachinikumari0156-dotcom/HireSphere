@@ -25,4 +25,26 @@
 | View another candidate’s application | 404 | Automated API |
 | Withdraw Pending application | Status → Withdrawn + history entry | API implemented; manual optional |
 
-Phase 4.3 will extend this checklist for assessments and interviews.
+## Phase 4.3
+
+| Step | Expected | Status |
+|------|----------|--------|
+| List `/candidate/assessments` | Only assigned assessments | Automated API + FE empty-state Vitest |
+| Unassigned assessment access | 404 | Automated API |
+| Start before window / after expiry | 400 | Automated API (expiry) |
+| Exhaust attempt limit | Further start → 400 | Automated API |
+| Answer + submit | Server score; no `correctAnswerKey` in JSON | Automated API |
+| Interview ownership | Other candidate → 404 | Automated API |
+| Confirm interview | Meeting link becomes available | Automated API |
+| Reschedule request | Requires reason; response recorded | Automated API |
+| Application timeline | History ordered ascending; nextAction present | Automated API |
+| Notifications on apply | `ApplicationSubmitted` in-app record | Automated API |
+| Open assessments/interviews/notifications UI | Loading/empty/error states | UI wired; FE Vitest for empty/list |
+
+### Manual / live (not completed this session)
+
+| Step | Status |
+|------|--------|
+| Browser walkthrough with screenshots | **Not captured** — do not invent PASS |
+| Recruiter creates assignment/interview in UI | N/A (recruiter Phase 5) |
+| Email/SMS delivery | Deferred — in-app only |

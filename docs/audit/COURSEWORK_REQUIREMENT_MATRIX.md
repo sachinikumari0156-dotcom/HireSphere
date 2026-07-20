@@ -1,7 +1,7 @@
 # HireSphere — Coursework Requirement Matrix
 
 **Course:** SE205.3 Software Architecture 2026
-**Last updated:** 2026-07-20 (Phase 4.2 candidate jobs/recommendations/applications)
+**Last updated:** 2026-07-20 (Phase 4.3 candidate assessments/interviews/tracking/notifications)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED — EXTERNAL CREDENTIAL | DEFERRED — OPTIONAL BONUS
 
 ---
@@ -12,7 +12,7 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-R01 | Candidate Portal | IN PROGRESS | `/candidate` dashboard, profile, jobs, recommendations, applications; assessments/interviews pending 4.3 |
+| M-R01 | Candidate Portal | TESTED | `/candidate` profile, jobs, recs, applications, assessments, interviews, notifications; not VERIFIED (no full E2E) |
 | M-R02 | Recruiter Portal | IN PROGRESS | Protected `/recruiter/*` shell + dashboard; request flow added |
 | M-R03 | Hiring Manager Dashboard | IN PROGRESS | Protected `/hiring-manager/*` shell |
 | M-R04 | Administrator Dashboard | IN PROGRESS | Protected `/admin/*` shell + admin APIs |
@@ -26,7 +26,7 @@
 | M-C03 | CV/resume upload and management | TESTED | Local secure storage + upload/download/delete; cloud storage pending |
 | M-C04 | Job search and application submission | TESTED | `/api/candidate/jobs` + apply wizard APIs; FE jobs/apply routes; automated tests |
 | M-C05 | AI-powered job recommendations | TESTED | Deterministic provider (not external AI); recommendations API + UI; incomplete-profile handling |
-| M-C06 | Application tracking dashboard | IN PROGRESS | Applications list/detail + dashboard counts; richer timeline pending 4.3 |
+| M-C06 | Application tracking dashboard | TESTED | Timeline + next action + linked interviews/assessments; automated ordering tests; live E2E pending |
 
 ### Recruiter features
 
@@ -36,8 +36,8 @@
 | M-RC02 | Candidate search and filtering | NOT STARTED | No dedicated search |
 | M-RC03 | Application review and shortlisting | IN PROGRESS | Status update endpoints exist |
 | M-RC04 | AI-powered candidate ranking and screening | NOT STARTED | — |
-| M-RC05 | Interview scheduling and management | NOT STARTED | Interview model + DB config; API pending |
-| M-RC06 | Communication with applicants | NOT STARTED | — |
+| M-RC05 | Interview scheduling and management | IN PROGRESS | Candidate interview respond APIs TESTED; recruiter schedule UI/API still Phase 5 |
+| M-RC06 | Communication with applicants | IN PROGRESS | In-app notification foundation; email/SMS deferred |
 
 ### Hiring Manager features
 
@@ -99,10 +99,10 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-I01 | Email notifications | NOT STARTED | BLOCKED until SMTP/MailHog configured |
+| M-I01 | Email notifications | NOT STARTED | BLOCKED until SMTP/MailHog configured; in-app records exist for key events |
 | M-I02 | SMS notifications | NOT STARTED | BLOCKED — EXTERNAL CREDENTIAL |
 | M-I03 | Interview reminders | NOT STARTED | — |
-| M-I04 | Application-status updates | NOT STARTED | — |
+| M-I04 | Application-status updates | IN PROGRESS | In-app notifications on submit/withdraw; email channel pending |
 | M-I05 | Google Calendar | NOT STARTED | BLOCKED — EXTERNAL CREDENTIAL |
 | M-I06 | Microsoft Outlook Calendar | NOT STARTED | BLOCKED — EXTERNAL CREDENTIAL |
 | M-I07 | Secure cloud document storage | NOT STARTED | BLOCKED until storage configured |

@@ -16,6 +16,11 @@ import CandidateRecommendationsPage from "./pages/candidate/CandidateRecommendat
 import CandidateApplyPage from "./pages/candidate/CandidateApplyPage";
 import CandidateApplicationsPage from "./pages/candidate/CandidateApplicationsPage";
 import CandidateApplicationDetailPage from "./pages/candidate/CandidateApplicationDetailPage";
+import CandidateAssessmentsPage from "./pages/candidate/CandidateAssessmentsPage";
+import CandidateAssessmentDetailPage from "./pages/candidate/CandidateAssessmentDetailPage";
+import CandidateInterviewsPage from "./pages/candidate/CandidateInterviewsPage";
+import CandidateInterviewDetailPage from "./pages/candidate/CandidateInterviewDetailPage";
+import CandidateNotificationsPage from "./pages/candidate/CandidateNotificationsPage";
 import RecruiterDashboard from "./pages/RecruiterDashboard";
 import { AdminDashboard, HiringManagerDashboard } from "./pages/RoleDashboards";
 import "./App.css";
@@ -94,6 +99,46 @@ function App() {
                         element={
                             <ProtectedRoute roles={["Candidate"]}>
                                 <CandidateApplicationDetailPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/assessments"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateAssessmentsPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/assessments/:id"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateAssessmentDetailPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/interviews"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateInterviewsPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/interviews/:id"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateInterviewDetailPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/candidate/notifications"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateNotificationsPage />
                             </ProtectedRoute>
                         }
                     />
