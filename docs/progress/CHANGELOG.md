@@ -1,5 +1,16 @@
 # HireSphere — Implementation Changelog
 
+## Phase 8.2 — 2026-07-21
+
+**Commit message:** `feat(integrations): add email SMS and calendar providers`
+
+- Notification outbox + user communication preferences
+- SMTP email provider (MailHog/local when configured; production NotConfigured by default)
+- Development Mock SMS with consent and E.164 validation
+- Internal calendar + ICS generation; Google/Outlook stubs NotConfigured
+- Admin integrations status dashboard and failed-delivery retry
+- Migration `AddIntegrationsPortalPhase82`
+
 ## Phase 8.1 — 2026-07-21
 
 **Commit message:** `feat(ai): add resume parsing matching ranking and trend insights`

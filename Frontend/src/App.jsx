@@ -22,6 +22,7 @@ import CandidateAssessmentDetailPage from "./pages/candidate/CandidateAssessment
 import CandidateInterviewsPage from "./pages/candidate/CandidateInterviewsPage";
 import CandidateInterviewDetailPage from "./pages/candidate/CandidateInterviewDetailPage";
 import CandidateNotificationsPage from "./pages/candidate/CandidateNotificationsPage";
+import NotificationPreferencesPage from "./pages/NotificationPreferencesPage";
 import RecruiterLayout from "./pages/recruiter/RecruiterLayout";
 import RecruiterHome from "./pages/recruiter/RecruiterHome";
 import RecruiterJobsPage from "./pages/recruiter/RecruiterJobsPage";
@@ -62,6 +63,7 @@ import AdminRolesPage from "./pages/admin/AdminRolesPage";
 import AdminHiringManagerAssignPage from "./pages/admin/AdminHiringManagerAssignPage";
 import AdminAuditPage from "./pages/admin/AdminAuditPage";
 import AdminMonitoringPage from "./pages/admin/AdminMonitoringPage";
+import AdminIntegrationsPage from "./pages/admin/AdminIntegrationsPage";
 import AdminAnalyticsPage from "./pages/admin/AdminAnalyticsPage";
 import AdminFinalDecisionsPage, { AdminFinalDecisionDetailPage } from "./pages/admin/AdminFinalDecisionsPage";
 import "./App.css";
@@ -192,6 +194,14 @@ function App() {
                         }
                     />
                     <Route
+                        path="/notification-preferences"
+                        element={
+                            <ProtectedRoute roles={["Candidate", "Recruiter", "HiringManager", "Admin"]}>
+                                <NotificationPreferencesPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
                         path="/recruiter"
                         element={
                             <ProtectedRoute roles={["Recruiter"]}>
@@ -256,6 +266,7 @@ function App() {
                         <Route path="hiring-managers" element={<AdminHiringManagerAssignPage />} />
                         <Route path="audit" element={<AdminAuditPage />} />
                         <Route path="monitoring" element={<AdminMonitoringPage />} />
+                        <Route path="integrations" element={<AdminIntegrationsPage />} />
                         <Route path="analytics" element={<AdminAnalyticsPage />} />
                         <Route path="final-decisions" element={<AdminFinalDecisionsPage />} />
                         <Route path="final-decisions/:applicationId" element={<AdminFinalDecisionDetailPage />} />

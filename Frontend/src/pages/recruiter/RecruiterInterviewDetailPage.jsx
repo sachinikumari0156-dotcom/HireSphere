@@ -38,6 +38,33 @@ export default function RecruiterInterviewDetailPage() {
         }
     }
 
+    async function downloadIcs() {
+        setError(null);
+        try {
+            const response = await api.get(`/interviews/${id}/calendar.ics`, { responseType: "blob" });
+            const url = URL.createObjectURL(response.data);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `interview-${id}.ics`;
+            a.click();
+            URL.revokeObjectURL(url);
+            setMessage("ICS downloaded (Internal/ICS providers). Google and Outlook remain Not Configured without OAuth.");
+        } catch (err) {
+            setError(err.response?.data?.message || "ICS download failed.");
+        }
+    }
+
+    async function syncInternalCalendar() {
+        setError(null);
+        try {
+            const response = await api.post(`/interviews/${id}/calendar/sync`);
+            setMessage(`Calendar sync: ${response.data.calendarSyncStatus}. Google: ${response.data.googleCalendar}. Outlook: ${response.data.outlookCalendar}.`);
+            setItem((prev) => prev ? { ...prev, calendarSyncStatus: response.data.calendarSyncStatus } : prev);
+        } catch (err) {
+            setError(err.response?.data?.message || "Calendar sync failed.");
+        }
+    }
+
     if (loading) return <main className="rec-page"><p>Loading interview…</p></main>;
     if (error && !item) return <main className="rec-page"><p className="rec-error">{error}</p></main>;
     if (!item) return null;
@@ -55,8 +82,11 @@ export default function RecruiterInterviewDetailPage() {
             <p>Status: {item.status} · Candidate response: {item.candidateResponse}</p>
             {item.candidateResponseReason && <p>Candidate reason: {item.candidateResponseReason}</p>}
             <p>Calendar sync: {item.calendarSyncStatus}</p>
+            <p className="rec-muted">Google Calendar: Not Configured · Outlook Calendar: Not Configured (without OAuth credentials)</p>
             <p>Internal notes: {item.internalNotes || "—"}</p>
             <div className="rec-actions">
+                <button type="button" className="rec-btn" onClick={downloadIcs}>Download ICS</button>
+                <button type="button" className="rec-btn secondary" onClick={syncInternalCalendar}>Sync internal calendar</button>
                 <button type="button" className="rec-btn danger" onClick={cancelInterview}>Cancel</button>
                 <Link className="rec-btn secondary" to="/recruiter/interviews">Back</Link>
             </div>

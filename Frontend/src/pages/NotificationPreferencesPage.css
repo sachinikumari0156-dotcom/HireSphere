@@ -1,0 +1,42 @@
+.pref-page {
+  max-width: 40rem;
+  margin: 1.5rem auto;
+  padding: 0 1rem 2rem;
+}
+
+.pref-form {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0 2rem;
+}
+
+.pref-form label {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.pref-muted {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.pref-error {
+  color: #8b1a1a;
+}
+
+.pref-ok {
+  color: #1a5c2e;
+}
+
+.pref-deliveries {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.pref-deliveries li {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.4rem;
+}

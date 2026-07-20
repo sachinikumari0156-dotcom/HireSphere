@@ -1,5 +1,6 @@
 using HireSphere.API.Data;
 using HireSphere.API.Models;
+using HireSphere.API.Services.Integrations;
 
 namespace HireSphere.API.Services;
 
@@ -19,10 +20,12 @@ public interface INotificationWriter
 public sealed class NotificationWriter : INotificationWriter
 {
     private readonly ApplicationDbContext _db;
+    private readonly INotificationDispatcher _dispatcher;
 
-    public NotificationWriter(ApplicationDbContext db)
+    public NotificationWriter(ApplicationDbContext db, INotificationDispatcher dispatcher)
     {
         _db = db;
+        _dispatcher = dispatcher;
     }
 
     public async Task CreateAsync(
@@ -51,6 +54,26 @@ public sealed class NotificationWriter : INotificationWriter
         if (saveChanges)
         {
             await _db.SaveChangesAsync();
+        }
+
+        // Outbox enqueue is best-effort after in-app notification; failures must not corrupt business state.
+        try
+        {
+            var forceSecurity = category.Contains("Password", StringComparison.OrdinalIgnoreCase)
+                || category.Contains("Security", StringComparison.OrdinalIgnoreCase);
+            await _dispatcher.EnqueueAsync(
+                userId,
+                category,
+                title,
+                message,
+                relatedEntityType,
+                relatedEntityId,
+                idempotencyKey: $"{category}:{userId}:{relatedEntityType}:{relatedEntityId}:Email",
+                forceSecurityEmail: forceSecurity);
+        }
+        catch
+        {
+            // Prefer durable in-app notification over failing the parent workflow.
         }
     }
 }

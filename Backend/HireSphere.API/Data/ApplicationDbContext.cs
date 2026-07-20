@@ -52,6 +52,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<ResumeAnalysis> ResumeAnalyses => Set<ResumeAnalysis>();
 
     public DbSet<ExtractedSkill> ExtractedSkills => Set<ExtractedSkill>();
+
+    public DbSet<NotificationOutbox> NotificationOutbox => Set<NotificationOutbox>();
+
+    public DbSet<UserNotificationPreference> UserNotificationPreferences => Set<UserNotificationPreference>();
     public DbSet<AIInsight> AIInsights => Set<AIInsight>();
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();

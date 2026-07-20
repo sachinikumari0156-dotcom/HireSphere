@@ -46,6 +46,19 @@ builder.Services.AddScoped<ICandidateAssessmentService, CandidateAssessmentServi
 builder.Services.AddScoped<ICandidateInterviewService, CandidateInterviewService>();
 builder.Services.AddScoped<ICandidateNotificationService, CandidateNotificationService>();
 builder.Services.AddScoped<INotificationWriter, NotificationWriter>();
+builder.Services.AddScoped<HireSphere.API.Services.Integrations.IEmailProvider, HireSphere.API.Services.Integrations.SmtpEmailProvider>();
+builder.Services.AddScoped<HireSphere.API.Services.Integrations.ISmsProvider, HireSphere.API.Services.Integrations.DevelopmentMockSmsProvider>();
+builder.Services.AddScoped<HireSphere.API.Services.Integrations.ICalendarProvider, HireSphere.API.Services.Integrations.InternalCalendarProvider>();
+builder.Services.AddScoped<HireSphere.API.Services.Integrations.ICalendarProvider, HireSphere.API.Services.Integrations.GoogleCalendarProviderStub>();
+builder.Services.AddScoped<HireSphere.API.Services.Integrations.ICalendarProvider, HireSphere.API.Services.Integrations.OutlookCalendarProviderStub>();
+builder.Services.AddScoped<HireSphere.API.Services.Integrations.IIcsCalendarService, HireSphere.API.Services.Integrations.IcsCalendarService>();
+builder.Services.AddScoped<HireSphere.API.Services.Integrations.INotificationDispatcher, HireSphere.API.Services.Integrations.NotificationDispatcher>();
+builder.Services.AddScoped<HireSphere.API.Services.Integrations.INotificationOutboxProcessor, HireSphere.API.Services.Integrations.NotificationOutboxProcessor>();
+builder.Services.AddScoped<HireSphere.API.Services.Integrations.IIntegrationHealthService, HireSphere.API.Services.Integrations.IntegrationHealthService>();
+if (!builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddHostedService<HireSphere.API.Services.Integrations.NotificationReminderWorker>();
+}
 builder.Services.AddScoped<IJobStatusTransitionService, JobStatusTransitionService>();
 builder.Services.AddScoped<IApplicationStatusTransitionService, ApplicationStatusTransitionService>();
 builder.Services.AddScoped<IRecruiterPortalService, RecruiterPortalService>();

@@ -13,7 +13,7 @@
 | 5 | Recruiter workflows | VERIFIED | Phase 5 feature + E2E verify | SUCCESS | Playwright recruiter journey PASS; LocalDB |
 | 6 | Hiring Manager | VERIFIED | `4bafce2` + `da285d2` + verify | SUCCESS | Playwright HM journey PASS; 21 screenshots; LocalDB |
 | 7 | Administrator | VERIFIED | `3d2b4d7` + `55bef50` + verify | SUCCESS | Playwright Admin journey PASS; 28 screenshots; LocalDB |
-| 8 | AI and integrations | IN PROGRESS | 8.1 pending push | — | Resume parsing/matching; email/SMS/calendar/storage next |
+| 8 | AI and integrations | IN PROGRESS | `d94e08e` + 8.2 push | PARTIAL | 8.1 AI + 8.2 integrations on main; storage/E2E pending |
 | 9 | UI design system | NOT STARTED | — | — | — |
 | 10 | Quality and evidence | NOT STARTED | — | — | — |
 | 11 | Submission pack | NOT STARTED | — | — | — |
