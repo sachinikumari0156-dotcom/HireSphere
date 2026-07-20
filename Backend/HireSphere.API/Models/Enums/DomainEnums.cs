@@ -81,3 +81,10 @@ public enum EmploymentType
     Internship,
     Temporary
 }
+
+public enum RecruiterRequestStatus
+{
+    Pending,
+    Approved,
+    Rejected
+}

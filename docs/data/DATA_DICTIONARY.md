@@ -1,7 +1,7 @@
 # HireSphere — Data Dictionary
 
-**Last updated:** 2026-07-20 (Phase 2)
-**Provider:** Microsoft SQL Server (EF Core 8.0.11)
+**Last updated:** 2026-07-20 (Phase 3)
+**Provider:** Microsoft SQL Server (EF Core 10.0.10)
 **Schema source:** `Backend/HireSphere.API/Models` + `Data/Configurations`
 
 ---
@@ -30,12 +30,29 @@
 | Email | nvarchar(256) | required, indexed | Display email |
 | NormalizedEmail | nvarchar(256) | required, **unique** | Uppercase normalized lookup |
 | PasswordHash | nvarchar(500) | required | BCrypt hash |
-| Role | nvarchar(50) | required | Legacy string role (RBAC expansion in Phase 3) |
+| Role | nvarchar(50) | required | Candidate, Recruiter, HiringManager, Admin |
 | Status | enum | required | Active, Inactive, PendingApproval, Suspended |
 | CreatedAtUtc | datetime2 | required | |
 | UpdatedAtUtc | datetime2 | nullable | |
 
 **FKs:** One-to-one optional profiles (CandidateProfile, RecruiterProfile, HiringManagerProfile); one-to-many Jobs (RecruiterId, Restrict), Applications (CandidateId, Restrict)
+
+### RecruiterAccessRequests
+
+| Column | Type | Constraints | Notes |
+|--------|------|-------------|-------|
+| Id | int | PK, identity | |
+| FullName | nvarchar(200) | required | |
+| BusinessEmail | nvarchar(256) | required | |
+| NormalizedBusinessEmail | nvarchar(256) | required, indexed | |
+| OrganizationName | nvarchar(200) | required | |
+| Message | nvarchar(2000) | nullable | |
+| Status | enum | required | Pending, Approved, Rejected |
+| ReviewedByUserId | int | FK Users, nullable | Admin reviewer |
+| ReviewedAtUtc | datetime2 | nullable | |
+| ReviewNotes | nvarchar(2000) | nullable | |
+| CreatedUserId | int | FK Users, nullable | User created on approve |
+| CreatedAtUtc | datetime2 | required | |
 
 ### Roles
 

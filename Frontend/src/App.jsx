@@ -1,70 +1,70 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./auth/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
-
-
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-
+import RecruiterRequest from "./pages/RecruiterRequest";
+import AccessDenied from "./pages/AccessDenied";
+import SessionExpired from "./pages/SessionExpired";
 import CandidateDashboard from "./pages/CandidateDashboard";
 import RecruiterDashboard from "./pages/RecruiterDashboard";
-
-
+import { AdminDashboard, HiringManagerDashboard } from "./pages/RoleDashboards";
 import "./App.css";
 
-
 function App() {
-
     return (
+        <AuthProvider>
+            <BrowserRouter>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/recruiter-request" element={<RecruiterRequest />} />
+                    <Route path="/access-denied" element={<AccessDenied />} />
+                    <Route path="/session-expired" element={<SessionExpired />} />
 
-        <BrowserRouter>
+                    <Route
+                        path="/candidate/*"
+                        element={
+                            <ProtectedRoute roles={["Candidate"]}>
+                                <CandidateDashboard />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/recruiter/*"
+                        element={
+                            <ProtectedRoute roles={["Recruiter"]}>
+                                <RecruiterDashboard />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/hiring-manager/*"
+                        element={
+                            <ProtectedRoute roles={["HiringManager"]}>
+                                <HiringManagerDashboard />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin/*"
+                        element={
+                            <ProtectedRoute roles={["Admin"]}>
+                                <AdminDashboard />
+                            </ProtectedRoute>
+                        }
+                    />
 
-            <Navbar />
-
-
-            <Routes>
-
-
-                <Route
-                    path="/"
-                    element={<Home />}
-                />
-
-
-                <Route
-                    path="/login"
-                    element={<Login />}
-                />
-
-
-                <Route
-                    path="/register"
-                    element={<Register />}
-                />
-
-
-                <Route
-                    path="/candidate-dashboard"
-                    element={<CandidateDashboard />}
-                />
-
-
-                <Route
-                    path="/recruiter-dashboard"
-                    element={<RecruiterDashboard />}
-                />
-
-
-            </Routes>
-
-
-        </BrowserRouter>
-
+                    <Route path="/candidate-dashboard" element={<Navigate to="/candidate" replace />} />
+                    <Route path="/recruiter-dashboard" element={<Navigate to="/recruiter" replace />} />
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     );
-
 }
-
 
 export default App;

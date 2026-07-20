@@ -5,7 +5,7 @@ using HireSphere.API.Data;
 using HireSphere.API.Models;
 using HireSphere.API.DTOs;
 using HireSphere.API.Models.Enums;
-using System.Security.Claims;
+using HireSphere.API.Services;
 
 namespace HireSphere.API.Controllers
 {
@@ -13,28 +13,43 @@ namespace HireSphere.API.Controllers
     [Route("api/[controller]")]
     public class ApplicationsController : ControllerBase
     {
-
         private readonly ApplicationDbContext _context;
+        private readonly ICurrentUserService _currentUser;
+        private readonly IResourceAuthorizationService _authz;
 
-
-        public ApplicationsController(ApplicationDbContext context)
+        public ApplicationsController(
+            ApplicationDbContext context,
+            ICurrentUserService currentUser,
+            IResourceAuthorizationService authz)
         {
             _context = context;
+            _currentUser = currentUser;
+            _authz = authz;
         }
 
-
-
-        // =====================================
-        // Recruiter View All Applications
-        // GET api/Applications
-        // =====================================
-        [Authorize(Roles = "Recruiter")]
+        [Authorize(Policy = "RecruiterOnly")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ApplicationDto>>> GetApplications()
         {
+            if (_currentUser.UserId is not int recruiterId)
+            {
+                return Unauthorized();
+            }
 
-            var applications = await _context.Applications
-                .AsNoTracking()
+            IQueryable<Application> query = _context.Applications.AsNoTracking();
+
+            if (_currentUser.OrganizationId is int orgId)
+            {
+                query = query.Where(a => _context.Jobs.Any(j =>
+                    j.Id == a.JobId && (j.RecruiterId == recruiterId || j.OrganizationId == orgId)));
+            }
+            else
+            {
+                query = query.Where(a => _context.Jobs.Any(j =>
+                    j.Id == a.JobId && j.RecruiterId == recruiterId));
+            }
+
+            var applications = await query
                 .Select(a => new ApplicationDto
                 {
                     Id = a.Id,
@@ -43,178 +58,75 @@ namespace HireSphere.API.Controllers
                     AppliedDate = a.AppliedDate,
                     Status = a.Status.ToString(),
                     CoverLetter = a.CoverLetter
-
                 })
                 .ToListAsync();
-
 
             return Ok(applications);
         }
 
-
-
-
-
-
-
-        // =====================================
-        // Recruiter Own Job Applications
-        // GET api/Applications/RecruiterApplications
-        // =====================================
-        [Authorize(Roles = "Recruiter")]
+        [Authorize(Policy = "RecruiterOnly")]
         [HttpGet("RecruiterApplications")]
-        public async Task<ActionResult<IEnumerable<ApplicationDto>>>
-            RecruiterApplications()
+        public async Task<ActionResult<IEnumerable<ApplicationDto>>> RecruiterApplications()
         {
-
-            var recruiterId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-
-            if (recruiterId == null)
-            {
-                return Unauthorized();
-            }
-
-
-
-            int id = int.Parse(recruiterId);
-
-
-
-            var applications = await _context.Applications
-                .AsNoTracking()
-                .Where(a => _context.Jobs
-                    .Any(j => j.Id == a.JobId &&
-                              j.RecruiterId == id))
-                .Select(a => new ApplicationDto
-                {
-                    Id = a.Id,
-                    CandidateId = a.CandidateId,
-                    JobId = a.JobId,
-                    AppliedDate = a.AppliedDate,
-                    Status = a.Status.ToString(),
-                    CoverLetter = a.CoverLetter
-
-                })
-                .ToListAsync();
-
-
-
-            return Ok(applications);
-
+            return await GetApplications();
         }
 
-
-
-
-
-
-
-        [Authorize(Roles = "Recruiter")]
+        [Authorize(Policy = "RecruiterOnly")]
         [HttpGet("RecruiterApplicationDetails")]
-        public async Task<ActionResult<IEnumerable<ApplicationDetailsDto>>>
-     GetRecruiterApplicationDetails()
+        public async Task<ActionResult<IEnumerable<ApplicationDetailsDto>>> GetRecruiterApplicationDetails()
         {
-            var recruiterId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-
-            if (recruiterId == null)
+            if (_currentUser.UserId is not int id)
             {
                 return Unauthorized();
             }
-
-
-            int id = int.Parse(recruiterId);
-
-
 
             var applications = await _context.Applications
                 .Include(a => a.Job)
                 .AsNoTracking()
                 .Where(a => a.Job != null &&
-                            a.Job.RecruiterId == id)
+                            (a.Job.RecruiterId == id
+                             || (_currentUser.OrganizationId != null
+                                 && a.Job.OrganizationId == _currentUser.OrganizationId)))
                 .Select(a => new ApplicationDetailsDto
                 {
                     Id = a.Id,
-
                     CandidateId = a.CandidateId,
-
-
                     CandidateName = _context.CandidateProfiles
                         .Where(c => c.UserId == a.CandidateId)
                         .Select(c => c.FullName)
                         .FirstOrDefault(),
-
-
                     PhoneNumber = _context.CandidateProfiles
                         .Where(c => c.UserId == a.CandidateId)
                         .Select(c => c.PhoneNumber)
                         .FirstOrDefault(),
-
-
                     Skills = _context.CandidateProfiles
                         .Where(c => c.UserId == a.CandidateId)
                         .Select(c => c.Skills)
                         .FirstOrDefault(),
-
-
                     ResumePath = _context.CandidateProfiles
                         .Where(c => c.UserId == a.CandidateId)
                         .Select(c => c.ResumePath)
                         .FirstOrDefault(),
-
-
                     JobId = a.JobId,
-
                     JobTitle = a.Job!.Title,
-
                     JobDescription = a.Job!.Description,
-
-
                     AppliedDate = a.AppliedDate,
-
                     Status = a.Status.ToString(),
-
                     CoverLetter = a.CoverLetter
-
                 })
                 .ToListAsync();
-
 
             return Ok(applications);
         }
 
-
-
-        // =====================================
-        // Candidate View Own Applications
-        // GET api/Applications/MyApplications
-        // =====================================
-        [Authorize(Roles = "Candidate")]
+        [Authorize(Policy = "CandidateOnly")]
         [HttpGet("MyApplications")]
-        public async Task<ActionResult<IEnumerable<ApplicationDto>>>
-            MyApplications()
+        public async Task<ActionResult<IEnumerable<ApplicationDto>>> MyApplications()
         {
-
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-
-            if (userId == null)
+            if (_currentUser.UserId is not int id)
             {
                 return Unauthorized();
             }
-
-
-
-            int id = int.Parse(userId);
-
-
 
             var applications = await _context.Applications
                 .AsNoTracking()
@@ -227,33 +139,16 @@ namespace HireSphere.API.Controllers
                     AppliedDate = a.AppliedDate,
                     Status = a.Status.ToString(),
                     CoverLetter = a.CoverLetter
-
                 })
                 .ToListAsync();
 
-
-
             return Ok(applications);
-
         }
 
-
-
-
-
-
-
-
-        // =====================================
-        // Get Single Application
-        // GET api/Applications/{id}
-        // =====================================
         [Authorize]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ApplicationDto>>
-            GetApplication(int id)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<ApplicationDto>> GetApplication(int id)
         {
-
             var application = await _context.Applications
                 .AsNoTracking()
                 .Where(a => a.Id == id)
@@ -265,188 +160,115 @@ namespace HireSphere.API.Controllers
                     AppliedDate = a.AppliedDate,
                     Status = a.Status.ToString(),
                     CoverLetter = a.CoverLetter
-
                 })
                 .FirstOrDefaultAsync();
-
-
 
             if (application == null)
             {
                 return NotFound();
             }
 
-
+            if (_currentUser.IsInRole("Candidate"))
+            {
+                if (!_authz.RequireSelf(application.CandidateId))
+                {
+                    return Forbid();
+                }
+            }
+            else if (_currentUser.IsInRole("Recruiter"))
+            {
+                if (!await _authz.RecruiterOwnsJobAsync(application.JobId))
+                {
+                    return Forbid();
+                }
+            }
+            else if (!_currentUser.IsInRole("Admin") && !_currentUser.IsInRole("HiringManager"))
+            {
+                return Forbid();
+            }
 
             return Ok(application);
-
         }
 
-
-
-
-
-
-
-        // =====================================
-        // Candidate Apply Job
-        // POST api/Applications
-        // =====================================
-        [Authorize(Roles = "Candidate")]
+        [Authorize(Policy = "CandidateOnly")]
         [HttpPost]
-        public async Task<ActionResult<ApplicationDto>>
-            Apply(Application application)
+        public async Task<ActionResult<ApplicationDto>> Apply(Application application)
         {
-
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-
-            if (userId == null)
+            if (_currentUser.UserId is not int userId)
             {
                 return Unauthorized();
             }
 
-
-
-            var job = await _context.Jobs
-                .FirstOrDefaultAsync(j =>
-                    j.Id == application.JobId);
-
-
-
+            var job = await _context.Jobs.FirstOrDefaultAsync(j => j.Id == application.JobId);
             if (job == null)
             {
                 return BadRequest("Job not found");
             }
 
-
-
-            application.CandidateId = int.Parse(userId);
-
-            application.AppliedDate = DateTime.Now;
-
+            application.CandidateId = userId;
+            application.AppliedDate = DateTime.UtcNow;
             application.Status = ApplicationStatus.Pending;
             application.CreatedAtUtc = DateTime.UtcNow;
 
-
-
             _context.Applications.Add(application);
-
-
             await _context.SaveChangesAsync();
 
+            var dto = new ApplicationDto
+            {
+                Id = application.Id,
+                CandidateId = application.CandidateId,
+                JobId = application.JobId,
+                AppliedDate = application.AppliedDate,
+                Status = application.Status.ToString(),
+                CoverLetter = application.CoverLetter
+            };
 
-
-            return CreatedAtAction(
-                nameof(GetApplication),
-                new { id = application.Id },
-                application
-            );
-
+            return CreatedAtAction(nameof(GetApplication), new { id = application.Id }, dto);
         }
 
-
-
-
-
-
-
-
-        // =====================================
-        // Recruiter Accept / Reject
-        // PUT api/Applications/{id}
-        // =====================================
-        [Authorize(Roles = "Recruiter")]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateApplication(
-            int id,
-            Application application)
+        [Authorize(Policy = "RecruiterOnly")]
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateApplication(int id, Application application)
         {
-
-            var existing = await _context.Applications
-                .FindAsync(id);
-
-
-
+            var existing = await _context.Applications.FindAsync(id);
             if (existing == null)
             {
                 return NotFound();
             }
 
-
+            if (!await _authz.RecruiterOwnsJobAsync(existing.JobId))
+            {
+                return Forbid();
+            }
 
             existing.Status = application.Status;
-
-
-
             await _context.SaveChangesAsync();
-
-
-
             return NoContent();
-
         }
 
-
-
-
-
-
-
-
-        // =====================================
-        // Candidate Delete Application
-        // DELETE api/Applications/{id}
-        // =====================================
-        [Authorize(Roles = "Candidate")]
-        [HttpDelete("{id}")]
+        [Authorize(Policy = "CandidateOnly")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteApplication(int id)
         {
-
-            var application = await _context.Applications
-                .FindAsync(id);
-
-
-
+            var application = await _context.Applications.FindAsync(id);
             if (application == null)
             {
                 return NotFound();
             }
 
-
-
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-
-
-            if (userId == null)
+            if (_currentUser.UserId is not int userId)
             {
                 return Unauthorized();
             }
 
-
-
-            if (application.CandidateId != int.Parse(userId))
+            if (application.CandidateId != userId)
             {
                 return Forbid();
             }
 
-
-
             _context.Applications.Remove(application);
-
-
             await _context.SaveChangesAsync();
-
-
-
             return NoContent();
-
         }
-
     }
 }

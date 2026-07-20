@@ -58,3 +58,19 @@
 - API smoke test: Swagger 200 against SQL Server
 - Frontend lint/build regression: PASS
 - M-B02 promoted to VERIFIED
+
+## Phase 3 — 2026-07-20
+
+**Commit message:** `feat(auth): implement secure role based access and account workflows`
+**Status:** TESTED
+
+- Service-based auth: AuthService, TokenService, PasswordService, CurrentUserService, AdminUserService, ResourceAuthorizationService
+- Candidate self-registration; recruiter access-request + admin approve/reject; admin role/status/org APIs
+- Authorization policies for all four roles + combined recruitment policies
+- Ownership/org scoping on candidate profiles, applications, and jobs
+- Frontend AuthContext, protected role routes, Access Denied / Session Expired, recruiter request page
+- Migration `AddRecruiterAccessRequests` applied to HireSphereDev
+- Target framework aligned to net10.0 to match installed ASP.NET runtime
+- Backend tests: 33 passed
+- Frontend: lint/build PASS
+- Not claimed: password reset, email verification, refresh-token rotation, account lockout

@@ -1,7 +1,7 @@
 # HireSphere — Coursework Requirement Matrix
 
 **Course:** SE205.3 Software Architecture 2026
-**Last updated:** 2026-07-20 (Phase 2 data model)
+**Last updated:** 2026-07-20 (Phase 3 auth/RBAC)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED — EXTERNAL CREDENTIAL | DEFERRED — OPTIONAL BONUS
 
 ---
@@ -12,16 +12,16 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-R01 | Candidate Portal | IN PROGRESS | Register, login, partial dashboard; missing resume, AI recs, assessments |
-| M-R02 | Recruiter Portal | IN PROGRESS | API for jobs/applications; UI is placeholder |
-| M-R03 | Hiring Manager Dashboard | NOT STARTED | No routes, models, or APIs |
-| M-R04 | Administrator Dashboard | NOT STARTED | No routes, models, or APIs |
+| M-R01 | Candidate Portal | IN PROGRESS | Protected `/candidate/*` shell + dashboard; Phase 4 expands features |
+| M-R02 | Recruiter Portal | IN PROGRESS | Protected `/recruiter/*` shell + dashboard; request flow added |
+| M-R03 | Hiring Manager Dashboard | IN PROGRESS | Protected `/hiring-manager/*` shell |
+| M-R04 | Administrator Dashboard | IN PROGRESS | Protected `/admin/*` shell + admin APIs |
 
 ### Candidate features
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-C01 | Registration and secure authentication | IN PROGRESS | Phase 1: BCrypt hashing; Candidate-only public register; full RBAC later |
+| M-C01 | Registration and secure authentication | TESTED | Candidate register + login + JWT + `/auth/me`; 33 backend tests |
 | M-C02 | Professional profile management | IN PROGRESS | `CandidateProfilesController`; no full UI |
 | M-C03 | CV/resume upload and management | NOT STARTED | `ResumePath` field only; no upload API |
 | M-C04 | Job search and application submission | IN PROGRESS | API + partial dashboard |
@@ -52,11 +52,11 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-A01 | User management | IN PROGRESS | `UsersController` secured; Admin CRUD; list/get DTO-safe |
-| M-A02 | Role and permission management | IN PROGRESS | RBAC tables seeded; admin API pending |
+| M-A01 | User management | TESTED | Admin user list/status/role/org APIs + audit logs |
+| M-A02 | Role and permission management | TESTED | Policies + admin role assignment; permission claims on JWT |
 | M-A03 | System monitoring | NOT STARTED | — |
 | M-A04 | Recruitment analytics dashboard | NOT STARTED | — |
-| M-A05 | Organization and department management | NOT STARTED | Models + seed; API pending |
+| M-A05 | Organization and department management | IN PROGRESS | Models + admin org assignment on users |
 
 ### Backend and database
 
@@ -72,13 +72,13 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-S01 | JWT authentication | IN PROGRESS | Token issued; validation configured; key via secrets/env |
-| M-S02 | RBAC | IN PROGRESS | Role claims; public privileged registration blocked |
-| M-S03 | Secure password hashing | IMPLEMENTED | BCrypt hash on register; verify on login; UsersController admin paths |
+| M-S01 | JWT authentication | TESTED | TokenService + validation + current-user restoration |
+| M-S02 | RBAC | TESTED | Role policies; public privileged registration impossible |
+| M-S03 | Secure password hashing | TESTED | BCrypt; hash never serialized; change-password requires current |
 | M-S04 | HTTPS-ready configuration | IN PROGRESS | Dev HTTPS profile exists |
-| M-S05 | Audit logging | IN PROGRESS | AuditLog entity + configuration; API pending |
-| M-S06 | Data privacy measures | IN PROGRESS | UserDto excludes PasswordHash; tests verify |
-| M-S07 | Resource ownership checks | IN PROGRESS | Partial in applications/jobs |
+| M-S05 | Audit logging | TESTED | Auth and admin sensitive actions write AuditLogs |
+| M-S06 | Data privacy measures | TESTED | CurrentUserDto / UserDto exclude PasswordHash |
+| M-S07 | Resource ownership checks | TESTED | Candidate/recruiter org scoping on core controllers |
 | M-S08 | Secure secret and document handling | IMPLEMENTED | Tracked secrets replaced with placeholders; rotation documented |
 
 ### AI and analytics
@@ -123,7 +123,7 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-T01 | Unit / API / auth tests | TESTED | `HireSphere.API.Tests` — 17 passing (SQLite + optional SQL Server verification) |
+| M-T01 | Unit / API / auth tests | TESTED | `HireSphere.API.Tests` — 33 passing (auth/RBAC + relational + SQL Server checks) |
 | M-T02 | Integration tests | NOT STARTED | — |
 | M-T03 | UAT scenarios (18 mandatory) | NOT STARTED | — |
 | M-T04 | Postman and Swagger evidence | NOT STARTED | Swagger only |

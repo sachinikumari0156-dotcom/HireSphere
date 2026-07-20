@@ -1,17 +1,20 @@
-using Microsoft.EntityFrameworkCore;
-using HireSphere.API.Data;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
+using HireSphere.API.Data;
+using HireSphere.API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile(
+    $"appsettings.{builder.Environment.EnvironmentName}.local.json",
+    optional: true,
+    reloadOnChange: true);
+builder.Configuration.AddEnvironmentVariables();
 
-// Controllers + JSON cycle handling
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -19,7 +22,14 @@ builder.Services.AddControllers()
             ReferenceHandler.IgnoreCycles;
     });
 
-// CORS - restrict via configuration (Phase 1)
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAdminUserService, AdminUserService>();
+builder.Services.AddScoped<IResourceAuthorizationService, ResourceAuthorizationService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
@@ -38,72 +48,62 @@ builder.Services.AddCors(options =>
     });
 });
 
-
-// Database Connection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
 
+if (!builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseSqlServer(connectionString));
+}
 
-// JWT Authentication
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme =
-        JwtBearerDefaults.AuthenticationScheme;
-
-    options.DefaultChallengeScheme =
-        JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options =>
 {
+    options.MapInboundClaims = false;
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
-
         ValidateAudience = true,
-
         ValidateLifetime = true,
-
         ValidateIssuerSigningKey = true,
-
-
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
-
         ValidAudience = builder.Configuration["Jwt:Audience"],
-
-
+        RoleClaimType = "role",
+        NameClaimType = "uid",
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(
-                builder.Configuration["Jwt:Key"]!
-            )
-        )
+            Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
     };
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("CandidateOnly", policy => policy.RequireRole("Candidate"));
+    options.AddPolicy("RecruiterOnly", policy => policy.RequireRole("Recruiter"));
+    options.AddPolicy("HiringManagerOnly", policy => policy.RequireRole("HiringManager"));
+    options.AddPolicy("AdministratorOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("RecruiterOrAdministrator", policy => policy.RequireRole("Recruiter", "Admin"));
+    options.AddPolicy("HiringManagerOrAdministrator", policy => policy.RequireRole("HiringManager", "Admin"));
+    options.AddPolicy("RecruitmentTeam", policy => policy.RequireRole("Recruiter", "HiringManager", "Admin"));
+});
 
-// Swagger + JWT Authorization
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer",
         new OpenApiSecurityScheme
         {
             Name = "Authorization",
-
             Type = SecuritySchemeType.Http,
-
             Scheme = "bearer",
-
             BearerFormat = "JWT",
-
             In = ParameterLocation.Header,
-
-            Description =
-            "Enter JWT Token like: Bearer {your token}"
+            Description = "Enter JWT Token like: Bearer {your token}"
         });
-
 
     options.AddSecurityRequirement(
         new OpenApiSecurityRequirement
@@ -113,18 +113,14 @@ builder.Services.AddSwaggerGen(options =>
                 {
                     Reference = new OpenApiReference
                     {
-                        Type =
-                        ReferenceType.SecurityScheme,
-
+                        Type = ReferenceType.SecurityScheme,
                         Id = "Bearer"
                     }
                 },
-
-                new string[] {}
+                Array.Empty<string>()
             }
         });
 });
-
 
 var app = builder.Build();
 

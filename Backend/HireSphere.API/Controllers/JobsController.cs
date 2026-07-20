@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using HireSphere.API.Data;
 using HireSphere.API.Models;
 using HireSphere.API.DTOs;
+using HireSphere.API.Services;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace HireSphere.API.Controllers
 {
@@ -12,24 +12,23 @@ namespace HireSphere.API.Controllers
     [Route("api/[controller]")]
     public class JobsController : ControllerBase
     {
-
         private readonly ApplicationDbContext _context;
+        private readonly ICurrentUserService _currentUser;
+        private readonly IResourceAuthorizationService _authz;
 
-
-        public JobsController(ApplicationDbContext context)
+        public JobsController(
+            ApplicationDbContext context,
+            ICurrentUserService currentUser,
+            IResourceAuthorizationService authz)
         {
             _context = context;
+            _currentUser = currentUser;
+            _authz = authz;
         }
 
-
-
-
-        // GET: api/Jobs
-        // Anyone can view jobs
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JobDto>>> GetJobs()
         {
-
             var jobs = await _context.Jobs
                 .AsNoTracking()
                 .Select(j => new JobDto
@@ -44,26 +43,17 @@ namespace HireSphere.API.Controllers
                 })
                 .ToListAsync();
 
-
             return Ok(jobs);
         }
 
-
-
-
-
-
-        // GET: api/Jobs/search?keyword=React
         [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<JobDto>>> SearchJobs(string keyword)
         {
-
             var jobs = await _context.Jobs
                 .Where(j =>
                     j.Title.Contains(keyword) ||
                     j.RequiredSkills.Contains(keyword) ||
-                    j.Location.Contains(keyword)
-                )
+                    j.Location.Contains(keyword))
                 .Select(j => new JobDto
                 {
                     Id = j.Id,
@@ -76,21 +66,12 @@ namespace HireSphere.API.Controllers
                 })
                 .ToListAsync();
 
-
             return Ok(jobs);
         }
 
-
-
-
-
-
-
-        // GET: api/Jobs/1
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<JobDto>> GetJob(int id)
         {
-
             var job = await _context.Jobs
                 .AsNoTracking()
                 .Where(j => j.Id == id)
@@ -106,45 +87,27 @@ namespace HireSphere.API.Controllers
                 })
                 .FirstOrDefaultAsync();
 
-
-
             if (job == null)
             {
                 return NotFound();
             }
 
-
             return Ok(job);
         }
 
-
-
-
-
-
-
-
-        // GET: api/Jobs/MyJobs
-        // Recruiter own jobs
-        [Authorize(Roles = "Recruiter")]
+        [Authorize(Policy = "RecruiterOnly")]
         [HttpGet("MyJobs")]
         public async Task<ActionResult<IEnumerable<JobDto>>> MyJobs()
         {
-
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-
-            if (userId == null)
+            if (_currentUser.UserId is not int userId)
             {
                 return Unauthorized();
             }
 
-
-
             var jobs = await _context.Jobs
-                .Where(j => j.RecruiterId == int.Parse(userId))
+                .Where(j => j.RecruiterId == userId
+                    || (_currentUser.OrganizationId != null
+                        && j.OrganizationId == _currentUser.OrganizationId))
                 .Select(j => new JobDto
                 {
                     Id = j.Id,
@@ -157,52 +120,26 @@ namespace HireSphere.API.Controllers
                 })
                 .ToListAsync();
 
-
-
             return Ok(jobs);
-
         }
 
-
-
-
-
-
-
-
-
-        // POST: api/Jobs
-        [Authorize(Roles = "Recruiter")]
+        [Authorize(Policy = "RecruiterOnly")]
         [HttpPost]
         public async Task<ActionResult<JobDto>> CreateJob(Job job)
         {
-
-
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-
-            if (userId == null)
+            if (_currentUser.UserId is not int userId)
             {
                 return Unauthorized();
             }
 
-
-
-            job.RecruiterId = int.Parse(userId);
-
-            job.PostedDate = DateTime.Now;
-
-
+            job.RecruiterId = userId;
+            job.OrganizationId = _currentUser.OrganizationId;
+            job.DepartmentId = _currentUser.DepartmentId;
+            job.PostedDate = DateTime.UtcNow;
+            job.CreatedAtUtc = DateTime.UtcNow;
 
             _context.Jobs.Add(job);
-
-
             await _context.SaveChangesAsync();
-
-
-
 
             var dto = new JobDto
             {
@@ -215,143 +152,62 @@ namespace HireSphere.API.Controllers
                 RecruiterId = job.RecruiterId
             };
 
-
-
-            return CreatedAtAction(
-                nameof(GetJob),
-                new { id = job.Id },
-                dto
-            );
-
+            return CreatedAtAction(nameof(GetJob), new { id = job.Id }, dto);
         }
 
-
-
-
-
-
-
-
-
-        // PUT: api/Jobs/1
-        [Authorize(Roles = "Recruiter")]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateJob(
-            int id,
-            Job job
-        )
+        [Authorize(Policy = "RecruiterOnly")]
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateJob(int id, Job job)
         {
-
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-
-            if (userId == null)
+            if (_currentUser.UserId is null)
             {
                 return Unauthorized();
             }
 
-
-
-            var existingJob = await _context.Jobs
-                .FirstOrDefaultAsync(j => j.Id == id);
-
-
-
+            var existingJob = await _context.Jobs.FirstOrDefaultAsync(j => j.Id == id);
             if (existingJob == null)
             {
                 return NotFound();
             }
 
-
-
-
-            if (existingJob.RecruiterId != int.Parse(userId))
+            if (!await _authz.RecruiterOwnsJobAsync(id))
             {
                 return Forbid();
             }
 
-
-
-
             existingJob.Title = job.Title;
-
             existingJob.Description = job.Description;
-
             existingJob.RequiredSkills = job.RequiredSkills;
-
             existingJob.Location = job.Location;
-
-
+            existingJob.UpdatedAtUtc = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
-
-
-
             return NoContent();
-
         }
 
-
-
-
-
-
-
-
-
-        // DELETE: api/Jobs/1
-        [Authorize(Roles = "Recruiter")]
-        [HttpDelete("{id}")]
+        [Authorize(Policy = "RecruiterOnly")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteJob(int id)
         {
-
-
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-
-            if (userId == null)
+            if (_currentUser.UserId is null)
             {
                 return Unauthorized();
             }
 
-
-
-            var job = await _context.Jobs
-                .FirstOrDefaultAsync(j => j.Id == id);
-
-
-
+            var job = await _context.Jobs.FirstOrDefaultAsync(j => j.Id == id);
             if (job == null)
             {
                 return NotFound();
             }
 
-
-
-
-            if (job.RecruiterId != int.Parse(userId))
+            if (!await _authz.RecruiterOwnsJobAsync(id))
             {
                 return Forbid();
             }
 
-
-
-
             _context.Jobs.Remove(job);
-
-
             await _context.SaveChangesAsync();
-
-
-
             return NoContent();
-
         }
-
-
     }
 }

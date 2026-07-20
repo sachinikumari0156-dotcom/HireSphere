@@ -47,6 +47,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<AIInsight> AIInsights => Set<AIInsight>();
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
+    public DbSet<RecruiterAccessRequest> RecruiterAccessRequests => Set<RecruiterAccessRequest>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

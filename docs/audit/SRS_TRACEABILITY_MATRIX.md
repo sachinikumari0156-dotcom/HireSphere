@@ -6,9 +6,9 @@
 
 | SRS Area | Requirement summary | Matrix ID | Status | Phase evidence |
 |----------|---------------------|-----------|--------|----------------|
-| Auth | Secure registration / login | M-C01, M-S01, M-S03 | IN PROGRESS | Phase 1: BCrypt hashing; Candidate-only public register |
-| Auth | JWT-based API auth | M-S01 | IN PROGRESS | JWT still issued; secrets externalized |
-| Auth | Privileged role control | M-S02 | IN PROGRESS | Public Admin/Recruiter/HM registration blocked; unit + API tests |
+| Auth | Secure registration / login | M-C01, M-S01, M-S03 | TESTED | Candidate register/login; BCrypt; terms; sanitized failures |
+| Auth | JWT-based API auth | M-S01 | TESTED | TokenService + issuer/audience/lifetime validation |
+| Auth | Privileged role control | M-S02 | TESTED | No public role field; admin-only privileged assignment |
 | Security | Secret handling | M-S08 | IMPLEMENTED | Tracked secrets replaced with placeholders |
 | Security | CORS restriction | M-S08 / quality | IMPLEMENTED | Configured `Cors:AllowedOrigins` |
 | Security | Error sanitization | Q-04 (partial) | IMPLEMENTED | Global exception handler returns safe JSON |

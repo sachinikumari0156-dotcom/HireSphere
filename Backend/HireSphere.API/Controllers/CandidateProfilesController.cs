@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using HireSphere.API.Data;
 using HireSphere.API.Models;
 using HireSphere.API.DTOs;
+using HireSphere.API.Services;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace HireSphere.API.Controllers
 {
@@ -13,16 +13,20 @@ namespace HireSphere.API.Controllers
     public class CandidateProfilesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly ICurrentUserService _currentUser;
+        private readonly IResourceAuthorizationService _authz;
 
-        public CandidateProfilesController(ApplicationDbContext context)
+        public CandidateProfilesController(
+            ApplicationDbContext context,
+            ICurrentUserService currentUser,
+            IResourceAuthorizationService authz)
         {
             _context = context;
+            _currentUser = currentUser;
+            _authz = authz;
         }
 
-
-
-        // GET: api/CandidateProfiles
-        [Authorize]
+        [Authorize(Policy = "RecruitmentTeam")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CandidateProfileDto>>> GetCandidateProfiles()
         {
@@ -40,17 +44,43 @@ namespace HireSphere.API.Controllers
                 })
                 .ToListAsync();
 
-
             return profiles;
         }
 
+        [Authorize(Policy = "CandidateOnly")]
+        [HttpGet("me")]
+        public async Task<ActionResult<CandidateProfileDto>> GetMyProfile()
+        {
+            if (_currentUser.UserId is not int userId)
+            {
+                return Unauthorized();
+            }
 
+            var profile = await _context.CandidateProfiles
+                .AsNoTracking()
+                .Where(c => c.UserId == userId)
+                .Select(c => new CandidateProfileDto
+                {
+                    Id = c.Id,
+                    UserId = c.UserId,
+                    FullName = c.FullName,
+                    PhoneNumber = c.PhoneNumber,
+                    Address = c.Address,
+                    Skills = c.Skills,
+                    ResumePath = c.ResumePath
+                })
+                .FirstOrDefaultAsync();
 
+            if (profile == null)
+            {
+                return NotFound();
+            }
 
+            return profile;
+        }
 
-        // GET: api/CandidateProfiles/1
         [Authorize]
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<CandidateProfileDto>> GetCandidateProfile(int id)
         {
             var profile = await _context.CandidateProfiles
@@ -68,66 +98,49 @@ namespace HireSphere.API.Controllers
                 })
                 .FirstOrDefaultAsync();
 
-
             if (profile == null)
             {
                 return NotFound();
             }
 
+            if (_currentUser.IsInRole("Candidate")
+                && !_authz.RequireSelf(profile.UserId))
+            {
+                return Forbid();
+            }
+
+            if (!_currentUser.IsInRole("Candidate")
+                && !_currentUser.IsInRole("Recruiter")
+                && !_currentUser.IsInRole("HiringManager")
+                && !_currentUser.IsInRole("Admin"))
+            {
+                return Forbid();
+            }
 
             return profile;
         }
 
-
-
-
-
-        // POST: api/CandidateProfiles
-        // Candidate create own profile
-        [Authorize(Roles = "Candidate")]
+        [Authorize(Policy = "CandidateOnly")]
         [HttpPost]
         public async Task<ActionResult<CandidateProfileDto>> CreateCandidateProfile(
             CandidateProfile profile)
         {
-
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-
-            if (userId == null)
+            if (_currentUser.UserId is not int id)
             {
                 return Unauthorized();
             }
 
-
-
-            int id = int.Parse(userId);
-
-
-
             var existingProfile = await _context.CandidateProfiles
                 .FirstOrDefaultAsync(c => c.UserId == id);
-
-
 
             if (existingProfile != null)
             {
                 return BadRequest("Profile already exists");
             }
 
-
-
             profile.UserId = id;
-
-
-
             _context.CandidateProfiles.Add(profile);
-
-
             await _context.SaveChangesAsync();
-
-
 
             var dto = new CandidateProfileDto
             {
@@ -140,55 +153,30 @@ namespace HireSphere.API.Controllers
                 ResumePath = profile.ResumePath
             };
 
-
-
             return CreatedAtAction(
                 nameof(GetCandidateProfile),
                 new { id = profile.Id },
-                dto
-            );
+                dto);
         }
 
-
-
-
-
-        // PUT: api/CandidateProfiles/1
-        // Candidate update own profile
-        [Authorize(Roles = "Candidate")]
-        [HttpPut("{id}")]
+        [Authorize(Policy = "CandidateOnly")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateCandidateProfile(
             int id,
             CandidateProfile profile)
         {
-
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-
-            if (userId == null)
+            if (_currentUser.UserId is not int userId)
             {
                 return Unauthorized();
             }
 
-
-
-            var existingProfile =
-                await _context.CandidateProfiles
-                .FirstOrDefaultAsync(
-                    c => c.Id == id &&
-                    c.UserId == int.Parse(userId)
-                );
-
-
+            var existingProfile = await _context.CandidateProfiles
+                .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId);
 
             if (existingProfile == null)
             {
                 return NotFound();
             }
-
-
 
             existingProfile.FullName = profile.FullName;
             existingProfile.PhoneNumber = profile.PhoneNumber;
@@ -196,60 +184,29 @@ namespace HireSphere.API.Controllers
             existingProfile.Skills = profile.Skills;
             existingProfile.ResumePath = profile.ResumePath;
 
-
-
             await _context.SaveChangesAsync();
-
-
-
             return NoContent();
         }
 
-
-
-
-
-        // DELETE: api/CandidateProfiles/1
-        [Authorize(Roles = "Candidate")]
-        [HttpDelete("{id}")]
+        [Authorize(Policy = "CandidateOnly")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteCandidateProfile(int id)
         {
-
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier
-            );
-
-
-            if (userId == null)
+            if (_currentUser.UserId is not int userId)
             {
                 return Unauthorized();
             }
 
-
-
-            var profile =
-                await _context.CandidateProfiles
-                .FirstOrDefaultAsync(
-                    c => c.Id == id &&
-                    c.UserId == int.Parse(userId)
-                );
-
-
+            var profile = await _context.CandidateProfiles
+                .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId);
 
             if (profile == null)
             {
                 return NotFound();
             }
 
-
-
             _context.CandidateProfiles.Remove(profile);
-
-
             await _context.SaveChangesAsync();
-
-
-
             return NoContent();
         }
     }
