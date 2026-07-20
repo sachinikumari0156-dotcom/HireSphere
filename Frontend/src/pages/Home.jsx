@@ -11,19 +11,16 @@ function Home() {
                 <div className="home-hero-content">
 
                     <span className="home-eyebrow">
-                        AI-Powered Recruitment Platform
+                        HireSphere recruitment platform
                     </span>
 
                     <h1 className="home-headline">
-                        Find the right job.
-                        <br />
-                        Find the right talent.
+                        HireSphere
                     </h1>
 
                     <p className="home-subcopy">
-                        HireSphere connects candidates and recruiters through
-                        a smarter, faster hiring process. Post jobs, apply in
-                        seconds, and track every step in one place.
+                        Find the right job. Find the right talent. Post roles, apply with confidence,
+                        and track every hiring step in one place — with human review on AI insights.
                     </p>
 
                     <div className="home-cta-group">

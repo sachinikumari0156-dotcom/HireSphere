@@ -1,5 +1,13 @@
 # HireSphere — Implementation Changelog
 
+## Phase 9.2 — 2026-07-21
+
+**Commit message:** `feat(ui): complete responsive role portal experiences`
+
+- Responsive utilities, FilterDrawer, table→card transforms, friendly status labels
+- Public/auth empty states, analytics chart summary + table alternative, provider chip
+- Candidate/Recruiter/Admin portal responsive polish; RESPONSIVE_STRATEGY.md
+
 ## Phase 9.1 — 2026-07-21
 
 **Commit message:** `feat(ui): establish accessible HireSphere design system`

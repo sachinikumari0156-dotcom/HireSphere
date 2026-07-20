@@ -4,9 +4,11 @@
 }
 
 .home-hero {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    background:
+      radial-gradient(900px 420px at 20% 0%, rgba(13, 148, 136, 0.35), transparent 55%),
+      linear-gradient(145deg, #0f172a 0%, #083833 100%);
     color: #fff;
-    padding: 100px 24px;
+    padding: clamp(4rem, 12vw, 7rem) 1.5rem;
     text-align: center;
 }
 
@@ -20,15 +22,16 @@
     font-size: 13px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: #93c5fd;
+    color: #99f6e4;
     margin-bottom: 16px;
     font-weight: 600;
 }
 
 .home-headline {
-    font-size: 42px;
+    font-family: var(--hs-font-display, Georgia, serif);
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.15;
     margin: 0 0 20px;
 }
 
@@ -47,7 +50,7 @@
 }
 
 .home-cta-primary {
-    background: #2563eb;
+    background: #0d5f59;
     color: #fff;
     padding: 14px 28px;
     border-radius: 8px;
@@ -57,7 +60,7 @@
 }
 
     .home-cta-primary:hover {
-        background: #1d4ed8;
+        background: #0f766e;
     }
 
 .home-cta-secondary {

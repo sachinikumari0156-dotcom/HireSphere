@@ -81,7 +81,7 @@ describe('Phase 8.2 integrations UI', () => {
         );
 
         expect(await screen.findByRole('heading', { name: /integration providers/i })).toBeInTheDocument();
-        expect(screen.getAllByText(/NotConfigured/i).length).toBeGreaterThan(0);
+        expect(screen.getAllByText(/not configured/i).length).toBeGreaterThan(0);
         expect(screen.getByRole('button', { name: /retry/i })).toBeInTheDocument();
         fireEvent.click(screen.getByRole('button', { name: /retry/i }));
         expect(api.post).toHaveBeenCalled();

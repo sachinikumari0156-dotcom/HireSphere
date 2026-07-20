@@ -15,5 +15,8 @@
 | Modal | Modal.jsx | focus trap, Escape, restore focus |
 | Tabs / Accordion / Pagination / FileUpload | patterns | keyboard support |
 | RoleShell | layout | mobile menu, Escape |
+| FilterDrawer | FilterDrawer.jsx | mobile filter toggle; desktop inline |
+
+`friendlyStatus()` in `utils/statusLabels.js` maps API enums to user-facing labels.
 
 Additional domain pages continue to use existing portal CSS classes while adopting tokens/layout shell.

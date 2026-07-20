@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../api/axios";
+import { friendlyStatus } from "../../utils/statusLabels";
 
 export default function AdminIntegrationsPage() {
     const [statuses, setStatuses] = useState([]);
@@ -69,12 +70,13 @@ export default function AdminIntegrationsPage() {
         <main className="admin-page">
             <h2>Integration providers</h2>
             <p className="admin-muted">Statuses are truthful. Secrets are never shown. External providers remain Not Configured until verified with real credentials.</p>
+            <p><span className="portal-provider-chip">Provider Not Configured</span> appears when credentials are absent.</p>
             {message && <p className="admin-ok">{message}</p>}
             {error && <p className="admin-error">{error}</p>}
             <ul className="admin-integration-list">
                 {statuses.map((s) => (
                     <li key={s.name}>
-                        <strong>{s.name}</strong>: {s.status}
+                        <strong>{s.name}</strong>: {friendlyStatus(s.status)}
                         {s.detail && <span className="admin-muted"> — {s.detail}</span>}
                         <button type="button" onClick={() => healthCheck(s.name)}>Health check</button>
                     </li>
