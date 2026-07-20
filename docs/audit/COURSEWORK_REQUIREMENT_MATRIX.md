@@ -21,7 +21,7 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-C01 | Registration and secure authentication | TESTED | Candidate register + login + JWT + `/auth/me`; 33 backend tests |
+| M-C01 | Registration and secure authentication | VERIFIED | Phase 3 live UAT + FE/BE tests |
 | M-C02 | Professional profile management | IN PROGRESS | `CandidateProfilesController`; no full UI |
 | M-C03 | CV/resume upload and management | NOT STARTED | `ResumePath` field only; no upload API |
 | M-C04 | Job search and application submission | IN PROGRESS | API + partial dashboard |
@@ -72,13 +72,13 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-S01 | JWT authentication | TESTED | TokenService + validation + current-user restoration |
-| M-S02 | RBAC | TESTED | Role policies; public privileged registration impossible |
-| M-S03 | Secure password hashing | TESTED | BCrypt; hash never serialized; change-password requires current |
+| M-S01 | JWT authentication | VERIFIED | Live login/me + TokenService tests |
+| M-S02 | RBAC | VERIFIED | Four-role live UAT + policies |
+| M-S03 | Secure password hashing | VERIFIED | BCrypt; change-password UAT |
 | M-S04 | HTTPS-ready configuration | IN PROGRESS | Dev HTTPS profile exists |
-| M-S05 | Audit logging | TESTED | Auth and admin sensitive actions write AuditLogs |
-| M-S06 | Data privacy measures | TESTED | CurrentUserDto / UserDto exclude PasswordHash |
-| M-S07 | Resource ownership checks | TESTED | Candidate/recruiter org scoping on core controllers |
+| M-S05 | Audit logging | VERIFIED | AuditLogs observed for auth/admin actions |
+| M-S06 | Data privacy measures | VERIFIED | CurrentUserDto / UserDto exclude PasswordHash |
+| M-S07 | Resource ownership checks | VERIFIED | Cross-candidate 403 in live UAT |
 | M-S08 | Secure secret and document handling | IMPLEMENTED | Tracked secrets replaced with placeholders; rotation documented |
 
 ### AI and analytics
@@ -115,7 +115,7 @@
 | M-F02 | Accessibility | NOT STARTED | Not audited |
 | M-F03 | Consistent UX / design system | IN PROGRESS | HireSphere branding on auth pages; design system later |
 | M-F04 | Client-side validation | IN PROGRESS | Login/register forms |
-| M-F05 | Secure authentication workflow | IN PROGRESS | Token stored; centralized API URL; no route guards yet |
+| M-F05 | Secure authentication workflow | VERIFIED | AuthContext, protected routes, session expiry |
 | M-F06 | Error handling and user feedback | IN PROGRESS | Basic form errors; API global exception handler added |
 | M-F07 | Usability testing evidence | NOT STARTED | — |
 
@@ -123,7 +123,7 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-T01 | Unit / API / auth tests | TESTED | `HireSphere.API.Tests` — 33 passing (auth/RBAC + relational + SQL Server checks) |
+| M-T01 | Unit / API / auth tests | VERIFIED | BE 33 + FE 13 + live UAT 26 |
 | M-T02 | Integration tests | NOT STARTED | — |
 | M-T03 | UAT scenarios (18 mandatory) | NOT STARTED | — |
 | M-T04 | Postman and Swagger evidence | NOT STARTED | Swagger only |

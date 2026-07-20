@@ -1,6 +1,6 @@
 # HireSphere — Risk Register
 
-**Last updated:** 2026-07-20 (Phase 3)
+**Last updated:** 2026-07-20 (Phase 3 verification)
 
 | ID | Risk | Likelihood | Impact | Mitigation | Owner | Status |
 |----|------|------------|--------|------------|-------|--------|
@@ -15,7 +15,7 @@
 | R-09 | Split API URLs | Low | Medium | Centralized `VITE_API_BASE_URL` / `api/config.js` | Agent | CLOSED |
 | R-10 | Open privileged self-registration | Low | High | Candidate-only public register + tests | Agent | CLOSED |
 | R-11 | Unrestricted CORS | Low | High | Configured allowed origins | Agent | CLOSED |
-| R-12 | No automated tests | Medium | High | 33 backend tests covering auth/RBAC | Agent | MITIGATED — expand in Phase 10 |
+| R-12 | No automated tests | Low | High | BE 33 + FE 13 auth tests | Agent | CLOSED |
 | R-13 | Large scope vs deadline | High | High | Mandatory-first tiers | Team | OPEN |
 | R-14 | External integration credentials | Medium | Medium | Adapter + honest BLOCKED status | Kalani | OPEN |
 | R-15 | EF package/version mismatch | Low | Low | Aligned to EF Core 10.0.10 / net10.0 | Agent | CLOSED |
@@ -26,12 +26,13 @@
 | R-20 | Runtime/SDK alignment | Low | Low | Retargeted API/tests to net10.0 for installed runtime | Agent | CLOSED |
 | R-21 | Existing users with plaintext passwords | High | High | Re-register or migrate hashes after deploy | Kalani | OPEN |
 | R-22 | SQL Server unavailable locally | Low | Medium | Express installed; migrations applied to HireSphereDev | Kalani | CLOSED |
-| R-23 | Missing password reset / email verify | Medium | Medium | Documented as next quality; not claimed complete | Agent | OPEN |
+| R-23 | Missing password reset / email verify | Medium | Medium | Documented deferred quality | Agent | OPEN |
+| R-24 | Frontend test tooling missing | Low | Medium | Vitest + RTL added in Phase 3 verification | Agent | CLOSED |
 
 ---
 
 ## Risk response summary
 
-**Closed in Phase 1–3:** R-01–R-05, R-07–R-11, R-15, R-18, R-20, R-22
-**Mitigated / monitoring:** R-06, R-12, R-16, R-17, R-19
+**Closed in Phase 1–3 verification:** R-01–R-05, R-07–R-12, R-15, R-18, R-20, R-22, R-24
+**Mitigated / monitoring:** R-06, R-16, R-17, R-19
 **Next focus:** R-13 (scope), R-17 (full role portals), R-21 (password migration), R-23 (reset/verify)
