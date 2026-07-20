@@ -16,6 +16,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.NormalizedEmail).HasMaxLength(256);
         builder.Property(u => u.PasswordHash).HasMaxLength(500);
         builder.Property(u => u.Role).HasMaxLength(50);
+        builder.Property(u => u.SecurityStamp).HasMaxLength(64);
 
         builder.HasOne(u => u.CandidateProfile)
             .WithOne(c => c.User)

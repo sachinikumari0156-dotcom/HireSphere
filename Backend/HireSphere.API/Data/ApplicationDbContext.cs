@@ -60,4 +60,37 @@ public class ApplicationDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
+
+    public override int SaveChanges()
+    {
+        NormalizeOrganizations();
+        return base.SaveChanges();
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        NormalizeOrganizations();
+        return base.SaveChangesAsync(cancellationToken);
+    }
+
+    private void NormalizeOrganizations()
+    {
+        foreach (var entry in ChangeTracker.Entries<Organization>()
+                     .Where(e => e.State is EntityState.Added or EntityState.Modified))
+        {
+            if (string.IsNullOrWhiteSpace(entry.Entity.Code))
+            {
+                entry.Entity.Code = $"ORG-{Guid.NewGuid():N}"[..12].ToUpperInvariant();
+            }
+            else
+            {
+                entry.Entity.Code = entry.Entity.Code.Trim().ToUpperInvariant();
+            }
+
+            if (string.IsNullOrWhiteSpace(entry.Entity.TimeZoneId))
+            {
+                entry.Entity.TimeZoneId = "UTC";
+            }
+        }
+    }
 }

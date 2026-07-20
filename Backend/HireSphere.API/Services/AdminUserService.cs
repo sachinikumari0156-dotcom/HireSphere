@@ -195,14 +195,33 @@ public sealed class AdminUserService : IAdminUserService
             return (false, "Invalid status value.");
         }
 
+        if (targetUserId == adminUserId && parsed is UserStatus.Inactive or UserStatus.Suspended)
+        {
+            return (false, "Administrators cannot disable their own account through this endpoint.");
+        }
+
         var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == targetUserId);
         if (user == null)
         {
             return (false, "User not found.");
         }
 
+        if (user.Role == "Admin" && user.Status == UserStatus.Active
+            && parsed is UserStatus.Inactive or UserStatus.Suspended)
+        {
+            var activeAdmins = await _db.Users.CountAsync(u => u.Role == "Admin" && u.Status == UserStatus.Active);
+            if (activeAdmins <= 1)
+            {
+                return (false, "Cannot disable the last active global Administrator.");
+            }
+        }
+
         user.Status = parsed;
         user.UpdatedAtUtc = DateTime.UtcNow;
+        if (parsed is UserStatus.Inactive or UserStatus.Suspended)
+        {
+            user.SecurityStamp = Guid.NewGuid().ToString("N");
+        }
 
         _db.AuditLogs.Add(new AuditLog
         {
@@ -236,8 +255,24 @@ public sealed class AdminUserService : IAdminUserService
         }
 
         var normalizedRole = allowed.First(r => r.Equals(role, StringComparison.OrdinalIgnoreCase));
+
+        if (user.Role == "Admin" && normalizedRole != "Admin" && user.Status == UserStatus.Active)
+        {
+            var activeAdmins = await _db.Users.CountAsync(u => u.Role == "Admin" && u.Status == UserStatus.Active);
+            if (activeAdmins <= 1)
+            {
+                return (false, "Cannot remove the last global Administrator role assignment.");
+            }
+
+            if (targetUserId == adminUserId)
+            {
+                return (false, "Administrators cannot remove their own Administrator role when it is the last active assignment.");
+            }
+        }
+
         user.Role = normalizedRole;
         user.UpdatedAtUtc = DateTime.UtcNow;
+        user.SecurityStamp = Guid.NewGuid().ToString("N");
 
         var roleEntity = await _db.Roles.FirstOrDefaultAsync(r => r.Name == normalizedRole);
         if (roleEntity != null)

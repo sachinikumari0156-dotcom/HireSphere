@@ -14,6 +14,14 @@ public class AuditLog
 
     public string? Details { get; set; }
 
+    public bool Success { get; set; } = true;
+
+    public string? CorrelationId { get; set; }
+
+    public string? ActorRole { get; set; }
+
+    public string? IpAddress { get; set; }
+
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 
     public User? User { get; set; }

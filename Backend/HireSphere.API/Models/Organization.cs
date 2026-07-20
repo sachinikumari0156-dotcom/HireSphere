@@ -6,9 +6,21 @@ public class Organization
 
     public string Name { get; set; } = string.Empty;
 
+    public string Code { get; set; } = string.Empty;
+
     public string? Description { get; set; }
 
     public string? Website { get; set; }
+
+    public string? ContactEmail { get; set; }
+
+    public string? Address { get; set; }
+
+    public string TimeZoneId { get; set; } = "UTC";
+
+    public string? DefaultCurrency { get; set; }
+
+    public Models.Enums.OrganizationStatus Status { get; set; } = Models.Enums.OrganizationStatus.Active;
 
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 

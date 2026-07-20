@@ -18,6 +18,11 @@ public class User
 
     public UserStatus Status { get; set; } = UserStatus.Active;
 
+    public bool MustChangePassword { get; set; }
+
+    /// <summary>Rotated on critical status/role changes so stale tokens can be invalidated on sensitive checks.</summary>
+    public string? SecurityStamp { get; set; }
+
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 
     public DateTime? UpdatedAtUtc { get; set; }

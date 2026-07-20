@@ -140,8 +140,11 @@ public static class DbSeeder
             db.Organizations.Add(new Organization
             {
                 Name = "HireSphere Demo Org",
+                Code = "HS-DEMO",
                 Description = "Demo organization for local development",
-                Website = "https://hiresphere.local"
+                Website = "https://hiresphere.local",
+                Status = Models.Enums.OrganizationStatus.Active,
+                CreatedAtUtc = DateTime.UtcNow
             });
             await db.SaveChangesAsync(cancellationToken);
         }

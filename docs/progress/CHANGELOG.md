@@ -1,5 +1,15 @@
 # HireSphere — Implementation Changelog
 
+## Phase 7.1 — 2026-07-20
+
+**Commit message:** `feat(admin): add user access organization and department governance`
+
+- Admin portal APIs: dashboard, users, roles, orgs, departments, recruiter requests, HM assign
+- Self-disable and last-Administrator protections; SecurityStamp rotation
+- Migration `AddAdminPortalPhase71`
+- Frontend `/admin` nested portal + Vitest
+- Phase 7 remains IN PROGRESS until 7.2 + browser E2E
+
 ## Phase 6 verification — 2026-07-20
 
 **Commit message:** `test(manager): verify complete hiring manager portal workflows`

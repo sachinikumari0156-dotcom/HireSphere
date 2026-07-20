@@ -11,6 +11,9 @@ public class AuditLogConfiguration : IEntityTypeConfiguration<AuditLog>
         builder.Property(a => a.Action).HasMaxLength(200);
         builder.Property(a => a.EntityType).HasMaxLength(200);
         builder.Property(a => a.Details).HasMaxLength(4000);
+        builder.Property(a => a.CorrelationId).HasMaxLength(100);
+        builder.Property(a => a.ActorRole).HasMaxLength(50);
+        builder.Property(a => a.IpAddress).HasMaxLength(64);
 
         builder.HasOne(a => a.User)
             .WithMany()

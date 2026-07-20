@@ -49,7 +49,16 @@ import HiringManagerInterviewsPage from "./pages/hiring-manager/HiringManagerInt
 import HiringManagerInterviewDetailPage from "./pages/hiring-manager/HiringManagerInterviewDetailPage";
 import HiringManagerEvaluationPage from "./pages/hiring-manager/HiringManagerEvaluationPage";
 import HiringManagerRecommendationPage from "./pages/hiring-manager/HiringManagerRecommendationPage";
-import { AdminDashboard } from "./pages/RoleDashboards";
+import AdminLayout from "./pages/admin/AdminLayout";
+import AdminHome from "./pages/admin/AdminHome";
+import AdminUsersPage from "./pages/admin/AdminUsersPage";
+import AdminUserDetailPage from "./pages/admin/AdminUserDetailPage";
+import AdminRecruiterRequestsPage from "./pages/admin/AdminRecruiterRequestsPage";
+import AdminRecruiterRequestDetailPage from "./pages/admin/AdminRecruiterRequestDetailPage";
+import AdminOrganizationsPage from "./pages/admin/AdminOrganizationsPage";
+import AdminDepartmentsPage from "./pages/admin/AdminDepartmentsPage";
+import AdminRolesPage from "./pages/admin/AdminRolesPage";
+import AdminHiringManagerAssignPage from "./pages/admin/AdminHiringManagerAssignPage";
 import "./App.css";
 
 function App() {
@@ -216,13 +225,23 @@ function App() {
                         <Route path="compare" element={<HiringManagerComparePage />} />
                     </Route>
                     <Route
-                        path="/admin/*"
+                        path="/admin"
                         element={
                             <ProtectedRoute roles={["Admin"]}>
-                                <AdminDashboard />
+                                <AdminLayout />
                             </ProtectedRoute>
                         }
-                    />
+                    >
+                        <Route index element={<AdminHome />} />
+                        <Route path="users" element={<AdminUsersPage />} />
+                        <Route path="users/:id" element={<AdminUserDetailPage />} />
+                        <Route path="recruiter-requests" element={<AdminRecruiterRequestsPage />} />
+                        <Route path="recruiter-requests/:id" element={<AdminRecruiterRequestDetailPage />} />
+                        <Route path="organizations" element={<AdminOrganizationsPage />} />
+                        <Route path="departments" element={<AdminDepartmentsPage />} />
+                        <Route path="roles" element={<AdminRolesPage />} />
+                        <Route path="hiring-managers" element={<AdminHiringManagerAssignPage />} />
+                    </Route>
 
                     <Route path="/candidate-dashboard" element={<Navigate to="/candidate" replace />} />
                     <Route path="/candidate-profile" element={<Navigate to="/candidate/profile" replace />} />
