@@ -235,12 +235,14 @@ public sealed class CandidateJobService : ICandidateJobService
 
     private IQueryable<Job> OpenJobsQuery()
     {
+        var now = DateTime.UtcNow;
         return _db.Jobs
             .AsNoTracking()
             .Include(j => j.Department)
             .Include(j => j.Organization)
             .Include(j => j.JobSkills).ThenInclude(js => js.Skill)
-            .Where(j => j.Status == JobStatus.Open);
+            .Where(j => (j.Status == JobStatus.Open || j.Status == JobStatus.Published)
+                && (j.ApplicationDeadlineUtc == null || j.ApplicationDeadlineUtc > now));
     }
 
     private async Task<(bool Ok, string? Error, CandidateProfile? Profile)> RequireProfileAsync()

@@ -39,6 +39,9 @@ builder.Services.AddScoped<ICandidateAssessmentService, CandidateAssessmentServi
 builder.Services.AddScoped<ICandidateInterviewService, CandidateInterviewService>();
 builder.Services.AddScoped<ICandidateNotificationService, CandidateNotificationService>();
 builder.Services.AddScoped<INotificationWriter, NotificationWriter>();
+builder.Services.AddScoped<IJobStatusTransitionService, JobStatusTransitionService>();
+builder.Services.AddScoped<IApplicationStatusTransitionService, ApplicationStatusTransitionService>();
+builder.Services.AddScoped<IRecruiterPortalService, RecruiterPortalService>();
 
 builder.Services.AddCors(options =>
 {

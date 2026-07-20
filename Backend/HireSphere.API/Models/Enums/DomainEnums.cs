@@ -10,10 +10,14 @@ public enum UserStatus
 
 public enum JobStatus
 {
-    Draft,
-    Open,
-    Closed,
-    Archived
+    Draft = 0,
+    /// <summary>Legacy published state; treated as publicly visible with <see cref="Published"/>.</summary>
+    Open = 1,
+    Closed = 2,
+    Archived = 3,
+    PendingApproval = 4,
+    Paused = 5,
+    Published = 6
 }
 
 /// <summary>
@@ -31,7 +35,8 @@ public enum ApplicationStatus
     Offered,
     Hired,
     Rejected,
-    Withdrawn
+    Withdrawn,
+    ManualReview
 }
 
 public enum InterviewStatus

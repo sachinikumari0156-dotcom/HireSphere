@@ -13,9 +13,14 @@ public class JobConfiguration : IEntityTypeConfiguration<Job>
 
         builder.Property(j => j.Title).HasMaxLength(200);
         builder.Property(j => j.Description).HasMaxLength(4000);
+        builder.Property(j => j.Responsibilities).HasMaxLength(4000);
         builder.Property(j => j.RequiredSkills).HasMaxLength(4000);
         builder.Property(j => j.Location).HasMaxLength(200);
         builder.Property(j => j.JobType).HasMaxLength(50);
+        builder.Property(j => j.SalaryCurrency).HasMaxLength(10);
+        builder.Property(j => j.EducationRequirement).HasMaxLength(500);
+        builder.Property(j => j.SalaryMin).HasPrecision(18, 2);
+        builder.Property(j => j.SalaryMax).HasPrecision(18, 2);
 
         builder.HasOne(j => j.Organization)
             .WithMany(o => o.Jobs)
@@ -26,6 +31,11 @@ public class JobConfiguration : IEntityTypeConfiguration<Job>
             .WithMany(d => d.Jobs)
             .HasForeignKey(j => j.DepartmentId)
             .OnDelete(DeleteBehavior.SetNull);
+
+        builder.HasOne(j => j.HiringManager)
+            .WithMany()
+            .HasForeignKey(j => j.HiringManagerUserId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(j => j.JobSkills)
             .WithOne(js => js.Job)

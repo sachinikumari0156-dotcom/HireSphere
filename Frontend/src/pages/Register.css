@@ -6,8 +6,8 @@
     --paper: #f7f5f0;
     --slate: #3a3f4a;
     --slate-soft: #4b5568;
-    --amber: #e8a33d;
-    --amber-dark: #c8822b;
+    --amber: #f0c14d;
+    --amber-dark: #d4a017;
     --teal: #2e8b7a;
     --teal-dark: #226e60;
     --line: #e3e0d8;
@@ -57,18 +57,18 @@
 }
 
 .reg-eyebrow {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--amber);
+    color: #f5d76e;
     transition: color 0.3s ease;
     margin-bottom: 18px;
     display: block;
 }
 
 .reg-brand[data-role="Recruiter"] .reg-eyebrow {
-    color: var(--teal);
+    color: #5ec4b0;
 }
 
 .reg-headline {
@@ -91,7 +91,7 @@
 .reg-brand-footer {
     z-index: 1;
     font-size: 13px;
-    color: #4b5568;
+    color: #c7cbdb;
 }
 
 /* ---------- Right form panel ---------- */

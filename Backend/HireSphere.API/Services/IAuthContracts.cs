@@ -43,5 +43,7 @@ public interface IResourceAuthorizationService
 
     Task<bool> RecruiterOwnsJobAsync(int jobId);
 
+    Task<bool> RecruiterCanAccessApplicationAsync(int applicationId);
+
     Task EnsureCandidateOwnsApplicationAsync(int applicationId);
 }

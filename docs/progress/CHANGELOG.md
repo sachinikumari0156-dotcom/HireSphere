@@ -1,5 +1,17 @@
 # HireSphere — Implementation Changelog
 
+## Phase 5.1 — 2026-07-20
+
+**Commit message:** `feat(recruiter): add job management and applicant pipeline`
+
+- Recruiter portal APIs: dashboard, jobs lifecycle, applicant pipeline, notes, comparison
+- Job/application status transition services with audit + notifications
+- EF migration `AddRecruiterPortalPhase51` applied on LocalDB
+- Frontend `/recruiter` pages for dashboard, jobs, pipeline, review, compare
+- Registration color-contrast fix (`Register.css`)
+- Backend tests: 65/65 PASS; Frontend Vitest: 31/31 PASS
+- Phase 5 remains IN PROGRESS until 5.2, 5.3, and Recruiter E2E evidence
+
 ## Phase 0 — 2026-07-20
 
 **Commit:** `07080b12733b9af5d07b1e5cb90d5b55a588bdd4`

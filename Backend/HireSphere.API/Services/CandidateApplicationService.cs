@@ -63,7 +63,7 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
             .AnyAsync(a => a.CandidateId == profile.UserId && a.JobId == jobId);
 
         string? blockReason = null;
-        if (job.Status != JobStatus.Open)
+        if (!JobAcceptsApplications(job))
         {
             blockReason = "This job is closed or inactive and is not accepting applications.";
         }
@@ -131,7 +131,7 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
             return (false, "Job not found.", null);
         }
 
-        if (job.Status != JobStatus.Open)
+        if (!JobAcceptsApplications(job))
         {
             return (false, "This job is closed or inactive and is not accepting applications.", null);
         }
@@ -490,5 +490,20 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
                 })
                 .ToList()
         };
+    }
+
+    internal static bool JobAcceptsApplications(Job job)
+    {
+        if (job.Status is not (JobStatus.Open or JobStatus.Published))
+        {
+            return false;
+        }
+
+        if (job.ApplicationDeadlineUtc is DateTime deadline && deadline <= DateTime.UtcNow)
+        {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -33,6 +33,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Application> Applications => Set<Application>();
     public DbSet<ApplicationAnswer> ApplicationAnswers => Set<ApplicationAnswer>();
     public DbSet<ApplicationStatusHistory> ApplicationStatusHistories => Set<ApplicationStatusHistory>();
+    public DbSet<ApplicationNote> ApplicationNotes => Set<ApplicationNote>();
     public DbSet<SkillAssessment> SkillAssessments => Set<SkillAssessment>();
     public DbSet<AssessmentQuestion> AssessmentQuestions => Set<AssessmentQuestion>();
     public DbSet<AssessmentAssignment> AssessmentAssignments => Set<AssessmentAssignment>();

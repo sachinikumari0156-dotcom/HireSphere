@@ -32,5 +32,7 @@ public class Application
 
     public ICollection<ApplicationStatusHistory> StatusHistory { get; set; } = new List<ApplicationStatusHistory>();
 
+    public ICollection<ApplicationNote> InternalNotes { get; set; } = new List<ApplicationNote>();
+
     public ICollection<Interview> Interviews { get; set; } = new List<Interview>();
 }

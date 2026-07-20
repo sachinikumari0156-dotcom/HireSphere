@@ -1,0 +1,33 @@
+# Recruiter Portal
+
+**Phase:** 5 (in progress)  
+**Last updated:** 2026-07-20  
+**Environment:** `(localdb)\MSSQLLocalDB` / `HireSphereDev`
+
+## Phase 5.1 — Job management and applicant pipeline
+
+### Delivered
+
+- Organization-scoped Recruiter dashboard (`GET /api/recruiter/dashboard`) with live SQL metrics and truthful empty states
+- Job CRUD + controlled status transitions (`Draft`, `PendingApproval`, `Published`/`Open`, `Paused`, `Closed`, `Archived`)
+- Applicant pipeline with search/filter/pagination, application detail, internal notes, comparison (max 5)
+- Application status transitions with history, audit logs, and candidate notifications
+- Public/candidate job visibility limited to `Published`/`Open` and non-expired deadlines
+- Frontend routes under `/recruiter/*` (dashboard, jobs, create/edit, detail, pipeline, application review, compare)
+- Registration color-contrast fix for Candidate/Recruiter eyebrow text (`Register.css`)
+
+### Authorization
+
+- JWT `org_id` / recruiter identity used server-side; client-supplied organization IDs are not trusted
+- Cross-organization job/application access returns safe 404
+- Candidate role cannot call `/api/recruiter/*`
+- Internal notes never returned on Candidate application DTOs
+
+### Migration
+
+- `AddRecruiterPortalPhase51` — Job portal fields + `ApplicationNotes`
+
+### Not in 5.1
+
+- Ranking panel, assessment builder, messaging, interviews, reports (Phases 5.2–5.3)
+- External email/SMS and calendar providers (Phase 8)

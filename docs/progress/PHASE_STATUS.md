@@ -10,7 +10,7 @@
 | 2 | SQL Server and data model | VERIFIED | `1e4c688` + `e84eeb5` | SUCCESS | Applied on LocalDB this host; Express optional |
 | 3 | Auth and RBAC | VERIFIED | `3c0ae38` + verification | SUCCESS | Four-role live UAT 26/26 |
 | 4 | Candidate workflows | VERIFIED | Phase 4 E2E commit | SUCCESS | Browser Playwright 6/6; 23 screenshots; LocalDB |
-| 5 | Recruiter workflows | NOT STARTED | — | — | — |
+| 5 | Recruiter workflows | IN PROGRESS | Phase 5.1 pending push | — | 5.1 job/pipeline delivered; 5.2–5.3 and E2E pending |
 | 6 | Hiring Manager | NOT STARTED | — | — | — |
 | 7 | Administrator | NOT STARTED | — | — | — |
 | 8 | AI and integrations | NOT STARTED | — | — | Cloud storage deferred here |

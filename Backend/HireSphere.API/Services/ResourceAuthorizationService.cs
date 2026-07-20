@@ -66,6 +66,37 @@ public sealed class ResourceAuthorizationService : IResourceAuthorizationService
         return false;
     }
 
+    public async Task<bool> RecruiterCanAccessApplicationAsync(int applicationId)
+    {
+        if (_currentUser.IsInRole("Admin"))
+        {
+            return true;
+        }
+
+        if (_currentUser.UserId is not int userId)
+        {
+            return false;
+        }
+
+        var job = await _db.Applications
+            .AsNoTracking()
+            .Where(a => a.Id == applicationId)
+            .Select(a => a.Job)
+            .FirstOrDefaultAsync();
+
+        if (job == null)
+        {
+            return false;
+        }
+
+        if (job.RecruiterId == userId)
+        {
+            return true;
+        }
+
+        return _currentUser.OrganizationId is int orgId && job.OrganizationId == orgId;
+    }
+
     public async Task EnsureCandidateOwnsApplicationAsync(int applicationId)
     {
         // Helper used by controllers; throws InvalidOperationException when denied.
