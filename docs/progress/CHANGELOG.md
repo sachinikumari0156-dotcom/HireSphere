@@ -1,5 +1,15 @@
 # HireSphere — Implementation Changelog
 
+## Phase 10.1 — 2026-07-21
+
+**Commit message:** `test(quality): add automated integration security and performance coverage`
+
+- Phase10QualityTests (CSV formula escape, authz, performance smoke, Swagger)
+- MigrationVerificationTests + verify-migrations.ps1
+- Postman sanitized collection; security/testing docs
+- Frontend resilience Vitest; CsvEscaper formula neutralization
+- Backend 132 tests; Vitest 89; npm audit 0; NuGet vulnerable 0
+
 ## Phase 9 verification — 2026-07-21
 
 **Commit message:** `test(ui): verify responsive accessibility and visual quality`

@@ -121,9 +121,22 @@ public sealed class CsvExportResult
 
 public static class CsvEscaper
 {
+    /// <summary>
+    /// Escapes CSV cells and neutralizes spreadsheet formula injection
+    /// for values starting with =, +, -, @, or tab/CR.
+    /// </summary>
     public static string Escape(string? value)
     {
         var text = value ?? string.Empty;
+        if (text.Length > 0)
+        {
+            var first = text[0];
+            if (first is '=' or '+' or '-' or '@' or '\t' or '\r')
+            {
+                text = "'" + text;
+            }
+        }
+
         if (text.Contains('"') || text.Contains(',') || text.Contains('\n') || text.Contains('\r'))
         {
             return "\"" + text.Replace("\"", "\"\"") + "\"";

@@ -1,7 +1,7 @@
 # HireSphere — Phase Status
 
 **Last updated:** 2026-07-21
-**Overall readiness:** NOT READY (Phases 10–11 pending)
+**Overall readiness:** NOT READY (Phase 11 pending; Phase 10 in progress)
 
 | Phase | Name | Status | Commit | Push | Notes |
 |-------|------|--------|--------|------|-------|
@@ -15,7 +15,7 @@
 | 7 | Administrator | VERIFIED | `3d2b4d7` + `55bef50` + verify | SUCCESS | Playwright Admin journey PASS; 28 screenshots; LocalDB |
 | 8 | AI and integrations | IMPLEMENTED — EXTERNAL PROVIDER VERIFICATION PENDING | `d94e08e` + `3a5ef00` + `472df59` + `ed74aed` | SUCCESS | Deterministic AI, outbox, ICS, local storage verified; external cloud providers NotConfigured |
 | 9 | UI design system | VERIFIED | `48db259` + `3119e4f` + verify | SUCCESS | Design system + responsive portals; axe/keyboard/visual PASS; evidence in phase9-ui |
-| 10 | Quality and evidence | NOT STARTED | — | — | — |
+| 10 | Quality and UAT | IN PROGRESS | 10.1 pending | — | Automated quality coverage next |
 | 11 | Submission pack | NOT STARTED | — | — | — |
 
 ---

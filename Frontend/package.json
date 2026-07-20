@@ -16,7 +16,9 @@
     "e2e:report": "playwright show-report",
     "test:a11y": "playwright test e2e/phase9-ui.spec.js e2e/candidate-a11y.spec.js",
     "test:responsive": "playwright test e2e/phase9-ui.spec.js e2e/candidate-responsive.spec.js",
-    "test:visual": "playwright test e2e/phase9-visual.spec.js"
+    "test:visual": "playwright test e2e/phase9-visual.spec.js",
+    "test:integration": "playwright test e2e/candidate-portal.spec.js e2e/recruiter-portal.spec.js e2e/hiring-manager-portal.spec.js e2e/admin-portal.spec.js e2e/phase8-platform.spec.js",
+    "test:security": "playwright test e2e/candidate-authz.spec.js"
   },
   "dependencies": {
     "axios": "^1.18.1",
