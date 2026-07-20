@@ -268,3 +268,82 @@ describe('Recruiter compare page', () => {
         expect(await screen.findByText(/select between 2 and 5 applicants/i)).toBeInTheDocument();
     });
 });
+
+describe('Phase 5.2 recruiter UI', () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
+
+    it('shows ranking explanation and human-review notice', async () => {
+        api.get.mockResolvedValueOnce({
+            data: {
+                totalScore: 72,
+                confidence: 'Medium',
+                providerName: 'Deterministic',
+                modelVersion: 'recruiter-rank-v1',
+                explanation: 'Matched required skills: C#.',
+                humanReviewNotice: 'AI-generated insight. Final recruitment decisions must be reviewed by authorized users.',
+                matchedRequiredSkills: ['C#'],
+                missingRequiredSkills: []
+            }
+        });
+        const { default: RecruiterRankingPage } = await import('../pages/recruiter/RecruiterRankingPage');
+        renderWithAuth(<RecruiterRankingPage />, {
+            route: '/recruiter/applications/9/ranking',
+            path: '/recruiter/applications/:id/ranking'
+        });
+        expect(await screen.findByText(/ai-generated insight/i)).toBeInTheDocument();
+        expect(screen.getByTestId('ranking-explanation')).toHaveTextContent(/matched required skills/i);
+    });
+
+    it('validates assessment builder title', async () => {
+        const user = userEvent.setup();
+        const { default: RecruiterAssessmentBuilderPage } = await import('../pages/recruiter/RecruiterAssessmentBuilderPage');
+        renderWithAuth(<RecruiterAssessmentBuilderPage />, {
+            route: '/recruiter/assessments/new',
+            path: '/recruiter/assessments/:id'
+        });
+        await user.click(screen.getByRole('button', { name: /^create$/i }));
+        expect(await screen.findByText(/title is required/i)).toBeInTheDocument();
+        expect(api.post).not.toHaveBeenCalled();
+    });
+
+    it('requires confirmation for screening decision', async () => {
+        api.get.mockResolvedValueOnce({
+            data: [{
+                applicationId: 3,
+                candidateName: 'Ada',
+                jobTitle: 'Engineer',
+                status: 'Pending',
+                requiredAnswersCompleted: 1,
+                requiredAnswersTotal: 1
+            }]
+        });
+        const user = userEvent.setup();
+        const { default: RecruiterScreeningPage } = await import('../pages/recruiter/RecruiterScreeningPage');
+        renderWithAuth(<RecruiterScreeningPage />);
+        expect(await screen.findByText('Ada')).toBeInTheDocument();
+        await user.click(screen.getByRole('button', { name: /shortlist/i }));
+        expect(screen.getByText(/confirm shortlisted/i)).toBeInTheDocument();
+    });
+
+    it('loads message thread and sends', async () => {
+        api.get.mockResolvedValueOnce({ data: { messages: [], totalCount: 0 } });
+        api.post.mockResolvedValue({});
+        const user = userEvent.setup();
+        const { default: RecruiterMessageThreadPage } = await import('../pages/recruiter/RecruiterMessageThreadPage');
+        renderWithAuth(<RecruiterMessageThreadPage />, {
+            route: '/recruiter/applications/4/messages',
+            path: '/recruiter/applications/:id/messages'
+        });
+        expect(await screen.findByText(/no messages yet/i)).toBeInTheDocument();
+        await user.type(screen.getByLabelText(/^message$/i), 'Hello candidate');
+        await user.click(screen.getByRole('button', { name: /send message/i }));
+        await waitFor(() => {
+            expect(api.post).toHaveBeenCalledWith(
+                '/recruiter/applications/4/messages',
+                { body: 'Hello candidate' }
+            );
+        });
+    });
+});

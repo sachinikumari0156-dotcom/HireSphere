@@ -31,3 +31,19 @@
 
 - Ranking panel, assessment builder, messaging, interviews, reports (Phases 5.2–5.3)
 - External email/SMS and calendar providers (Phase 8)
+
+## Phase 5.2 — Screening, ranking, assessments, communication
+
+### Delivered
+
+- Deterministic ranking API with explanation, confidence, human-review notice, and audited override
+- Screening queue + reasoned screening decisions (no silent score-only reject)
+- Org-scoped assessment CRUD, questions (answer keys recruiter-only), assignment, attempt review
+- Application message threads (recruiter ↔ candidate) with sanitization and notifications
+- Migration `AddRecruiterPortalPhase52`
+- Frontend: screening, ranking, assessments builder, message thread
+
+### Deferred
+
+- Interview scheduling and reports (Phase 5.3)
+- External email/SMS (Phase 8)

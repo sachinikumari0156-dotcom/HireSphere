@@ -1,5 +1,17 @@
 # HireSphere — Implementation Changelog
 
+## Phase 5.2 — 2026-07-20
+
+**Commit message:** `feat(recruiter): add screening ranking assessments and communication`
+
+- Deterministic ranking with explanation, human-review notice, audited override
+- Screening queue and reasoned screening decisions
+- Org-scoped assessment builder/assignment; answer keys hidden from candidate APIs
+- Application messaging threads with sanitization and notifications
+- Migration `AddRecruiterPortalPhase52` on LocalDB
+- Frontend screening/ranking/assessments/messages pages + Vitest coverage
+- Phase 5 remains IN PROGRESS until 5.3 + Recruiter E2E evidence
+
 ## Phase 5.1 — 2026-07-20
 
 **Commit message:** `feat(recruiter): add job management and applicant pipeline`

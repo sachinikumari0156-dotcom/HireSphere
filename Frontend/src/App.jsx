@@ -29,6 +29,11 @@ import RecruiterJobDetailPage from "./pages/recruiter/RecruiterJobDetailPage";
 import RecruiterPipelinePage from "./pages/recruiter/RecruiterPipelinePage";
 import RecruiterApplicationPage from "./pages/recruiter/RecruiterApplicationPage";
 import RecruiterComparePage from "./pages/recruiter/RecruiterComparePage";
+import RecruiterScreeningPage from "./pages/recruiter/RecruiterScreeningPage";
+import RecruiterRankingPage from "./pages/recruiter/RecruiterRankingPage";
+import RecruiterAssessmentsPage from "./pages/recruiter/RecruiterAssessmentsPage";
+import RecruiterAssessmentBuilderPage from "./pages/recruiter/RecruiterAssessmentBuilderPage";
+import RecruiterMessageThreadPage from "./pages/recruiter/RecruiterMessageThreadPage";
 import { AdminDashboard, HiringManagerDashboard } from "./pages/RoleDashboards";
 import "./App.css";
 
@@ -164,6 +169,12 @@ function App() {
                         <Route path="jobs/:id/edit" element={<RecruiterJobFormPage />} />
                         <Route path="jobs/:id/applicants" element={<RecruiterPipelinePage />} />
                         <Route path="applications/:id" element={<RecruiterApplicationPage />} />
+                        <Route path="applications/:id/ranking" element={<RecruiterRankingPage />} />
+                        <Route path="applications/:id/messages" element={<RecruiterMessageThreadPage />} />
+                        <Route path="screening" element={<RecruiterScreeningPage />} />
+                        <Route path="assessments" element={<RecruiterAssessmentsPage />} />
+                        <Route path="assessments/new" element={<RecruiterAssessmentBuilderPage />} />
+                        <Route path="assessments/:id" element={<RecruiterAssessmentBuilderPage />} />
                         <Route path="compare" element={<RecruiterComparePage />} />
                     </Route>
                     <Route

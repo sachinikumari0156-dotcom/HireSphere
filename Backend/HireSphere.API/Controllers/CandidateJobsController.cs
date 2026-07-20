@@ -1,4 +1,5 @@
 using HireSphere.API.DTOs.Candidate;
+using HireSphere.API.DTOs.Recruiter;
 using HireSphere.API.Models.Enums;
 using HireSphere.API.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -13,13 +14,16 @@ public class CandidateJobsController : ControllerBase
 {
     private readonly ICandidateJobService _jobService;
     private readonly ICandidateApplicationService _applicationService;
+    private readonly IRecruiterPhase52Service _messaging;
 
     public CandidateJobsController(
         ICandidateJobService jobService,
-        ICandidateApplicationService applicationService)
+        ICandidateApplicationService applicationService,
+        IRecruiterPhase52Service messaging)
     {
         _jobService = jobService;
         _applicationService = applicationService;
+        _messaging = messaging;
     }
 
     [HttpGet("jobs")]
@@ -111,6 +115,32 @@ public class CandidateJobsController : ControllerBase
     {
         var (ok, error, result) = await _applicationService.WithdrawAsync(id);
         return MapResult(ok, error, result);
+    }
+
+    [HttpGet("applications/{id:int}/messages")]
+    public async Task<IActionResult> GetMessages(int id, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+    {
+        var (ok, error, result) = await _messaging.GetMessagesAsync(id, page, pageSize);
+        return MapResult(ok, error, result);
+    }
+
+    [HttpPost("applications/{id:int}/messages")]
+    public async Task<IActionResult> SendMessage(int id, [FromBody] SendApplicationMessageDto dto)
+    {
+        var (ok, error, result) = await _messaging.SendCandidateMessageAsync(id, dto.Body);
+        return MapResult(ok, error, result);
+    }
+
+    [HttpPost("applications/{id:int}/messages/read")]
+    public async Task<IActionResult> MarkMessagesRead(int id)
+    {
+        var (ok, error) = await _messaging.MarkMessagesReadAsync(id);
+        if (!ok)
+        {
+            return MapError(error);
+        }
+
+        return NoContent();
     }
 
     private IActionResult MapResult<T>(bool ok, string? error, T? result)

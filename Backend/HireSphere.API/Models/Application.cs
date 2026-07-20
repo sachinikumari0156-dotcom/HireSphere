@@ -34,5 +34,7 @@ public class Application
 
     public ICollection<ApplicationNote> InternalNotes { get; set; } = new List<ApplicationNote>();
 
+    public ICollection<ApplicationMessage> Messages { get; set; } = new List<ApplicationMessage>();
+
     public ICollection<Interview> Interviews { get; set; } = new List<Interview>();
 }

@@ -8,6 +8,8 @@ public class SkillAssessment
 
     public int? JobId { get; set; }
 
+    public int? OrganizationId { get; set; }
+
     public string Title { get; set; } = string.Empty;
 
     public string? Description { get; set; }
@@ -20,6 +22,8 @@ public class SkillAssessment
 
     public bool RevealResultsToCandidate { get; set; }
 
+    public bool IsArchived { get; set; }
+
     public AssessmentStatus Status { get; set; } = AssessmentStatus.Pending;
 
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
@@ -27,6 +31,8 @@ public class SkillAssessment
     public DateTime? UpdatedAtUtc { get; set; }
 
     public Job? Job { get; set; }
+
+    public Organization? Organization { get; set; }
 
     public ICollection<AssessmentQuestion> Questions { get; set; } = new List<AssessmentQuestion>();
 

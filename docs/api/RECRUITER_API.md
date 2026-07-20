@@ -22,7 +22,25 @@ Organization scope: from authenticated JWT claims (never from request body)
 | DELETE | `/notes/{id}` | Delete internal note |
 | POST | `/applications/compare` | Compare 2–5 authorized applicants |
 
-## Error behaviour
+## Phase 5.2 endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/applications/{id}/ranking` | Deterministic ranking + human-review notice |
+| POST | `/applications/{id}/ranking/review` | Audited human review/override |
+| GET | `/screening-queue` | Org screening queue |
+| POST | `/applications/{id}/screening-decision` | Screening status + required reason |
+| GET/POST | `/assessments` | List/create assessments |
+| GET/PUT | `/assessments/{id}` | Detail/update |
+| POST | `/assessments/{id}/archive` | Archive |
+| POST/PUT/DELETE | `/assessments/{id}/questions[/{questionId}]` | Question management (keys included for recruiter) |
+| POST | `/applications/{applicationId}/assessments` | Assign assessment |
+| GET | `/assessment-assignments/{id}` | Assignment detail |
+| GET | `/assessment-assignments/{id}/attempts` | Attempt scores |
+| GET/POST | `/applications/{id}/messages` | Thread / send |
+| POST | `/applications/{id}/messages/read` | Mark read |
+
+Candidate message APIs: `GET/POST /api/candidate/applications/{id}/messages`
 
 - Missing/unauthorized resources: `404` with generic message
 - Invalid transitions / validation: `400`

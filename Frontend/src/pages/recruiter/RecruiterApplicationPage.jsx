@@ -135,6 +135,12 @@ export default function RecruiterApplicationPage() {
                 <Link className="rec-btn secondary" to={`/recruiter/jobs/${detail.jobId}/applicants`}>
                     Back to pipeline
                 </Link>
+                <Link className="rec-btn" to={`/recruiter/applications/${id}/ranking`}>
+                    View ranking
+                </Link>
+                <Link className="rec-btn secondary" to={`/recruiter/applications/${id}/messages`}>
+                    Messages
+                </Link>
             </div>
         </main>
     );

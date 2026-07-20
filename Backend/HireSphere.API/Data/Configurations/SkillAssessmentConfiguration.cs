@@ -17,6 +17,11 @@ public class SkillAssessmentConfiguration : IEntityTypeConfiguration<SkillAssess
             .HasForeignKey(sa => sa.JobId)
             .OnDelete(DeleteBehavior.SetNull);
 
+        builder.HasOne(sa => sa.Organization)
+            .WithMany()
+            .HasForeignKey(sa => sa.OrganizationId)
+            .OnDelete(DeleteBehavior.SetNull);
+
         builder.HasMany(sa => sa.Questions)
             .WithOne(q => q.SkillAssessment)
             .HasForeignKey(q => q.SkillAssessmentId)
