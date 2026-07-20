@@ -1,5 +1,16 @@
 # HireSphere — Implementation Changelog
 
+## Phase 5 verification — 2026-07-20
+
+**Commit message:** `test(recruiter): verify complete recruiter portal browser workflow`
+
+- Playwright Recruiter browser journey PASS against live API + Vite + LocalDB
+- Evidence pack: 26 screenshots under `docs/evidence/phase5-recruiter/`
+- Docs: RECRUITER_E2E_RESULTS, RECRUITER_UAT, RECRUITER_TEST_EVIDENCE
+- E2E seed `POST /api/e2e/ensure-recruiter-portal` supports multi-org names for cross-org checks
+- Phase 5 marked **VERIFIED**; Phase 6 not started
+- Backend 69/69; Vitest 38/38; Playwright 7/7
+
 ## Phase 5.3 — 2026-07-20
 
 **Commit message:** `feat(recruiter): add interview scheduling and recruitment reports`
@@ -10,7 +21,6 @@
 - Calendar sync accurately shown as NotConfigured
 - Migration `AddRecruiterPortalPhase53`
 - Frontend interviews/schedule/detail/reports pages
-- Phase 5 remains IN PROGRESS until full Recruiter Playwright E2E + evidence pack
 
 ## Phase 5.2 — 2026-07-20
 

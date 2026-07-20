@@ -1,4 +1,45 @@
-# Screenshot Index — Phase 4 Candidate Portal
+# Screenshot Index
+
+## Phase 5 — Recruiter Portal
+
+**Date:** 2026-07-20
+**Folder:** `docs/evidence/phase5-recruiter/`
+**Source:** Playwright Chromium live browser run against LocalDB `HireSphereDev`
+
+| File | Scenario |
+|------|----------|
+| `recruiter-request.png` | Recruiter access request page |
+| `admin-recruiter-approval.png` | Admin area after login (seeded approval path) |
+| `recruiter-dashboard.png` | Recruiter dashboard live metrics |
+| `recruiter-job-list.png` | Job list |
+| `recruiter-create-job.png` | Create job form |
+| `recruiter-job-skills.png` | Required/preferred skills |
+| `recruiter-screening-questions.png` | Screening questions on job |
+| `recruiter-published-job.png` | Published job detail |
+| `recruiter-applicant-pipeline.png` | Applicant pipeline |
+| `recruiter-application-detail.png` | Application review |
+| `recruiter-candidate-comparison.png` | Candidate comparison |
+| `recruiter-ranking-explanation.png` | Ranking + human-review notice |
+| `recruiter-screening.png` | Screening queue |
+| `recruiter-assessment-builder.png` | Assessment builder (keys recruiter-only) |
+| `recruiter-assessment-assignment.png` | Assessment assignment context |
+| `recruiter-assessment-result.png` | Recruiter result review |
+| `recruiter-message-thread.png` | Application message thread |
+| `recruiter-interview-schedule.png` | Schedule interview form |
+| `recruiter-conflict-warning.png` | Interview conflict warning |
+| `recruiter-interview-status.png` | Interview detail/status |
+| `recruiter-reports.png` | Reports dashboard |
+| `recruiter-report-filters.png` | Report filters applied |
+| `recruiter-csv-export.png` | CSV export action |
+| `recruiter-mobile-dashboard.png` | Mobile 390×844 dashboard |
+| `recruiter-access-denied.png` | Candidate denied recruiter route |
+| `phase5-playwright-summary.png` | End-of-journey capture |
+
+No passwords, JWT values, connection strings, or assessment answer keys intended for Candidate are present in these images.
+
+---
+
+## Phase 4 — Candidate Portal
 
 **Date:** 2026-07-20  
 **Folder:** `docs/evidence/phase4-candidate/`  

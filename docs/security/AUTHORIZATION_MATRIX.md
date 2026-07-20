@@ -12,6 +12,12 @@
 | List candidate profiles | No | Yes | Yes | Yes |
 | Own applications | Yes | No | No | Yes |
 | Job CRUD (own/org scope) | No | Yes | No | Yes (via admin tools) |
+| Applicant pipeline / notes / compare | No | Yes (org) | No | Yes (admin policy) |
+| Ranking / screening / assessments (recruiter mgmt) | No | Yes (org) | No | Yes (admin policy) |
+| Assessment take / submit (assigned) | Yes (own) | No | No | No |
+| Application messaging | Own thread | Org applications | No | Yes (admin policy) |
+| Interview schedule / conflicts | Respond own | Yes (org) | Participant | Yes (admin policy) |
+| Recruiter reports / CSV | No | Yes (org) | No | Yes (admin policy) |
 | List all users | No | No | No | Yes |
 | Approve/reject recruiter requests | No | No | No | Yes |
 | Assign roles / status / org | No | No | No | Yes |
@@ -22,4 +28,10 @@
 
 ## Permission claims
 
-Role-permission catalog is seeded. JWT may include `permission` claims from `RolePermissions`. Endpoint authorization primarily uses role policies in Phase 3; permissions are available for finer checks later.
+Role-permission catalog is seeded. JWT may include `permission` claims from `RolePermissions`. Endpoint authorization primarily uses role policies; Recruiter APIs additionally enforce organization ownership via resource authorization services.
+
+## Phase 5 notes
+
+- Cross-organization Recruiter access returns safe 404.
+- Assessment answer keys never appear in Candidate DTOs/UI.
+- Calendar provider sync status is NotConfigured until Phase 8 credentials exist.

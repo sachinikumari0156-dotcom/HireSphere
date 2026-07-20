@@ -430,4 +430,140 @@ public sealed class E2eSeedController : ControllerBase
 
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+    public sealed class EnsureRecruiterPortalRequest
+    {
+        public string? OrganizationName { get; set; }
+        public string? AdminEmail { get; set; }
+        public string? AdminPassword { get; set; }
+        public string? RecruiterEmail { get; set; }
+        public string? RecruiterPassword { get; set; }
+        public string? HiringManagerEmail { get; set; }
+        public string? HiringManagerPassword { get; set; }
+    }
+
+    [HttpPost("ensure-recruiter-portal")]
+    public async Task<IActionResult> EnsureRecruiterPortal(
+        [FromBody] EnsureRecruiterPortalRequest? request,
+        CancellationToken cancellationToken)
+    {
+        if (!IsE2eEnabled())
+        {
+            return Disabled();
+        }
+
+        var orgName = string.IsNullOrWhiteSpace(request?.OrganizationName)
+            ? "E2E Recruiter Org"
+            : request.OrganizationName.Trim();
+        var adminEmail = request?.AdminEmail ?? "e2e-admin@hiresphere.local";
+        var adminPassword = request?.AdminPassword
+            ?? Environment.GetEnvironmentVariable("HIRESPHERE_E2E_ADMIN_PASSWORD")
+            ?? "AdminE2ePass123!";
+        var recruiterEmail = request?.RecruiterEmail ?? $"e2e-recruiter-{Guid.NewGuid():N}@hiresphere.local";
+        var recruiterPassword = request?.RecruiterPassword
+            ?? Environment.GetEnvironmentVariable("HIRESPHERE_E2E_RECRUITER_PASSWORD")
+            ?? "RecruiterE2ePass123!";
+        var hmEmail = request?.HiringManagerEmail ?? $"e2e-hm-{Guid.NewGuid():N}@hiresphere.local";
+        var hmPassword = request?.HiringManagerPassword
+            ?? Environment.GetEnvironmentVariable("HIRESPHERE_E2E_HM_PASSWORD")
+            ?? "HiringMgrE2ePass123!";
+
+        var org = await _db.Organizations.FirstOrDefaultAsync(o => o.Name == orgName, cancellationToken);
+        if (org is null)
+        {
+            org = new Organization { Name = orgName, CreatedAtUtc = DateTime.UtcNow };
+            _db.Organizations.Add(org);
+            await _db.SaveChangesAsync(cancellationToken);
+        }
+
+        var admin = await EnsureUserWithRoleAsync(adminEmail, adminPassword, "Admin", org.Id, cancellationToken);
+        var recruiter = await EnsureUserWithRoleAsync(recruiterEmail, recruiterPassword, "Recruiter", org.Id, cancellationToken);
+        var hm = await EnsureUserWithRoleAsync(hmEmail, hmPassword, "HiringManager", org.Id, cancellationToken);
+
+        return Ok(new
+        {
+            organizationId = org.Id,
+            adminEmail = admin.Email,
+            recruiterEmail = recruiter.Email,
+            hiringManagerEmail = hm.Email,
+            hiringManagerUserId = hm.Id,
+            passwordsFromRequestOrEnv = true
+        });
+    }
+
+    private async Task<User> EnsureUserWithRoleAsync(
+        string email,
+        string password,
+        string roleName,
+        int organizationId,
+        CancellationToken cancellationToken)
+    {
+        var normalized = email.Trim().ToUpperInvariant();
+        var user = await _db.Users.FirstOrDefaultAsync(u => u.NormalizedEmail == normalized, cancellationToken);
+        if (user is null)
+        {
+            user = new User
+            {
+                FullName = $"E2E {roleName}",
+                Email = email.Trim(),
+                NormalizedEmail = normalized,
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword(password),
+                Role = roleName,
+                Status = UserStatus.Active,
+                CreatedAtUtc = DateTime.UtcNow
+            };
+            _db.Users.Add(user);
+            await _db.SaveChangesAsync(cancellationToken);
+        }
+        else
+        {
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
+            user.Status = UserStatus.Active;
+            user.Role = roleName;
+        }
+
+        var role = await _db.Roles.FirstAsync(r => r.Name == roleName, cancellationToken);
+        if (!await _db.UserRoles.AnyAsync(ur => ur.UserId == user.Id && ur.RoleId == role.Id, cancellationToken))
+        {
+            _db.UserRoles.Add(new UserRole { UserId = user.Id, RoleId = role.Id });
+        }
+
+        if (roleName == "Recruiter")
+        {
+            var profile = await _db.RecruiterProfiles.FirstOrDefaultAsync(p => p.UserId == user.Id, cancellationToken);
+            if (profile is null)
+            {
+                _db.RecruiterProfiles.Add(new RecruiterProfile
+                {
+                    UserId = user.Id,
+                    OrganizationId = organizationId,
+                    CreatedAtUtc = DateTime.UtcNow
+                });
+            }
+            else
+            {
+                profile.OrganizationId = organizationId;
+            }
+        }
+        else if (roleName == "HiringManager")
+        {
+            var profile = await _db.HiringManagerProfiles.FirstOrDefaultAsync(p => p.UserId == user.Id, cancellationToken);
+            if (profile is null)
+            {
+                _db.HiringManagerProfiles.Add(new HiringManagerProfile
+                {
+                    UserId = user.Id,
+                    OrganizationId = organizationId,
+                    CreatedAtUtc = DateTime.UtcNow
+                });
+            }
+            else
+            {
+                profile.OrganizationId = organizationId;
+            }
+        }
+
+        await _db.SaveChangesAsync(cancellationToken);
+        return user;
+    }
 }

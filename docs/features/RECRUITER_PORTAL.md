@@ -1,7 +1,7 @@
 # Recruiter Portal
 
-**Phase:** 5 (in progress)  
-**Last updated:** 2026-07-20  
+**Phase:** 5 — **VERIFIED** (2026-07-20)
+**Last updated:** 2026-07-20
 **Environment:** `(localdb)\MSSQLLocalDB` / `HireSphereDev`
 
 ## Phase 5.1 — Job management and applicant pipeline
@@ -61,4 +61,8 @@
 
 - Google Calendar / Outlook sync (Phase 8)
 - External email/SMS delivery (Phase 8)
-- Full Recruiter browser E2E evidence pack (required before Phase 5 VERIFIED)
+
+### Browser verification
+
+- Playwright journey PASS — see `docs/testing/RECRUITER_E2E_RESULTS.md`
+- Screenshots: `docs/evidence/phase5-recruiter/` (26 files)

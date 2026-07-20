@@ -1,7 +1,7 @@
 # HireSphere — Phase Status
 
 **Last updated:** 2026-07-20
-**Overall readiness:** NOT READY (Phases 5–12 pending)
+**Overall readiness:** NOT READY (Phases 6–12 pending)
 
 | Phase | Name | Status | Commit | Push | Notes |
 |-------|------|--------|--------|------|-------|
@@ -10,7 +10,7 @@
 | 2 | SQL Server and data model | VERIFIED | `1e4c688` + `e84eeb5` | SUCCESS | Applied on LocalDB this host; Express optional |
 | 3 | Auth and RBAC | VERIFIED | `3c0ae38` + verification | SUCCESS | Four-role live UAT 26/26 |
 | 4 | Candidate workflows | VERIFIED | Phase 4 E2E commit | SUCCESS | Browser Playwright 6/6; 23 screenshots; LocalDB |
-| 5 | Recruiter workflows | IN PROGRESS | Phase 5.3 pending push | — | 5.1–5.3 code delivered; full Recruiter E2E/evidence pending |
+| 5 | Recruiter workflows | VERIFIED | `4099d3f` + `677a425` + `d605c57` + E2E verify | SUCCESS | Playwright recruiter journey PASS; 26 screenshots; LocalDB |
 | 6 | Hiring Manager | NOT STARTED | — | — | — |
 | 7 | Administrator | NOT STARTED | — | — | — |
 | 8 | AI and integrations | NOT STARTED | — | — | Cloud storage deferred here |
@@ -18,6 +18,27 @@
 | 10 | Quality and evidence | NOT STARTED | — | — | — |
 | 11 | Submission pack | NOT STARTED | — | — | — |
 | 12 | Pull request | NOT STARTED | — | — | — |
+
+---
+
+## Phase 5 verification (closed)
+
+### Evidence
+
+- Playwright Recruiter journey: **PASS** (`docs/testing/RECRUITER_E2E_RESULTS.md`)
+- Full Playwright suite: **7/7 PASS** (Candidate + Recruiter)
+- Screenshots: `docs/evidence/phase5-recruiter/` (26 files) + `docs/report/SCREENSHOT_INDEX.md`
+- Backend tests: **69/69 PASS**
+- Frontend Vitest: **38/38 PASS**
+- Database: `(localdb)\MSSQLLocalDB` / `HireSphereDev` — migrations through `AddRecruiterPortalPhase53`
+- Calendar providers: NotConfigured (Phase 8)
+- External email/SMS: pending Phase 8
+
+### Focused commits
+
+1. `4099d3f` — job management and applicant pipeline
+2. `677a425` — screening, ranking, assessments, communication
+3. `d605c57` — interview scheduling and recruitment reports
 
 ---
 

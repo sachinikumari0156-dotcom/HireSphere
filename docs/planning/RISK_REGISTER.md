@@ -1,6 +1,6 @@
 # HireSphere — Risk Register
 
-**Last updated:** 2026-07-20 (Phase 4 E2E)
+**Last updated:** 2026-07-20 (Phase 5 E2E)
 
 | ID | Risk | Likelihood | Impact | Mitigation | Owner | Status |
 |----|------|------------|--------|------------|-------|--------|
@@ -15,17 +15,18 @@
 | R-09 | Split API URLs | Low | Medium | Centralized `VITE_API_BASE_URL` / `api/config.js` | Agent | CLOSED |
 | R-10 | Open privileged self-registration | Low | High | Candidate-only public register + tests | Agent | CLOSED |
 | R-11 | Unrestricted CORS | Low | High | Configured allowed origins | Agent | CLOSED |
-| R-12 | No automated tests | Low | High | BE 58 + FE 22 | Agent | CLOSED |
+| R-12 | No automated tests | Low | High | BE 69 + FE 38 + Playwright 7 | Agent | CLOSED |
 | R-13 | Large scope vs deadline | High | High | Mandatory-first tiers | Team | OPEN |
 | R-14 | External integration credentials | Medium | Medium | Adapter + honest BLOCKED status | Kalani | OPEN |
 | R-15 | EF package/version mismatch | Low | Low | Aligned to EF Core 10.0.10 / net10.0 | Agent | CLOSED |
 | R-16 | Hireflow branding inconsistency | Low | Low | Auth pages updated; remaining UI in Phase 9 | Agent | MITIGATED |
-| R-17 | Placeholder recruiter/manager/admin UIs | Medium | High | Phase 3 shells + policies; features in Phases 5–7 | Agent | MITIGATED — shells only |
+| R-17 | Placeholder recruiter/manager/admin UIs | Low | High | Recruiter portal VERIFIED Phase 5; HM/Admin still pending | Agent | MITIGATED — Recruiter closed |
 | R-18 | Coursework/SRS in public repo | Low | Medium | Moved to ignored `local-spec/` | Kalani | CLOSED |
 | R-19 | Academic integrity attribution | Low | Critical | Kalani history preserved; Chinthaka authors new commits only | Team | MONITORING |
-| R-22 | SQL Server unavailable locally | Low | Medium | LocalDB used for Phase 4 E2E when Express missing | Chinthaka | MITIGATED |
+| R-22 | SQL Server unavailable locally | Low | Medium | LocalDB used for Phase 4–5 E2E when Express missing | Chinthaka | MITIGATED |
 | R-28 | Phase 4 claimed VERIFIED without E2E | Low | High | Browser E2E + screenshots completed 2026-07-20 | Chinthaka | CLOSED |
-| R-29 | Residual register color-contrast | Low | Low | Documented; non-blocking after label remediation | Chinthaka | OPEN |
+| R-29 | Residual register color-contrast | Low | Low | Documented; 1 axe node on `/register` marketing chrome | Chinthaka | OPEN |
+| R-30 | Phase 5 claimed VERIFIED without Recruiter E2E | Low | High | Playwright journey + 26 screenshots 2026-07-20 | Chinthaka | CLOSED |
 
 | R-20 | Runtime/SDK alignment | Low | Low | Retargeted API/tests to net10.0 for installed runtime | Agent | CLOSED |
 | R-21 | Existing users with plaintext passwords | High | High | Re-register or migrate hashes after deploy | Kalani | OPEN |
@@ -41,6 +42,6 @@
 
 ## Risk response summary
 
-**Closed in Phase 1–4.3:** R-01–R-05, R-07–R-12, R-15, R-18, R-20, R-22, R-24
-**Mitigated / monitoring:** R-06, R-16, R-17, R-19, R-26, R-27, R-28
-**Next focus:** R-13 (scope), R-17 (full role portals), R-21 (password migration), R-23 (reset/verify), R-25 (cloud storage), Phase 5 recruiter assign/schedule
+**Closed in Phase 1–5:** R-01–R-05, R-07–R-12, R-15, R-18, R-20, R-22, R-24, R-28, R-30
+**Mitigated / monitoring:** R-06, R-16, R-17, R-19, R-26, R-27, R-29
+**Next focus:** R-13 (scope), Phase 6 Hiring Manager portal, R-21 (password migration), R-23 (reset/verify), R-25 (cloud storage), Phase 8 calendars/email

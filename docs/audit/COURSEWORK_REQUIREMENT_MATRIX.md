@@ -1,7 +1,7 @@
 # HireSphere — Coursework Requirement Matrix
 
 **Course:** SE205.3 Software Architecture 2026
-**Last updated:** 2026-07-20 (Phase 4 browser E2E VERIFIED)
+**Last updated:** 2026-07-20 (Phase 5 Recruiter browser E2E VERIFIED)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED — EXTERNAL CREDENTIAL | DEFERRED — OPTIONAL BONUS
 
 ---
@@ -13,7 +13,7 @@
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
 | M-R01 | Candidate Portal | VERIFIED | Playwright E2E 2026-07-20 + API/Vitest; screenshots in `docs/evidence/phase4-candidate/` |
-| M-R02 | Recruiter Portal | IN PROGRESS | Protected `/recruiter/*` shell + dashboard; request flow added |
+| M-R02 | Recruiter Portal | VERIFIED | Playwright E2E 2026-07-20; screenshots in `docs/evidence/phase5-recruiter/` |
 | M-R03 | Hiring Manager Dashboard | IN PROGRESS | Protected `/hiring-manager/*` shell |
 | M-R04 | Administrator Dashboard | IN PROGRESS | Protected `/admin/*` shell + admin APIs |
 
@@ -32,12 +32,12 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-RC01 | Job posting creation and management | IMPLEMENTED | `JobsController` CRUD |
-| M-RC02 | Candidate search and filtering | NOT STARTED | No dedicated search |
-| M-RC03 | Application review and shortlisting | IN PROGRESS | Status update endpoints exist |
-| M-RC04 | AI-powered candidate ranking and screening | NOT STARTED | — |
-| M-RC05 | Interview scheduling and management | IN PROGRESS | Candidate interview respond APIs TESTED; recruiter schedule UI/API still Phase 5 |
-| M-RC06 | Communication with applicants | IN PROGRESS | In-app notification foundation; email/SMS deferred |
+| M-RC01 | Job posting creation and management | VERIFIED | Recruiter job CRUD + lifecycle + E2E publish |
+| M-RC02 | Candidate search and filtering | VERIFIED | Pipeline search/filter/pagination E2E |
+| M-RC03 | Application review and shortlisting | VERIFIED | Status transitions + shortlist E2E |
+| M-RC04 | AI-powered candidate ranking and screening | VERIFIED | Deterministic ranking + screening queue; human-review notice (`docs/ai/RANKING_MODEL.md`) |
+| M-RC05 | Interview scheduling and management | VERIFIED | Schedule + conflicts + Candidate respond; calendar sync Phase 8 |
+| M-RC06 | Communication with applicants | VERIFIED | In-app threads + notifications; email/SMS deferred Phase 8 |
 
 ### Hiring Manager features
 
@@ -88,12 +88,12 @@
 | M-AI01 | Resume parsing | NOT STARTED | ResumeAnalysis model only |
 | M-AI02 | Skill extraction | NOT STARTED | — |
 | M-AI03 | Candidate-job matching | TESTED | DeterministicJobMatchingProvider; match API; CandidateJobMatch persistence |
-| M-AI04 | Candidate ranking/scoring | NOT STARTED | — |
+| M-AI04 | Candidate ranking/scoring | VERIFIED | Deterministic recruiter ranking provider + E2E explanation |
 | M-AI05 | Job recommendations | TESTED | `/api/candidate/recommendations` highest-match sort; not external AI |
 | M-AI06 | Automated feedback | NOT STARTED | — |
 | M-AI07 | Recruitment performance analytics | NOT STARTED | — |
 | M-AI08 | Hiring trend analysis | NOT STARTED | — |
-| M-AI09 | Explainable AI + human-review notice | IN PROGRESS | Deterministic match explanation + human-review notice in 4.2; broader AI explainability pending |
+| M-AI09 | Explainable AI + human-review notice | VERIFIED | Match (4.2) + ranking (5.2) notices; external AI still Phase 8 |
 
 ### External integrations
 
@@ -103,8 +103,8 @@
 | M-I02 | SMS notifications | NOT STARTED | BLOCKED — EXTERNAL CREDENTIAL |
 | M-I03 | Interview reminders | NOT STARTED | — |
 | M-I04 | Application-status updates | IN PROGRESS | In-app notifications on submit/withdraw; email channel pending |
-| M-I05 | Google Calendar | NOT STARTED | BLOCKED — EXTERNAL CREDENTIAL |
-| M-I06 | Microsoft Outlook Calendar | NOT STARTED | BLOCKED — EXTERNAL CREDENTIAL |
+| M-I05 | Google Calendar | NOT STARTED | BLOCKED — EXTERNAL CREDENTIAL; Phase 5 shows NotConfigured |
+| M-I06 | Microsoft Outlook Calendar | NOT STARTED | BLOCKED — EXTERNAL CREDENTIAL; Phase 5 shows NotConfigured |
 | M-I07 | Secure cloud document storage | NOT STARTED | BLOCKED until storage configured |
 
 ### Frontend quality
