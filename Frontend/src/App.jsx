@@ -64,6 +64,7 @@ import AdminHiringManagerAssignPage from "./pages/admin/AdminHiringManagerAssign
 import AdminAuditPage from "./pages/admin/AdminAuditPage";
 import AdminMonitoringPage from "./pages/admin/AdminMonitoringPage";
 import AdminIntegrationsPage from "./pages/admin/AdminIntegrationsPage";
+import AdminStoragePage from "./pages/admin/AdminStoragePage";
 import AdminAnalyticsPage from "./pages/admin/AdminAnalyticsPage";
 import AdminFinalDecisionsPage, { AdminFinalDecisionDetailPage } from "./pages/admin/AdminFinalDecisionsPage";
 import "./App.css";
@@ -267,6 +268,7 @@ function App() {
                         <Route path="audit" element={<AdminAuditPage />} />
                         <Route path="monitoring" element={<AdminMonitoringPage />} />
                         <Route path="integrations" element={<AdminIntegrationsPage />} />
+                        <Route path="storage" element={<AdminStoragePage />} />
                         <Route path="analytics" element={<AdminAnalyticsPage />} />
                         <Route path="final-decisions" element={<AdminFinalDecisionsPage />} />
                         <Route path="final-decisions/:applicationId" element={<AdminFinalDecisionDetailPage />} />

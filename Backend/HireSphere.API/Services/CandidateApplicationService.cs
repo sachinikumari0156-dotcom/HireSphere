@@ -74,15 +74,16 @@ public sealed class CandidateApplicationService : ICandidateApplicationService
 
         var resumes = await _db.Resumes
             .AsNoTracking()
-            .Where(r => r.CandidateProfileId == profile.Id)
+            .Where(r => r.CandidateProfileId == profile.Id && !r.IsDeleted)
             .OrderByDescending(r => r.IsPrimary)
             .ThenByDescending(r => r.UploadedAtUtc)
             .Select(r => new ResumeMetadataDto
             {
                 Id = r.Id,
-                StorageKey = r.FilePath,
                 FileName = r.FileName,
                 IsPrimary = r.IsPrimary,
+                ValidationStatus = r.ValidationStatus,
+                ScanStatus = r.ScanStatus,
                 UploadedAtUtc = r.UploadedAtUtc
             })
             .ToListAsync();

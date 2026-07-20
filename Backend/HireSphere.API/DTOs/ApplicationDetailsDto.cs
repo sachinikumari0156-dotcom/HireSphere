@@ -12,7 +12,8 @@
 
         public string? Skills { get; set; }
 
-        public string? ResumePath { get; set; }
+        /// <summary>True when a resume metadata record exists. Never exposes storage keys or absolute paths.</summary>
+        public bool HasResumeAvailable { get; set; }
 
         public int JobId { get; set; }
 

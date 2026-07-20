@@ -562,7 +562,7 @@ public sealed class CandidateProfileService : ICandidateProfileService
 
         var resumes = await _db.Resumes
             .AsNoTracking()
-            .Where(r => r.CandidateProfileId == profile.Id)
+            .Where(r => r.CandidateProfileId == profile.Id && !r.IsDeleted)
             .OrderByDescending(r => r.IsPrimary)
             .ThenByDescending(r => r.UploadedAtUtc)
             .ToListAsync();
@@ -584,7 +584,7 @@ public sealed class CandidateProfileService : ICandidateProfileService
             return (false, saveError, null);
         }
 
-        var isFirst = !await _db.Resumes.AnyAsync(r => r.CandidateProfileId == profile.Id);
+        var isFirst = !await _db.Resumes.AnyAsync(r => r.CandidateProfileId == profile.Id && !r.IsDeleted);
 
         var entity = new Resume
         {
@@ -592,6 +592,9 @@ public sealed class CandidateProfileService : ICandidateProfileService
             FilePath = stored.StorageKey,
             FileName = stored.OriginalFileName,
             IsPrimary = isFirst,
+            ValidationStatus = "Clean",
+            ScanStatus = "NotConfigured",
+            StorageProvider = "LocalDevelopment",
             UploadedAtUtc = DateTime.UtcNow,
             CreatedAtUtc = DateTime.UtcNow
         };
@@ -618,24 +621,35 @@ public sealed class CandidateProfileService : ICandidateProfileService
         }
 
         var entity = await _db.Resumes
-            .FirstOrDefaultAsync(r => r.Id == id && r.CandidateProfileId == profile.Id);
+            .FirstOrDefaultAsync(r => r.Id == id && r.CandidateProfileId == profile.Id && !r.IsDeleted);
 
         if (entity == null)
         {
             return (false, "Resume not found.");
         }
 
-        var storageKey = entity.FilePath;
         var wasPrimary = entity.IsPrimary;
+        entity.IsDeleted = true;
+        entity.DeletedAtUtc = DateTime.UtcNow;
+        entity.IsPrimary = false;
+        entity.ValidationStatus = "Deleted";
 
-        _db.Resumes.Remove(entity);
+        _db.AuditLogs.Add(new AuditLog
+        {
+            UserId = _currentUser.UserId,
+            Action = "ResumeLogicalDelete",
+            EntityType = "Resume",
+            EntityId = entity.Id,
+            Details = "Candidate logically deleted resume metadata.",
+            CreatedAtUtc = DateTime.UtcNow
+        });
+
         await _db.SaveChangesAsync();
-        await _fileStorage.DeleteAsync(storageKey);
 
         if (wasPrimary)
         {
             var nextPrimary = await _db.Resumes
-                .Where(r => r.CandidateProfileId == profile.Id)
+                .Where(r => r.CandidateProfileId == profile.Id && !r.IsDeleted)
                 .OrderByDescending(r => r.UploadedAtUtc)
                 .FirstOrDefaultAsync();
 
@@ -665,7 +679,7 @@ public sealed class CandidateProfileService : ICandidateProfileService
         }
 
         var entity = await _db.Resumes
-            .FirstOrDefaultAsync(r => r.Id == id && r.CandidateProfileId == profile.Id);
+            .FirstOrDefaultAsync(r => r.Id == id && r.CandidateProfileId == profile.Id && !r.IsDeleted);
 
         if (entity == null)
         {
@@ -673,7 +687,7 @@ public sealed class CandidateProfileService : ICandidateProfileService
         }
 
         var resumes = await _db.Resumes
-            .Where(r => r.CandidateProfileId == profile.Id)
+            .Where(r => r.CandidateProfileId == profile.Id && !r.IsDeleted)
             .ToListAsync();
 
         foreach (var resume in resumes)
@@ -698,7 +712,7 @@ public sealed class CandidateProfileService : ICandidateProfileService
 
         var documents = await _db.CandidateDocuments
             .AsNoTracking()
-            .Where(d => d.CandidateProfileId == profile.Id)
+            .Where(d => d.CandidateProfileId == profile.Id && !d.IsDeleted)
             .OrderByDescending(d => d.UploadedAtUtc)
             .ToListAsync();
 
@@ -727,6 +741,9 @@ public sealed class CandidateProfileService : ICandidateProfileService
             DocumentType = documentType,
             FilePath = stored.StorageKey,
             FileName = stored.OriginalFileName,
+            ValidationStatus = "Clean",
+            ScanStatus = "NotConfigured",
+            StorageProvider = "LocalDevelopment",
             UploadedAtUtc = DateTime.UtcNow,
             CreatedAtUtc = DateTime.UtcNow
         };
@@ -755,6 +772,11 @@ public sealed class CandidateProfileService : ICandidateProfileService
             return (false, "Document not found.", null);
         }
 
+        if (entity.IsDeleted || entity.ValidationStatus is "Quarantined" or "Deleted" or "Rejected")
+        {
+            return (false, "Document is unavailable.", null);
+        }
+
         var (openOk, openError, content, contentType, _) =
             await _fileStorage.OpenReadAsync(entity.FilePath);
 
@@ -780,17 +802,26 @@ public sealed class CandidateProfileService : ICandidateProfileService
         }
 
         var entity = await _db.CandidateDocuments
-            .FirstOrDefaultAsync(d => d.Id == id && d.CandidateProfileId == profile.Id);
+            .FirstOrDefaultAsync(d => d.Id == id && d.CandidateProfileId == profile.Id && !d.IsDeleted);
 
         if (entity == null)
         {
             return (false, "Document not found.");
         }
 
-        var storageKey = entity.FilePath;
-        _db.CandidateDocuments.Remove(entity);
+        entity.IsDeleted = true;
+        entity.DeletedAtUtc = DateTime.UtcNow;
+        entity.ValidationStatus = "Deleted";
+        _db.AuditLogs.Add(new AuditLog
+        {
+            UserId = _currentUser.UserId,
+            Action = "DocumentLogicalDelete",
+            EntityType = "CandidateDocument",
+            EntityId = entity.Id,
+            Details = "Candidate logically deleted document metadata.",
+            CreatedAtUtc = DateTime.UtcNow
+        });
         await _db.SaveChangesAsync();
-        await _fileStorage.DeleteAsync(storageKey);
 
         return (true, null);
     }
@@ -971,9 +1002,10 @@ public sealed class CandidateProfileService : ICandidateProfileService
     private static ResumeMetadataDto MapResume(Resume entity) => new()
     {
         Id = entity.Id,
-        StorageKey = entity.FilePath,
         FileName = entity.FileName,
         IsPrimary = entity.IsPrimary,
+        ValidationStatus = entity.ValidationStatus,
+        ScanStatus = entity.ScanStatus,
         UploadedAtUtc = entity.UploadedAtUtc
     };
 
@@ -981,8 +1013,9 @@ public sealed class CandidateProfileService : ICandidateProfileService
     {
         Id = entity.Id,
         DocumentType = entity.DocumentType,
-        StorageKey = entity.FilePath,
         FileName = entity.FileName,
+        ValidationStatus = entity.ValidationStatus,
+        ScanStatus = entity.ScanStatus,
         UploadedAtUtc = entity.UploadedAtUtc
     };
 }

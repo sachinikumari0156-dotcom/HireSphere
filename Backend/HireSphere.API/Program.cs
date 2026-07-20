@@ -32,7 +32,14 @@ builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 builder.Services.AddScoped<IAdminPortalService, AdminPortalService>();
 builder.Services.AddScoped<IAdminPhase72Service, AdminPhase72Service>();
 builder.Services.AddScoped<IResourceAuthorizationService, ResourceAuthorizationService>();
-builder.Services.AddScoped<ILocalFileStorageService, LocalFileStorageService>();
+builder.Services.AddSingleton<HireSphere.API.Services.Storage.LocalDevelopmentStorageProvider>();
+builder.Services.AddScoped<HireSphere.API.Services.Storage.AzuriteBlobStorageProvider>();
+builder.Services.AddScoped<HireSphere.API.Services.Storage.AzureBlobStorageProvider>();
+builder.Services.AddScoped<HireSphere.API.Services.Storage.IFileStorageProvider>(sp =>
+    sp.GetRequiredService<HireSphere.API.Services.Storage.LocalDevelopmentStorageProvider>());
+builder.Services.AddScoped<HireSphere.API.Services.Storage.IAntivirusScanner, HireSphere.API.Services.Storage.NotConfiguredAntivirusScanner>();
+builder.Services.AddScoped<HireSphere.API.Services.Storage.IStorageAdminService, HireSphere.API.Services.Storage.StorageAdminService>();
+builder.Services.AddScoped<ILocalFileStorageService, HireSphere.API.Services.Storage.LocalFileStorageBridge>();
 builder.Services.AddScoped<ICandidateProfileService, CandidateProfileService>();
 builder.Services.AddScoped<IJobMatchingProvider, DeterministicJobMatchingProvider>();
 builder.Services.AddScoped<HireSphere.API.Services.Ai.ISkillExtractionProvider, HireSphere.API.Services.Ai.DeterministicSkillExtractionProvider>();

@@ -213,11 +213,10 @@ public class CandidatePortalControllerTests : IClassFixture<TestWebApplicationFa
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
 
         var body = await response.Content.ReadFromJsonAsync<JsonElement>(JsonOptions);
-        var storageKey = body.GetProperty("storageKey").GetString()!;
-        Assert.StartsWith("resumes/", storageKey, StringComparison.OrdinalIgnoreCase);
-        Assert.DoesNotContain(":\\", storageKey);
-        Assert.DoesNotContain("App_Data", storageKey, StringComparison.OrdinalIgnoreCase);
+        Assert.False(body.TryGetProperty("storageKey", out _));
+        Assert.False(body.TryGetProperty("filePath", out _));
         Assert.Equal("resume.pdf", body.GetProperty("fileName").GetString());
+        Assert.True(body.TryGetProperty("id", out _));
     }
 
     [Fact]

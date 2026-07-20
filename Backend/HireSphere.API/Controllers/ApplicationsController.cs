@@ -103,10 +103,10 @@ namespace HireSphere.API.Controllers
                         .Where(c => c.UserId == a.CandidateId)
                         .Select(c => c.Skills)
                         .FirstOrDefault(),
-                    ResumePath = _context.CandidateProfiles
+                    HasResumeAvailable = _context.CandidateProfiles
                         .Where(c => c.UserId == a.CandidateId)
                         .Select(c => c.ResumePath)
-                        .FirstOrDefault(),
+                        .Any(p => p != null && p != ""),
                     JobId = a.JobId,
                     JobTitle = a.Job!.Title,
                     JobDescription = a.Job!.Description,

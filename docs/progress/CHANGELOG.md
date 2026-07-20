@@ -1,5 +1,15 @@
 # HireSphere — Implementation Changelog
 
+## Phase 8.3 — 2026-07-21
+
+**Commit message:** `feat(storage): add secure cloud document storage`
+
+- IFileStorageProvider with LocalDevelopment active; Azurite/Azure Blob NotConfigured without credentials
+- Magic-byte validation, quarantine/logical-delete foundation, randomized tenant storage keys
+- Storage keys removed from normal DTOs; antivirus NotConfigured
+- Admin storage status + migration dry-run
+- Migration `AddStoragePortalPhase83`
+
 ## Phase 8.2 — 2026-07-21
 
 **Commit message:** `feat(integrations): add email SMS and calendar providers`

@@ -8,7 +8,12 @@ public class CandidateDocumentConfiguration : IEntityTypeConfiguration<Candidate
 {
     public void Configure(EntityTypeBuilder<CandidateDocument> builder)
     {
-        builder.Property(d => d.FilePath).HasMaxLength(500);
+        builder.Property(d => d.FilePath).HasMaxLength(1000);
         builder.Property(d => d.FileName).HasMaxLength(255);
+        builder.Property(d => d.ContentType).HasMaxLength(150);
+        builder.Property(d => d.ChecksumSha256).HasMaxLength(64);
+        builder.Property(d => d.ValidationStatus).HasMaxLength(50);
+        builder.Property(d => d.ScanStatus).HasMaxLength(50);
+        builder.Property(d => d.StorageProvider).HasMaxLength(50);
     }
 }

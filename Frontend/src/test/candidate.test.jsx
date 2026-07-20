@@ -182,7 +182,7 @@ describe('Candidate jobs and recommendations', () => {
                 jobId: 7,
                 jobTitle: 'C# Developer',
                 canApply: true,
-                resumes: [{ id: 3, fileName: 'cv.pdf', isPrimary: true, storageKey: 'k', uploadedAtUtc: '2026-07-20T00:00:00Z' }],
+                resumes: [{ id: 3, fileName: 'cv.pdf', isPrimary: true, uploadedAtUtc: '2026-07-20T00:00:00Z' }],
                 screeningQuestions: [
                     { id: 11, questionText: 'Authorized to work?', questionType: 'YesNo', isRequired: true, sortOrder: 1 }
                 ]

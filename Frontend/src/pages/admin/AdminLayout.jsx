@@ -17,6 +17,7 @@ export default function AdminLayout() {
                     <NavLink to="/admin/audit">Audit</NavLink>
                     <NavLink to="/admin/monitoring">Monitoring</NavLink>
                     <NavLink to="/admin/integrations">Integrations</NavLink>
+                    <NavLink to="/admin/storage">Storage</NavLink>
                     <NavLink to="/admin/analytics">Analytics</NavLink>
                     <NavLink to="/admin/final-decisions">Final decisions</NavLink>
                 </nav>

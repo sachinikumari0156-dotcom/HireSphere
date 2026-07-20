@@ -486,7 +486,7 @@ public sealed class IntegrationHealthService : IIntegrationHealthService
         {
             Name = "Cloud Storage",
             Status = "NotConfigured",
-            Detail = "Azure Blob deferred to Phase 8.3. Local development storage remains separate."
+            Detail = "Azure Blob NotConfigured. Local development storage is the active provider for Phase 8.3."
         });
         foreach (var item in list) item.LastCheckedUtc = DateTime.UtcNow;
         return Task.FromResult<IReadOnlyList<IntegrationProviderStatusDto>>(list);

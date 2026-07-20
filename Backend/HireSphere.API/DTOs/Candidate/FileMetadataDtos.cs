@@ -6,11 +6,13 @@ public class ResumeMetadataDto
 {
     public int Id { get; set; }
 
-    public string StorageKey { get; set; } = string.Empty;
-
     public string FileName { get; set; } = string.Empty;
 
     public bool IsPrimary { get; set; }
+
+    public string ValidationStatus { get; set; } = "Clean";
+
+    public string ScanStatus { get; set; } = "NotConfigured";
 
     public DateTime UploadedAtUtc { get; set; }
 }
@@ -21,9 +23,11 @@ public class DocumentMetadataDto
 
     public DocumentType DocumentType { get; set; }
 
-    public string StorageKey { get; set; } = string.Empty;
-
     public string FileName { get; set; } = string.Empty;
+
+    public string ValidationStatus { get; set; } = "Clean";
+
+    public string ScanStatus { get; set; } = "NotConfigured";
 
     public DateTime UploadedAtUtc { get; set; }
 }
