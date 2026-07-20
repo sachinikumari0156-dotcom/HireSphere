@@ -257,4 +257,6 @@ Immutable-style audit trail; FK to Users with restrict delete.
 
 ## Seed data
 
-Development seed data is applied by `DbSeeder` when SQL Server is reachable. Demo credentials are documented only in comments inside `DbSeeder.cs` (not repeated here).
+Development seed data for catalog entities (roles, permissions, organization, departments, skills) is applied when SQL Server is reachable.
+
+Demo **user** accounts are created only when `Seed:Enabled` (or `HIRESPHERE_SEED_ENABLED`) is true and admin credentials are supplied via user secrets or environment variables. Passwords are BCrypt-hashed before persistence and are never documented in this file.

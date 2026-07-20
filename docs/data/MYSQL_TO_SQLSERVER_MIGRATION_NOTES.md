@@ -45,9 +45,9 @@ There is no scripted ETL from the old MySQL database to SQL Server. If historica
 
 | Environment | Migrate | Seed | Notes |
 |-------------|---------|------|-------|
-| Local dev (SQL Server running) | Ready | Ready after `database update` | See `SQL_SERVER_SETUP.md` |
-| Local dev (no SQL Server) | **BLOCKED** | Skipped at startup | API builds; seeder logs warning |
-| CI / coursework evidence | **BLOCKED** until SQL Server service configured | — | Document honest BLOCKED status |
+| Local dev (SQL Server Express) | **VERIFIED** | Catalog seed + optional gated user seed | Applied `InitialSqlServerCoreModel` to `HireSphereDev` |
+| Local dev (no SQL Server) | N/A | Skipped at startup | Historical blocker closed on this workstation |
+| CI / coursework evidence | Ready when connection configured | Gated | Use Windows auth or secrets; never commit passwords |
 
 ---
 

@@ -63,7 +63,7 @@
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
 | M-B01 | C# ASP.NET Core Web API | IMPLEMENTED | Builds successfully |
-| M-B02 | SQL Server database | IMPLEMENTED | Provider + migration generated; **apply BLOCKED** without SQL Server |
+| M-B02 | SQL Server database | VERIFIED | Applied `InitialSqlServerCoreModel` on `localhost\SQLEXPRESS` / `HireSphereDev` |
 | M-B03 | Core entities (profiles, jobs, applications, interviews, assessments, analytics, orgs) | IMPLEMENTED | 35+ entities in DbContext + configurations |
 | M-B04 | REST APIs (auth, profiles, resumes, jobs, applications, interviews, evaluations, analytics) | IN PROGRESS | ~5 controller groups; many missing |
 | M-B05 | Swagger/OpenAPI | IMPLEMENTED | Enabled in `Program.cs` |
@@ -123,7 +123,7 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-T01 | Unit / API / auth tests | TESTED | `HireSphere.API.Tests` — 14 passing (SQLite constraints + auth) |
+| M-T01 | Unit / API / auth tests | TESTED | `HireSphere.API.Tests` — 17 passing (SQLite + optional SQL Server verification) |
 | M-T02 | Integration tests | NOT STARTED | — |
 | M-T03 | UAT scenarios (18 mandatory) | NOT STARTED | — |
 | M-T04 | Postman and Swagger evidence | NOT STARTED | Swagger only |

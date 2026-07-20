@@ -45,3 +45,16 @@
 - Backend tests: PASS (14/14)
 - Frontend lint/build: PASS; frontend test script still missing
 - Migration apply: BLOCKED — SQL Server not available locally
+
+## Phase 2 verification closure — 2026-07-20
+
+**Commit message:** `fix(data): verify SQL Server migration and secure development seeding`
+
+- Installed/used SQL Server Express (`localhost\SQLEXPRESS`)
+- Applied `InitialSqlServerCoreModel` to `HireSphereDev` (Windows auth)
+- Confirmed 38 tables + `__EFMigrationsHistory`
+- Removed hardcoded seed password; user seed requires explicit enable + secrets/env
+- Added SQL Server verification tests; suite now 17 passing
+- API smoke test: Swagger 200 against SQL Server
+- Frontend lint/build regression: PASS
+- M-B02 promoted to VERIFIED

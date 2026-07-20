@@ -1,46 +1,54 @@
 # HireSphere — SQL Server Setup
 
-**Last updated:** 2026-07-20 (Phase 2)
+**Last updated:** 2026-07-20 (Phase 2 verification)
 
 ---
 
 ## Prerequisites
 
 - .NET 8 SDK (project targets `net8.0`; EF CLI may require `DOTNET_ROLL_FORWARD=Major` if only .NET 10 runtime is installed)
-- SQL Server 2022 (local or Docker)
+- SQL Server LocalDB, Express, Developer, or Docker SQL Server
 - EF Core tools (`dotnet-ef` 8.0.11 in `Backend/HireSphere.API/dotnet-tools.json`)
 
 ---
 
-## Option A — Docker (recommended)
+## Option A — SQL Server LocalDB (preferred on Windows)
 
-```powershell
-docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=YourStrong!Passw0rd" `
-  -p 1433:1433 --name hiresphere-sql `
-  -d mcr.microsoft.com/mssql/server:2022-latest
+```text
+Server=(localdb)\MSSQLLocalDB;Database=HireSphereDev;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True
 ```
 
-Wait for SQL Server to accept connections, then create the database (optional — migration can create schema):
+Install SQL Server Express LocalDB if `sqllocaldb` is not available, then:
 
 ```powershell
-docker exec -it hiresphere-sql /opt/mssql-tools18/bin/sqlcmd `
-  -S localhost -U sa -P "YourStrong!Passw0rd" -C `
-  -Q "IF DB_ID('HireSphereDB') IS NULL CREATE DATABASE HireSphereDB;"
+sqllocaldb start MSSQLLocalDB
 ```
 
 ---
 
-## Option B — Local SQL Server / SSMS
+## Option B — SQL Server Express
 
-1. Install SQL Server Developer or Express edition.
-2. Enable TCP/IP on port **1433**.
-3. Create database `HireSphereDB` (or let EF migrations create tables).
+```text
+Server=localhost\SQLEXPRESS;Database=HireSphereDev;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True
+```
+
+---
+
+## Option C — Docker SQL Server
+
+Pull and run the official image. Supply `ACCEPT_EULA` and a strong `MSSQL_SA_PASSWORD` from your local environment only — do not commit the password.
+
+```powershell
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=$env:MSSQL_SA_PASSWORD" `
+  -p 1433:1433 --name hiresphere-sql `
+  -d mcr.microsoft.com/mssql/server:2022-latest
+```
 
 ---
 
 ## Connection string configuration
 
-**Do not commit real passwords.** Set via user-secrets, environment variables, or local untracked overrides.
+**Do not commit real passwords.** Use user-secrets, environment variables, or ignored local overrides (`appsettings.Development.local.json` is gitignored).
 
 ### User secrets (development)
 
@@ -48,27 +56,31 @@ From `Backend/HireSphere.API`:
 
 ```powershell
 dotnet user-secrets init
-dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost,1433;Database=HireSphereDB;User Id=sa;Password=YOUR_PASSWORD;TrustServerCertificate=True;Encrypt=True"
-dotnet user-secrets set "Jwt:Key" "YOUR_JWT_SIGNING_KEY_AT_LEAST_32_CHARS"
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "<YOUR_LOCAL_CONNECTION_STRING>"
+dotnet user-secrets set "Jwt:Key" "<YOUR_JWT_SIGNING_KEY_AT_LEAST_32_CHARS>"
 ```
 
-### Environment variable (CI / containers)
+### Environment variable
 
 ```powershell
-$env:ConnectionStrings__DefaultConnection = "Server=localhost,1433;Database=HireSphereDB;User Id=sa;Password=YOUR_PASSWORD;TrustServerCertificate=True;Encrypt=True"
-$env:Jwt__Key = "YOUR_JWT_SIGNING_KEY_AT_LEAST_32_CHARS"
+$env:ConnectionStrings__DefaultConnection = "<YOUR_LOCAL_CONNECTION_STRING>"
+$env:Jwt__Key = "<YOUR_JWT_SIGNING_KEY_AT_LEAST_32_CHARS>"
 ```
 
-Placeholder values remain in tracked `appsettings.json` / `appsettings.Development.json`.
+Tracked `appsettings*.json` files contain placeholders only.
 
 ---
 
 ## Apply migrations
 
-From `Backend/HireSphere.API` (SQL Server must be running):
+From `Backend/HireSphere.API` (SQL Server must be running and the connection string configured):
 
 ```powershell
 $env:DOTNET_ROLL_FORWARD = "Major"
+dotnet tool restore
+dotnet restore
+dotnet build
+dotnet tool run dotnet-ef migrations list --project HireSphere.API.csproj
 dotnet tool run dotnet-ef database update --project HireSphere.API.csproj
 ```
 
@@ -76,9 +88,32 @@ Initial migration name: **`InitialSqlServerCoreModel`** (`20260720103526_Initial
 
 ---
 
-## Seed data
+## Secure development seeding
 
-On startup, `Program.cs` calls `DbSeeder.SeedAsync` when the database is reachable. Demo user passwords are documented **only** in comments inside `Data/Seed/DbSeeder.cs` — rotate them for any shared environment.
+Reference/catalog seed (roles, permissions, organization, departments, skills) runs when the database is reachable.
+
+**User account seeding is disabled by default.** Enable only when you explicitly supply configuration:
+
+| Key / env var | Purpose |
+|---------------|---------|
+| `Seed:Enabled` / `HIRESPHERE_SEED_ENABLED` | Must be `true` to create demo users |
+| `Seed:AdminEmail` / `HIRESPHERE_SEED_ADMIN_EMAIL` | Admin email used as the seed identity base |
+| `Seed:AdminPassword` / `HIRESPHERE_SEED_ADMIN_PASSWORD` | Password hashed with BCrypt before persistence (never logged) |
+
+Example (local only — do not commit values):
+
+```powershell
+dotnet user-secrets set "Seed:Enabled" "true"
+dotnet user-secrets set "Seed:AdminEmail" "<YOUR_LOCAL_ADMIN_EMAIL>"
+dotnet user-secrets set "Seed:AdminPassword" "<YOUR_LOCAL_ADMIN_PASSWORD>"
+```
+
+Rules:
+
+- Seed skips safely when disabled or when credentials are missing.
+- Passwords must be at least 12 characters.
+- Passwords are hashed before storage; plaintext is never written to the database or logs.
+- Seed is idempotent — running twice does not duplicate roles, skills, or users.
 
 ---
 
@@ -88,9 +123,7 @@ On startup, `Program.cs` calls `DbSeeder.SeedAsync` when the database is reachab
 dotnet run --project Backend/HireSphere.API/HireSphere.API.csproj
 ```
 
-Swagger: `https://localhost:7xxx/swagger` (port from launch profile).
-
-If seed is skipped, check logs for *Database is not reachable* and confirm connection string + migration status.
+Swagger uses the HTTPS port from `launchSettings.json`.
 
 ---
 
@@ -98,7 +131,8 @@ If seed is skipped, check logs for *Database is not reachable* and confirm conne
 
 | Symptom | Action |
 |---------|--------|
-| Login failed for user `sa` | Verify password, SQL auth enabled, container fully started |
+| Cannot connect / login failed | Confirm instance name, Windows auth vs SQL auth, and local secrets |
 | Certificate / encryption errors | Keep `TrustServerCertificate=True` for local dev |
 | `dotnet ef` fails on missing net8.0 runtime | Set `$env:DOTNET_ROLL_FORWARD="Major"` or install .NET 8 runtime |
-| Migration apply blocked | SQL Server not running — expected until local instance available |
+| Migration apply blocked | No SQL Server instance available on this machine |
+| User seed skipped | Enable `Seed:Enabled` and supply admin email/password via secrets or env |

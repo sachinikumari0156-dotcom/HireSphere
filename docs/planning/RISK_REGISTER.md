@@ -25,7 +25,7 @@
 | R-19 | Academic integrity attribution | Low | Critical | Only Kalani SHAs for new work | Agent | MONITORING |
 | R-20 | .NET SDK 10 vs project net8.0 | Low | Low | Build/test succeed; EF CLI needs roll-forward | Agent | MONITORING |
 | R-21 | Existing users with plaintext passwords | High | High | Re-register or migrate hashes after deploy | Kalani | OPEN |
-| R-22 | SQL Server unavailable locally | Medium | Medium | Migration generated; apply BLOCKED until instance running | Kalani | OPEN — BLOCKED apply |
+| R-22 | SQL Server unavailable locally | Low | Medium | Express installed; migration applied to HireSphereDev | Kalani | CLOSED |
 
 ---
 

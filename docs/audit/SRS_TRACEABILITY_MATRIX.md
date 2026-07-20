@@ -17,7 +17,7 @@
 | Recruiter | Jobs / applications | M-RC01–M-RC06 | IN PROGRESS | API partial; UI placeholder |
 | Hiring Manager | Evaluation / decisions | M-HM01–M-HM04 | NOT STARTED | Models in DB; APIs pending |
 | Administrator | Users / orgs / analytics | M-A01–M-A05 | IN PROGRESS | UsersController secured; org models seeded |
-| Database | SQL Server deliverable | M-B02 | IMPLEMENTED | SqlServer provider + `InitialSqlServerCoreModel`; apply BLOCKED locally |
+| Database | SQL Server deliverable | M-B02 | VERIFIED | Applied on SQL Express `HireSphereDev`; migration history confirmed |
 | Database | Core entity model | M-B03 | IMPLEMENTED | 35+ entities, fluent configs, ER diagram |
 | AI | Matching / ranking / recs | M-AI01–M-AI09 | NOT STARTED | Model stubs only |
 | Integrations | Email / SMS / calendar / storage | M-I01–M-I07 | NOT STARTED | Credential-dependent |

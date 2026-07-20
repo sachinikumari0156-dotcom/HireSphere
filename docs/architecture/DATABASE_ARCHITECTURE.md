@@ -84,7 +84,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 Connection string key: `ConnectionStrings:DefaultConnection` (secrets/env in production).
 
-Startup seed runs only when **not** in `Testing` environment and database is reachable.
+Startup catalog seed (roles/permissions/org/skills) runs only when **not** in `Testing` environment and the database is reachable. Demo **user** seeding requires explicit `Seed:Enabled` plus admin credentials from user secrets or environment variables; passwords are BCrypt-hashed and never logged.
 
 ---
 

@@ -139,7 +139,10 @@ using (var scope = app.Services.CreateScope())
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             if (await db.Database.CanConnectAsync())
             {
-                await HireSphere.API.Data.Seed.DbSeeder.SeedAsync(db);
+                await HireSphere.API.Data.Seed.DbSeeder.SeedAsync(
+                    db,
+                    app.Configuration,
+                    logger);
             }
             else
             {
