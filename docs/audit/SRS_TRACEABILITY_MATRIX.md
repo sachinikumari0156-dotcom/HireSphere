@@ -18,7 +18,7 @@
 | Candidate | Assessments / interviews | M-R01 (partial) | VERIFIED (candidate) | Candidate E2E; recruiter assign/schedule VERIFIED in Phase 5 |
 | Recruiter | Jobs / applications | M-RC01–M-RC06 | VERIFIED | Phase 5 Playwright + 26 screenshots; org scoping |
 | Hiring Manager | Evaluation / decisions | M-HM01–M-HM04 | VERIFIED | Phase 6 Playwright + 21 screenshots; assignment authz |
-| Administrator | Users / orgs / analytics | M-A01–M-A05 | IN PROGRESS | UsersController secured; org models seeded |
+| Administrator | Users / orgs / analytics | M-A01–M-A05 | VERIFIED | Phase 7 Admin portal + E2E 2026-07-20 |
 | Database | SQL Server deliverable | M-B02 | VERIFIED | Applied on LocalDB `HireSphereDev`; migration history confirmed |
 | Database | Core entity model | M-B03 | IMPLEMENTED | 35+ entities, fluent configs, ER diagram; Phase 5 recruiter fields |
 | AI | Matching / ranking / recs | M-AI01–M-AI09 | IN PROGRESS | Deterministic match/recs/ranking; external AI Phase 8 |

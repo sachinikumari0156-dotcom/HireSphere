@@ -837,6 +837,245 @@ public sealed class E2eSeedController : ControllerBase
         });
     }
 
+    public sealed class EnsureAdminPortalRequest
+    {
+        public string? AdminPassword { get; set; }
+        public string? SecondAdminPassword { get; set; }
+        public string? RecruiterPassword { get; set; }
+        public string? HiringManagerPassword { get; set; }
+        public string? CandidatePassword { get; set; }
+    }
+
+    /// <summary>
+    /// Deterministic Administrator portal fixture for Phase 7 E2E.
+    /// </summary>
+    [HttpPost("ensure-admin-portal")]
+    public async Task<IActionResult> EnsureAdminPortal(
+        [FromBody] EnsureAdminPortalRequest? request,
+        CancellationToken cancellationToken)
+    {
+        if (!IsE2eEnabled())
+        {
+            return Disabled();
+        }
+
+        var stamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
+        var adminPassword = request?.AdminPassword
+            ?? Environment.GetEnvironmentVariable("HIRESPHERE_E2E_ADMIN_PASSWORD")
+            ?? "AdminE2ePass123!";
+        var admin2Password = request?.SecondAdminPassword
+            ?? Environment.GetEnvironmentVariable("HIRESPHERE_E2E_ADMIN2_PASSWORD")
+            ?? "Admin2E2ePass123!";
+        var recruiterPassword = request?.RecruiterPassword
+            ?? Environment.GetEnvironmentVariable("HIRESPHERE_E2E_RECRUITER_PASSWORD")
+            ?? "RecruiterE2ePass123!";
+        var hmPassword = request?.HiringManagerPassword
+            ?? Environment.GetEnvironmentVariable("HIRESPHERE_E2E_HM_PASSWORD")
+            ?? "HiringMgrE2ePass123!";
+        var candidatePassword = request?.CandidatePassword
+            ?? Environment.GetEnvironmentVariable("HIRESPHERE_E2E_CANDIDATE_PASSWORD")
+            ?? "CandidateE2ePass123!";
+
+        var adminEmail = $"e2e-admin-{stamp}@hiresphere.local";
+        var admin2Email = $"e2e-admin2-{stamp}@hiresphere.local";
+        var recruiterEmail = $"e2e-admin-rec-{stamp}@hiresphere.local";
+        var hmEmail = $"e2e-admin-hm-{stamp}@hiresphere.local";
+        var candidateEmail = $"e2e-admin-cand-{stamp}@example.test";
+        var pendingApproveEmail = $"e2e-admin-req-approve-{stamp}@example.test";
+        var pendingRejectEmail = $"e2e-admin-req-reject-{stamp}@example.test";
+
+        var orgA = new Organization
+        {
+            Name = $"E2E Admin Org A {stamp}",
+            Code = $"A{Guid.NewGuid():N}"[..12].ToUpperInvariant(),
+            Status = OrganizationStatus.Active,
+            CreatedAtUtc = DateTime.UtcNow
+        };
+        var orgB = new Organization
+        {
+            Name = $"E2E Admin Org B {stamp}",
+            Code = $"B{Guid.NewGuid():N}"[..12].ToUpperInvariant(),
+            Status = OrganizationStatus.Active,
+            CreatedAtUtc = DateTime.UtcNow
+        };
+        _db.Organizations.AddRange(orgA, orgB);
+        await _db.SaveChangesAsync(cancellationToken);
+
+        var deptA = new Department
+        {
+            OrganizationId = orgA.Id,
+            Name = "Engineering",
+            Code = "ENG",
+            Status = DepartmentStatus.Active,
+            CreatedAtUtc = DateTime.UtcNow
+        };
+        var deptA2 = new Department
+        {
+            OrganizationId = orgA.Id,
+            Name = "Archive Candidate",
+            Code = "ARC",
+            Status = DepartmentStatus.Active,
+            CreatedAtUtc = DateTime.UtcNow
+        };
+        var deptB = new Department
+        {
+            OrganizationId = orgB.Id,
+            Name = "People",
+            Code = "PPL",
+            Status = DepartmentStatus.Active,
+            CreatedAtUtc = DateTime.UtcNow
+        };
+        _db.Departments.AddRange(deptA, deptA2, deptB);
+        await _db.SaveChangesAsync(cancellationToken);
+
+        var admin = await EnsureUserWithRoleAsync(adminEmail, adminPassword, "Admin", orgA.Id, cancellationToken);
+        var admin2 = await EnsureUserWithRoleAsync(admin2Email, admin2Password, "Admin", orgA.Id, cancellationToken);
+        var recruiter = await EnsureUserWithRoleAsync(recruiterEmail, recruiterPassword, "Recruiter", orgA.Id, cancellationToken);
+        var hm = await EnsureUserWithRoleAsync(hmEmail, hmPassword, "HiringManager", orgA.Id, cancellationToken);
+        var candidate = await EnsureCandidateUserAsync(candidateEmail, candidatePassword, "E2E Admin Candidate", cancellationToken);
+
+        admin.SecurityStamp ??= Guid.NewGuid().ToString("N");
+        admin2.SecurityStamp ??= Guid.NewGuid().ToString("N");
+        await _db.SaveChangesAsync(cancellationToken);
+
+        var approveRequest = new RecruiterAccessRequest
+        {
+            FullName = "Pending Approve Recruiter",
+            BusinessEmail = pendingApproveEmail,
+            NormalizedBusinessEmail = pendingApproveEmail.ToUpperInvariant(),
+            OrganizationName = orgA.Name,
+            Message = "Please approve Phase 7 E2E",
+            Status = RecruiterRequestStatus.Pending,
+            CreatedAtUtc = DateTime.UtcNow
+        };
+        var rejectRequest = new RecruiterAccessRequest
+        {
+            FullName = "Pending Reject Recruiter",
+            BusinessEmail = pendingRejectEmail,
+            NormalizedBusinessEmail = pendingRejectEmail.ToUpperInvariant(),
+            OrganizationName = orgA.Name,
+            Message = "Please reject Phase 7 E2E",
+            Status = RecruiterRequestStatus.Pending,
+            CreatedAtUtc = DateTime.UtcNow
+        };
+        _db.RecruiterAccessRequests.AddRange(approveRequest, rejectRequest);
+
+        var skills = await _db.Skills
+            .Where(s => s.Name == "C#" || s.Name == "React")
+            .ToListAsync(cancellationToken);
+        if (skills.Count == 0)
+        {
+            _db.Skills.AddRange(
+                new Skill { Name = "C#", CreatedAtUtc = DateTime.UtcNow },
+                new Skill { Name = "React", CreatedAtUtc = DateTime.UtcNow });
+            await _db.SaveChangesAsync(cancellationToken);
+            skills = await _db.Skills.Where(s => s.Name == "C#" || s.Name == "React").ToListAsync(cancellationToken);
+        }
+
+        var job = new Job
+        {
+            Title = $"Phase7 Admin Final Decision Role {stamp}",
+            Description = "Published job awaiting Administrator final decision.",
+            RequiredSkills = "C#, React",
+            Location = "Colombo",
+            JobType = "Full-time",
+            PostedDate = DateTime.UtcNow,
+            RecruiterId = recruiter.Id,
+            OrganizationId = orgA.Id,
+            DepartmentId = deptA.Id,
+            HiringManagerUserId = hm.Id,
+            Status = JobStatus.Published,
+            EmploymentType = EmploymentType.FullTime,
+            WorkArrangement = WorkArrangement.Hybrid,
+            PublishedAtUtc = DateTime.UtcNow,
+            CreatedAtUtc = DateTime.UtcNow,
+            Vacancies = 1
+        };
+        foreach (var skill in skills)
+        {
+            job.JobSkills.Add(new JobSkill { SkillId = skill.Id, IsRequired = true, MinProficiencyLevel = "Intermediate" });
+        }
+
+        _db.Jobs.Add(job);
+        await _db.SaveChangesAsync(cancellationToken);
+
+        var profile = await EnsureCandidateProfileAsync(candidate, skills, cancellationToken);
+        var application = new Application
+        {
+            CandidateId = candidate.Id,
+            JobId = job.Id,
+            AppliedDate = DateTime.UtcNow.AddDays(-7),
+            CreatedAtUtc = DateTime.UtcNow.AddDays(-7),
+            UpdatedAtUtc = DateTime.UtcNow,
+            Status = ApplicationStatus.Interviewed,
+            CoverLetter = "Phase 7 Admin final decision application",
+            ResumeId = profile.Resumes.FirstOrDefault()?.Id
+        };
+        application.StatusHistory.Add(new ApplicationStatusHistory
+        {
+            Status = ApplicationStatus.Pending,
+            ChangedAtUtc = DateTime.UtcNow.AddDays(-7),
+            Notes = "Submitted"
+        });
+        application.StatusHistory.Add(new ApplicationStatusHistory
+        {
+            Status = ApplicationStatus.Interviewed,
+            ChangedAtUtc = DateTime.UtcNow.AddDays(-1),
+            Notes = "Interview complete"
+        });
+        _db.Applications.Add(application);
+        await _db.SaveChangesAsync(cancellationToken);
+
+        _db.HiringDecisions.Add(new HiringDecision
+        {
+            ApplicationId = application.Id,
+            DecisionByUserId = hm.Id,
+            DecisionType = HiringDecisionType.RecommendHire,
+            IsFinal = false,
+            Status = HiringDecisionStatus.Pending,
+            Reason = "Strong Phase 7 panel recommendation",
+            PriorApplicationStatus = ApplicationStatus.Interviewed,
+            DecisionDateUtc = DateTime.UtcNow.AddHours(-2),
+            CreatedAtUtc = DateTime.UtcNow.AddHours(-2)
+        });
+
+        _db.AuditLogs.Add(new AuditLog
+        {
+            UserId = admin.Id,
+            Action = "admin.seed",
+            EntityType = "System",
+            Details = "Phase 7 admin portal seed",
+            Success = true,
+            ActorRole = "Admin",
+            CorrelationId = $"phase7-{stamp}",
+            CreatedAtUtc = DateTime.UtcNow
+        });
+        await _db.SaveChangesAsync(cancellationToken);
+
+        return Ok(new
+        {
+            organizationId = orgA.Id,
+            organizationBId = orgB.Id,
+            departmentId = deptA.Id,
+            archiveDepartmentId = deptA2.Id,
+            departmentBId = deptB.Id,
+            adminEmail = admin.Email,
+            adminUserId = admin.Id,
+            secondAdminEmail = admin2.Email,
+            secondAdminUserId = admin2.Id,
+            recruiterEmail = recruiter.Email,
+            hiringManagerEmail = hm.Email,
+            hiringManagerUserId = hm.Id,
+            candidateEmail = candidate.Email,
+            candidateUserId = candidate.Id,
+            approveRecruiterRequestId = approveRequest.Id,
+            rejectRecruiterRequestId = rejectRequest.Id,
+            jobId = job.Id,
+            applicationId = application.Id,
+            passwordsFromRequestOrEnv = true
+        });
+    }
+
     private async Task<User> EnsureCandidateUserAsync(
         string email,
         string password,

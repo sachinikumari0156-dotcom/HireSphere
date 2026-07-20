@@ -1,23 +1,27 @@
-# Administrator Governance
+# Administrator governance
 
-**Phase:** 7.1
+**Phase 7 — VERIFIED 2026-07-20**
 
 ## Authorization
 
-- Endpoints require authenticated **active** `Admin` role (`AdministratorOnly`).
-- Client-supplied role/org/permission fields are ignored for authorization; identity comes from JWT + DB.
+- Policy: `AdministratorOnly` (`Admin` role)
+- Client Role/OrganizationId/Permission claims are not trusted for authorization decisions
+- Sensitive Admin actions check authenticated user + DB role/status
+- `SecurityStamp` rotates on disable and critical role changes; Inactive/Suspended cannot login
 
-## Last-Administrator protection
+## Protections
 
-- An Admin cannot disable their own account via status PATCH.
-- The last active global Admin cannot be disabled.
-- The last Admin role assignment cannot be removed.
+- Self-disable blocked
+- Last active global Administrator cannot be disabled / last Admin role cannot be removed
+- PasswordHash, JWTs, reset tokens never serialized
+- Recruiter approval cannot assign privileged roles beyond Recruiter
+- Cross-organization department assignment blocked
+- Archived departments reject new assignments
 
-## Token / session approach
+## Final decisions
 
-1. Login rejects `Inactive` / `Suspended` / `PendingApproval`.
-2. Critical status/role changes rotate `User.SecurityStamp`.
-3. Sensitive Admin actions always load targets from the database (not client claims).
-4. JWT lifetime remains short; `/auth/me` refreshes status from DB.
+Hiring Manager recommendations are not final. Only Administrator records FinalHire/FinalReject (see `FINAL_DECISION_WORKFLOW.md`).
 
-Password reset delivery is Phase 8 unless a provider is configured.
+## Providers
+
+Email / SMS / calendar / cloud storage: **NotConfigured** until Phase 8.

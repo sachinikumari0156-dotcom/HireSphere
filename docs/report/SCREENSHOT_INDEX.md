@@ -1,6 +1,47 @@
 # Screenshot Index
 
-## Phase 6 â€” Hiring Manager Portal
+## Phase 7 — Administrator Portal
+
+**Date:** 2026-07-20
+**Folder:** `docs/evidence/phase7-admin/`
+**Source:** Playwright Chromium live browser run against LocalDB `HireSphereDev`
+
+| File | Scenario |
+|------|----------|
+| `admin-login.png` | Administrator login |
+| `admin-dashboard.png` | Live governance metrics |
+| `admin-user-list.png` | User list / filters |
+| `admin-user-detail.png` | User detail |
+| `admin-user-role-assignment.png` | Role / org assignment UI |
+| `admin-self-disable-blocked.png` | Self-disable blocked |
+| `admin-last-admin-protection.png` | Last-Administrator protection |
+| `admin-recruiter-requests.png` | Recruiter request list |
+| `admin-recruiter-approval.png` | Approve request |
+| `admin-recruiter-rejection.png` | Reject with reason |
+| `admin-organization-list.png` | Organizations |
+| `admin-organization-form.png` | Create organization |
+| `admin-department-list.png` | Departments |
+| `admin-department-form.png` | Create department |
+| `admin-role-permission-matrix.png` | Roles / permissions |
+| `admin-audit-log.png` | Audit logs |
+| `admin-audit-filters.png` | Audit filters |
+| `admin-monitoring.png` | Monitoring summary |
+| `admin-provider-not-configured.png` | Phase 8 providers NotConfigured |
+| `admin-recruitment-analytics.png` | Recruitment analytics |
+| `admin-department-analytics.png` | Department analytics view |
+| `admin-skill-demand.png` | Skill demand |
+| `admin-final-decision-review.png` | Final decision review |
+| `admin-final-decision-success.png` | FinalHire recorded |
+| `admin-duplicate-decision-blocked.png` | Duplicate final blocked |
+| `admin-access-denied.png` | Candidate denied `/admin` |
+| `admin-mobile-dashboard.png` | Mobile 390×844 |
+| `phase7-playwright-summary.png` | End-of-journey capture |
+
+No passwords, JWTs, connection strings, or assessment answer keys are present in these images.
+
+---
+
+## Phase 6 — Hiring Manager Portal
 
 **Date:** 2026-07-20
 **Folder:** `docs/evidence/phase6-hiring-manager/`

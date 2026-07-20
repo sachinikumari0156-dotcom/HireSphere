@@ -1,6 +1,6 @@
 # HireSphere — Risk Register
 
-**Last updated:** 2026-07-20 (Phase 6 E2E)
+**Last updated:** 2026-07-20 (Phase 7 E2E)
 
 | ID | Risk | Likelihood | Impact | Mitigation | Owner | Status |
 |----|------|------------|--------|------------|-------|--------|
@@ -20,7 +20,8 @@
 | R-14 | External integration credentials | Medium | Medium | Adapter + honest BLOCKED status | Kalani | OPEN |
 | R-15 | EF package/version mismatch | Low | Low | Aligned to EF Core 10.0.10 / net10.0 | Agent | CLOSED |
 | R-16 | Hireflow branding inconsistency | Low | Low | Auth pages updated; remaining UI in Phase 9 | Agent | MITIGATED |
-| R-17 | Placeholder recruiter/manager/admin UIs | Low | High | Recruiter + HM portals VERIFIED; Admin pending Phase 7 | Agent | MITIGATED — Admin remaining |
+| R-17 | Placeholder recruiter/manager/admin UIs | Low | High | Recruiter + HM + Admin portals VERIFIED | Agent | CLOSED |
+| R-32 | Phase 7 claimed VERIFIED without Admin E2E | Low | High | Playwright journey + 28 screenshots 2026-07-20 | Chinthaka | CLOSED |
 | R-18 | Coursework/SRS in public repo | Low | Medium | Moved to ignored `local-spec/` | Kalani | CLOSED |
 | R-19 | Academic integrity attribution | Low | Critical | Kalani history preserved; Chinthaka authors new commits only | Team | MONITORING |
 | R-22 | SQL Server unavailable locally | Low | Medium | LocalDB used for Phase 4–6 E2E when Express missing | Chinthaka | MITIGATED |

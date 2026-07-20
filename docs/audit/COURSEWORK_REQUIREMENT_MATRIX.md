@@ -15,7 +15,7 @@
 | M-R01 | Candidate Portal | VERIFIED | Playwright E2E 2026-07-20 + API/Vitest; screenshots in `docs/evidence/phase4-candidate/` |
 | M-R02 | Recruiter Portal | VERIFIED | Playwright E2E 2026-07-20; screenshots in `docs/evidence/phase5-recruiter/` |
 | M-R03 | Hiring Manager Dashboard | VERIFIED | Playwright E2E 2026-07-20; screenshots in `docs/evidence/phase6-hiring-manager/` |
-| M-R04 | Administrator Dashboard | IN PROGRESS | Protected `/admin/*` shell + admin APIs |
+| M-R04 | Administrator Dashboard | VERIFIED | Live `/admin` dashboard + Phase 7 E2E |
 
 ### Candidate features
 
@@ -52,11 +52,11 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-A01 | User management | TESTED | Admin user list/status/role/org APIs + audit logs |
-| M-A02 | Role and permission management | TESTED | Policies + admin role assignment; permission claims on JWT |
-| M-A03 | System monitoring | NOT STARTED | — |
-| M-A04 | Recruitment analytics dashboard | NOT STARTED | — |
-| M-A05 | Organization and department management | IN PROGRESS | Models + admin org assignment on users |
+| M-A01 | User management | VERIFIED | Admin users + Phase 7 E2E |
+| M-A02 | Role and permission management | VERIFIED | Matrix UI + APIs + E2E |
+| M-A03 | System monitoring | VERIFIED | `/admin/monitoring` truthful LocalDB + NotConfigured providers |
+| M-A04 | Recruitment analytics dashboard | VERIFIED | `/admin/analytics` org-scoped LocalDB |
+| M-A05 | Organization and department management | VERIFIED | CRUD + archive rules + E2E |
 
 ### Backend and database
 
