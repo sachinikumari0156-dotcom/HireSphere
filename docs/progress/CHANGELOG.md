@@ -1,5 +1,13 @@
 # HireSphere — Implementation Changelog
 
+## Phase 10 release — 2026-07-21
+
+**Commit message:** `test(release): verify complete HireSphere release candidate`
+
+- Release build/tests PASS; Playwright 14/14
+- Release readiness docs; Phase 10 PARTIALLY VERIFIED (usability participants pending)
+- Phase 11 pending
+
 ## Phase 10.2 — 2026-07-21
 
 **Commit message:** `test(usability): complete role based UAT and usability evaluation`

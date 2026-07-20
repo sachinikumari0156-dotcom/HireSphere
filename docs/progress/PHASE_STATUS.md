@@ -1,7 +1,7 @@
 # HireSphere — Phase Status
 
 **Last updated:** 2026-07-21
-**Overall readiness:** NOT READY (Phase 11 pending; Phase 10 in progress)
+**Overall readiness:** NOT READY (Phase 11 pending)
 
 | Phase | Name | Status | Commit | Push | Notes |
 |-------|------|--------|--------|------|-------|
@@ -15,8 +15,27 @@
 | 7 | Administrator | VERIFIED | `3d2b4d7` + `55bef50` + verify | SUCCESS | Playwright Admin journey PASS; 28 screenshots; LocalDB |
 | 8 | AI and integrations | IMPLEMENTED — EXTERNAL PROVIDER VERIFICATION PENDING | `d94e08e` + `3a5ef00` + `472df59` + `ed74aed` | SUCCESS | Deterministic AI, outbox, ICS, local storage verified; external cloud providers NotConfigured |
 | 9 | UI design system | VERIFIED | `48db259` + `3119e4f` + verify | SUCCESS | Design system + responsive portals; axe/keyboard/visual PASS; evidence in phase9-ui |
-| 10 | Quality and UAT | PARTIALLY VERIFIED | `fe3c0cc` + 10.2 | PARTIAL | Automated UAT PASS; real usability participants PENDING |
+| 10 | Quality and UAT | PARTIALLY VERIFIED | `fe3c0cc` + `6cddb19` + release | PARTIAL | Automated quality/UAT/release PASS; real usability participants PENDING |
 | 11 | Submission pack | NOT STARTED | — | — | — |
+
+---
+
+## Phase 10 verification (partial)
+
+### Evidence
+
+- Backend Release: **132/132 PASS**
+- Frontend Vitest: **89/89 PASS**
+- Playwright: **14/14 PASS**
+- Evidence: `docs/evidence/phase10-quality/`
+- Real usability participants: **0 PENDING**
+- Status: **PARTIALLY VERIFIED**
+
+### Focused commits
+
+1. Quality — integration/security/performance coverage
+2. Usability — role UAT + heuristic (participants pending)
+3. Release — release candidate verification
 
 ---
 

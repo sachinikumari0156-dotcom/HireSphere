@@ -24,13 +24,14 @@
 | AI | Matching / ranking / recs | M-AI01–M-AI09 | IMPLEMENTED — EXTERNAL PENDING | Deterministic AI verified Phase 8; External AI NotConfigured |
 | Integrations | Email / SMS / calendar / storage | M-I01–M-I07 | IMPLEMENTED — EXTERNAL PENDING | Outbox + ICS + local storage verified; production/cloud NotConfigured |
 | Frontend | Branding / responsive / a11y | M-F03, M-F05 | VERIFIED | Phase 9 design system + responsive + axe; evidence phase9-ui |
-| Testing | Automated tests | M-T01 | IN PROGRESS | BE 114; FE Vitest 84; Playwright 13/13; formal UAT Phase 10 |
-| Report | Diagrams / contribution / demo | M-D01–M-D05 | IN PROGRESS | ER diagram + data dictionary + Phase 4–9 evidence |
+| Testing | Automated tests | M-T01 | VERIFIED | BE 132; FE Vitest 89; Playwright 14/14 Phase 10 |
+| Usability | Participant evaluation | M-F07 | PENDING | 0 participants this cycle; heuristic complete |
+| Report | Diagrams / contribution / demo | M-D01–M-D05 | IN PROGRESS | ER diagram + data dictionary + Phase 4–10 evidence |
 
 **Notes**
 
 - Original SRS PDF remains in ignored `local-spec/` and is not committed.
 - Phase 4 Candidate Portal is **VERIFIED** with Playwright browser E2E evidence (2026-07-20).
 - Phase 8 development adapters are verified; external cloud providers remain NotConfigured.
-- Phase 9 UI/accessibility is **VERIFIED**; formal usability study remains Phase 10.
-- Full SRS coverage continues in Phases 10–11.
+- Phase 9 UI/accessibility is **VERIFIED**; Phase 10 is **PARTIALLY VERIFIED** pending real usability participants.
+- Phase 11 packaging pending.
