@@ -17,7 +17,7 @@ namespace HireSphere.API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
+                .HasAnnotation("ProductVersion", "10.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -87,6 +87,9 @@ namespace HireSphere.API.Migrations
                     b.Property<int>("JobId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ResumeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -96,6 +99,8 @@ namespace HireSphere.API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("JobId");
+
+                    b.HasIndex("ResumeId");
 
                     b.HasIndex("Status");
 
@@ -174,6 +179,91 @@ namespace HireSphere.API.Migrations
                     b.ToTable("ApplicationStatusHistories");
                 });
 
+            modelBuilder.Entity("HireSphere.API.Models.AssessmentAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AnswerValue")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int>("AssessmentAttemptId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AssessmentQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("AwardedPoints")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssessmentQuestionId");
+
+                    b.HasIndex("AssessmentAttemptId", "AssessmentQuestionId")
+                        .IsUnique();
+
+                    b.ToTable("AssessmentAnswers");
+                });
+
+            modelBuilder.Entity("HireSphere.API.Models.AssessmentAssignment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ApplicationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AssignedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CandidateId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ExpiresAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("MaxAttempts")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("RevealResultsToCandidate")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SkillAssessmentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("StartsAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationId");
+
+                    b.HasIndex("SkillAssessmentId");
+
+                    b.HasIndex("CandidateId", "SkillAssessmentId");
+
+                    b.ToTable("AssessmentAssignments");
+                });
+
             modelBuilder.Entity("HireSphere.API.Models.AssessmentAttempt", b =>
                 {
                     b.Property<int>("Id")
@@ -181,6 +271,12 @@ namespace HireSphere.API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AssessmentAssignmentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AttemptExpiresAtUtc")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("CandidateId")
                         .HasColumnType("int");
@@ -199,6 +295,8 @@ namespace HireSphere.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AssessmentAssignmentId");
+
                     b.HasIndex("CandidateId");
 
                     b.HasIndex("SkillAssessmentId");
@@ -213,6 +311,15 @@ namespace HireSphere.API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CorrectAnswerKey")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("OptionsJson")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
 
                     b.Property<decimal>("Points")
                         .HasPrecision(5, 2)
@@ -445,13 +552,29 @@ namespace HireSphere.API.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("Availability")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("DesiredJobTitle")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("GitHubUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("LinkedInUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Location")
                         .HasMaxLength(200)
@@ -462,10 +585,20 @@ namespace HireSphere.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("PortfolioUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int?>("PreferredWorkArrangement")
+                        .HasColumnType("int");
+
                     b.Property<string>("ResumePath")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<int?>("SalaryExpectation")
+                        .HasColumnType("int");
 
                     b.Property<string>("Skills")
                         .IsRequired()
@@ -541,6 +674,10 @@ namespace HireSphere.API.Migrations
                     b.Property<string>("CredentialId")
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("CredentialUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("datetime2");
@@ -632,6 +769,9 @@ namespace HireSphere.API.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("IsCurrentStudy")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
@@ -733,6 +873,16 @@ namespace HireSphere.API.Migrations
                     b.Property<int>("ApplicationId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("CandidateRespondedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CandidateResponse")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CandidateResponseReason")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("datetime2");
 
@@ -744,13 +894,28 @@ namespace HireSphere.API.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("MeetingInstructions")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
                     b.Property<string>("MeetingLink")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<bool>("RequireConfirmForMeetingInfo")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<string>("TimeZoneId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -935,16 +1100,32 @@ namespace HireSphere.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsRead")
                         .HasColumnType("bit");
 
+                    b.Property<string>("LinkPath")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<string>("Message")
                         .IsRequired()
                         .HasMaxLength(4000)
                         .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("RelatedEntityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RelatedEntityType")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -956,7 +1137,7 @@ namespace HireSphere.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId", "IsRead", "CreatedAtUtc");
 
                     b.ToTable("Notifications");
                 });
@@ -1024,6 +1205,70 @@ namespace HireSphere.API.Migrations
                         .IsUnique();
 
                     b.ToTable("Permissions");
+                });
+
+            modelBuilder.Entity("HireSphere.API.Models.RecruiterAccessRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BusinessEmail")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Message")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("NormalizedBusinessEmail")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("OrganizationName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ReviewNotes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTime?>("ReviewedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ReviewedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedUserId");
+
+                    b.HasIndex("NormalizedBusinessEmail");
+
+                    b.HasIndex("ReviewedByUserId");
+
+                    b.HasIndex("Status");
+
+                    b.ToTable("RecruiterAccessRequests");
                 });
 
             modelBuilder.Entity("HireSphere.API.Models.RecruiterProfile", b =>
@@ -1277,6 +1522,16 @@ namespace HireSphere.API.Migrations
                     b.Property<int?>("JobId")
                         .HasColumnType("int");
 
+                    b.Property<int>("MaxAttempts")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PassingScorePercent")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<bool>("RevealResultsToCandidate")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -1400,6 +1655,9 @@ namespace HireSphere.API.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsCurrentRole")
+                        .HasColumnType("bit");
+
                     b.Property<string>("JobTitle")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -1450,9 +1708,16 @@ namespace HireSphere.API.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("HireSphere.API.Models.Resume", "Resume")
+                        .WithMany()
+                        .HasForeignKey("ResumeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("Candidate");
 
                     b.Navigation("Job");
+
+                    b.Navigation("Resume");
                 });
 
             modelBuilder.Entity("HireSphere.API.Models.ApplicationAnswer", b =>
@@ -1491,8 +1756,59 @@ namespace HireSphere.API.Migrations
                     b.Navigation("ChangedByUser");
                 });
 
+            modelBuilder.Entity("HireSphere.API.Models.AssessmentAnswer", b =>
+                {
+                    b.HasOne("HireSphere.API.Models.AssessmentAttempt", "AssessmentAttempt")
+                        .WithMany("Answers")
+                        .HasForeignKey("AssessmentAttemptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HireSphere.API.Models.AssessmentQuestion", "AssessmentQuestion")
+                        .WithMany()
+                        .HasForeignKey("AssessmentQuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AssessmentAttempt");
+
+                    b.Navigation("AssessmentQuestion");
+                });
+
+            modelBuilder.Entity("HireSphere.API.Models.AssessmentAssignment", b =>
+                {
+                    b.HasOne("HireSphere.API.Models.Application", "Application")
+                        .WithMany()
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("HireSphere.API.Models.User", "Candidate")
+                        .WithMany()
+                        .HasForeignKey("CandidateId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HireSphere.API.Models.SkillAssessment", "SkillAssessment")
+                        .WithMany("Assignments")
+                        .HasForeignKey("SkillAssessmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Application");
+
+                    b.Navigation("Candidate");
+
+                    b.Navigation("SkillAssessment");
+                });
+
             modelBuilder.Entity("HireSphere.API.Models.AssessmentAttempt", b =>
                 {
+                    b.HasOne("HireSphere.API.Models.AssessmentAssignment", "AssessmentAssignment")
+                        .WithMany("Attempts")
+                        .HasForeignKey("AssessmentAssignmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("HireSphere.API.Models.User", "Candidate")
                         .WithMany()
                         .HasForeignKey("CandidateId")
@@ -1504,6 +1820,8 @@ namespace HireSphere.API.Migrations
                         .HasForeignKey("SkillAssessmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("AssessmentAssignment");
 
                     b.Navigation("Candidate");
 
@@ -1802,6 +2120,23 @@ namespace HireSphere.API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("HireSphere.API.Models.RecruiterAccessRequest", b =>
+                {
+                    b.HasOne("HireSphere.API.Models.User", "CreatedUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("HireSphere.API.Models.User", "ReviewedByUser")
+                        .WithMany()
+                        .HasForeignKey("ReviewedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("CreatedUser");
+
+                    b.Navigation("ReviewedByUser");
+                });
+
             modelBuilder.Entity("HireSphere.API.Models.RecruiterProfile", b =>
                 {
                     b.HasOne("HireSphere.API.Models.Department", "Department")
@@ -1928,8 +2263,15 @@ namespace HireSphere.API.Migrations
                     b.Navigation("StatusHistory");
                 });
 
+            modelBuilder.Entity("HireSphere.API.Models.AssessmentAssignment", b =>
+                {
+                    b.Navigation("Attempts");
+                });
+
             modelBuilder.Entity("HireSphere.API.Models.AssessmentAttempt", b =>
                 {
+                    b.Navigation("Answers");
+
                     b.Navigation("Result");
                 });
 
@@ -2010,6 +2352,8 @@ namespace HireSphere.API.Migrations
 
             modelBuilder.Entity("HireSphere.API.Models.SkillAssessment", b =>
                 {
+                    b.Navigation("Assignments");
+
                     b.Navigation("Attempts");
 
                     b.Navigation("Questions");

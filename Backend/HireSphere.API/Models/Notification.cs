@@ -10,6 +10,18 @@ public class Notification
 
     public string Message { get; set; } = string.Empty;
 
+    /// <summary>
+    /// ApplicationSubmitted | ApplicationStatusUpdated | AssessmentAssigned |
+    /// InterviewScheduled | InterviewUpdated
+    /// </summary>
+    public string Category { get; set; } = string.Empty;
+
+    public string? RelatedEntityType { get; set; }
+
+    public int? RelatedEntityId { get; set; }
+
+    public string? LinkPath { get; set; }
+
     public bool IsRead { get; set; }
 
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;

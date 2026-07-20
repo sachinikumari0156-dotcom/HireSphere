@@ -10,6 +10,11 @@ public class NotificationConfiguration : IEntityTypeConfiguration<Notification>
     {
         builder.Property(n => n.Title).HasMaxLength(200);
         builder.Property(n => n.Message).HasMaxLength(4000);
+        builder.Property(n => n.Category).HasMaxLength(100);
+        builder.Property(n => n.RelatedEntityType).HasMaxLength(100);
+        builder.Property(n => n.LinkPath).HasMaxLength(500);
+
+        builder.HasIndex(n => new { n.UserId, n.IsRead, n.CreatedAtUtc });
 
         builder.HasOne(n => n.User)
             .WithMany()

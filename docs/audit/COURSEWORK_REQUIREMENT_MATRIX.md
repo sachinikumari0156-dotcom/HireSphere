@@ -1,7 +1,7 @@
 # HireSphere — Coursework Requirement Matrix
 
 **Course:** SE205.3 Software Architecture 2026
-**Last updated:** 2026-07-20 (Phase 2 data model)
+**Last updated:** 2026-07-20 (Phase 4.3 candidate assessments/interviews/tracking/notifications)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED — EXTERNAL CREDENTIAL | DEFERRED — OPTIONAL BONUS
 
 ---
@@ -12,21 +12,21 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-R01 | Candidate Portal | IN PROGRESS | Register, login, partial dashboard; missing resume, AI recs, assessments |
-| M-R02 | Recruiter Portal | IN PROGRESS | API for jobs/applications; UI is placeholder |
-| M-R03 | Hiring Manager Dashboard | NOT STARTED | No routes, models, or APIs |
-| M-R04 | Administrator Dashboard | NOT STARTED | No routes, models, or APIs |
+| M-R01 | Candidate Portal | TESTED | `/candidate` profile, jobs, recs, applications, assessments, interviews, notifications; not VERIFIED (no full E2E) |
+| M-R02 | Recruiter Portal | IN PROGRESS | Protected `/recruiter/*` shell + dashboard; request flow added |
+| M-R03 | Hiring Manager Dashboard | IN PROGRESS | Protected `/hiring-manager/*` shell |
+| M-R04 | Administrator Dashboard | IN PROGRESS | Protected `/admin/*` shell + admin APIs |
 
 ### Candidate features
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-C01 | Registration and secure authentication | IN PROGRESS | Phase 1: BCrypt hashing; Candidate-only public register; full RBAC later |
-| M-C02 | Professional profile management | IN PROGRESS | `CandidateProfilesController`; no full UI |
-| M-C03 | CV/resume upload and management | NOT STARTED | `ResumePath` field only; no upload API |
-| M-C04 | Job search and application submission | IN PROGRESS | API + partial dashboard |
-| M-C05 | AI-powered job recommendations | NOT STARTED | No AI services |
-| M-C06 | Application tracking dashboard | IN PROGRESS | Partial list in dashboard |
+| M-C01 | Registration and secure authentication | VERIFIED | Phase 3 live UAT + FE/BE tests |
+| M-C02 | Professional profile management | TESTED | `/api/candidate` profile/experience/education/skills/certs; FE profile page |
+| M-C03 | CV/resume upload and management | TESTED | Local secure storage + upload/download/delete; cloud storage pending |
+| M-C04 | Job search and application submission | TESTED | `/api/candidate/jobs` + apply wizard APIs; FE jobs/apply routes; automated tests |
+| M-C05 | AI-powered job recommendations | TESTED | Deterministic provider (not external AI); recommendations API + UI; incomplete-profile handling |
+| M-C06 | Application tracking dashboard | TESTED | Timeline + next action + linked interviews/assessments; automated ordering tests; live E2E pending |
 
 ### Recruiter features
 
@@ -36,8 +36,8 @@
 | M-RC02 | Candidate search and filtering | NOT STARTED | No dedicated search |
 | M-RC03 | Application review and shortlisting | IN PROGRESS | Status update endpoints exist |
 | M-RC04 | AI-powered candidate ranking and screening | NOT STARTED | — |
-| M-RC05 | Interview scheduling and management | NOT STARTED | Interview model + DB config; API pending |
-| M-RC06 | Communication with applicants | NOT STARTED | — |
+| M-RC05 | Interview scheduling and management | IN PROGRESS | Candidate interview respond APIs TESTED; recruiter schedule UI/API still Phase 5 |
+| M-RC06 | Communication with applicants | IN PROGRESS | In-app notification foundation; email/SMS deferred |
 
 ### Hiring Manager features
 
@@ -52,18 +52,18 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-A01 | User management | IN PROGRESS | `UsersController` secured; Admin CRUD; list/get DTO-safe |
-| M-A02 | Role and permission management | IN PROGRESS | RBAC tables seeded; admin API pending |
+| M-A01 | User management | TESTED | Admin user list/status/role/org APIs + audit logs |
+| M-A02 | Role and permission management | TESTED | Policies + admin role assignment; permission claims on JWT |
 | M-A03 | System monitoring | NOT STARTED | — |
 | M-A04 | Recruitment analytics dashboard | NOT STARTED | — |
-| M-A05 | Organization and department management | NOT STARTED | Models + seed; API pending |
+| M-A05 | Organization and department management | IN PROGRESS | Models + admin org assignment on users |
 
 ### Backend and database
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
 | M-B01 | C# ASP.NET Core Web API | IMPLEMENTED | Builds successfully |
-| M-B02 | SQL Server database | IMPLEMENTED | Provider + migration generated; **apply BLOCKED** without SQL Server |
+| M-B02 | SQL Server database | VERIFIED | Applied `InitialSqlServerCoreModel` on `localhost\SQLEXPRESS` / `HireSphereDev` |
 | M-B03 | Core entities (profiles, jobs, applications, interviews, assessments, analytics, orgs) | IMPLEMENTED | 35+ entities in DbContext + configurations |
 | M-B04 | REST APIs (auth, profiles, resumes, jobs, applications, interviews, evaluations, analytics) | IN PROGRESS | ~5 controller groups; many missing |
 | M-B05 | Swagger/OpenAPI | IMPLEMENTED | Enabled in `Program.cs` |
@@ -72,13 +72,13 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-S01 | JWT authentication | IN PROGRESS | Token issued; validation configured; key via secrets/env |
-| M-S02 | RBAC | IN PROGRESS | Role claims; public privileged registration blocked |
-| M-S03 | Secure password hashing | IMPLEMENTED | BCrypt hash on register; verify on login; UsersController admin paths |
+| M-S01 | JWT authentication | VERIFIED | Live login/me + TokenService tests |
+| M-S02 | RBAC | VERIFIED | Four-role live UAT + policies |
+| M-S03 | Secure password hashing | VERIFIED | BCrypt; change-password UAT |
 | M-S04 | HTTPS-ready configuration | IN PROGRESS | Dev HTTPS profile exists |
-| M-S05 | Audit logging | IN PROGRESS | AuditLog entity + configuration; API pending |
-| M-S06 | Data privacy measures | IN PROGRESS | UserDto excludes PasswordHash; tests verify |
-| M-S07 | Resource ownership checks | IN PROGRESS | Partial in applications/jobs |
+| M-S05 | Audit logging | VERIFIED | AuditLogs observed for auth/admin actions |
+| M-S06 | Data privacy measures | VERIFIED | CurrentUserDto / UserDto exclude PasswordHash |
+| M-S07 | Resource ownership checks | VERIFIED | Cross-candidate 403 in live UAT |
 | M-S08 | Secure secret and document handling | IMPLEMENTED | Tracked secrets replaced with placeholders; rotation documented |
 
 ### AI and analytics
@@ -87,22 +87,22 @@
 |----|-------------|--------|------------------|
 | M-AI01 | Resume parsing | NOT STARTED | ResumeAnalysis model only |
 | M-AI02 | Skill extraction | NOT STARTED | — |
-| M-AI03 | Candidate-job matching | NOT STARTED | CandidateJobMatch model only |
+| M-AI03 | Candidate-job matching | TESTED | DeterministicJobMatchingProvider; match API; CandidateJobMatch persistence |
 | M-AI04 | Candidate ranking/scoring | NOT STARTED | — |
-| M-AI05 | Job recommendations | NOT STARTED | — |
+| M-AI05 | Job recommendations | TESTED | `/api/candidate/recommendations` highest-match sort; not external AI |
 | M-AI06 | Automated feedback | NOT STARTED | — |
 | M-AI07 | Recruitment performance analytics | NOT STARTED | — |
 | M-AI08 | Hiring trend analysis | NOT STARTED | — |
-| M-AI09 | Explainable AI + human-review notice | NOT STARTED | — |
+| M-AI09 | Explainable AI + human-review notice | IN PROGRESS | Deterministic match explanation + human-review notice in 4.2; broader AI explainability pending |
 
 ### External integrations
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-I01 | Email notifications | NOT STARTED | BLOCKED until SMTP/MailHog configured |
+| M-I01 | Email notifications | NOT STARTED | BLOCKED until SMTP/MailHog configured; in-app records exist for key events |
 | M-I02 | SMS notifications | NOT STARTED | BLOCKED — EXTERNAL CREDENTIAL |
 | M-I03 | Interview reminders | NOT STARTED | — |
-| M-I04 | Application-status updates | NOT STARTED | — |
+| M-I04 | Application-status updates | IN PROGRESS | In-app notifications on submit/withdraw; email channel pending |
 | M-I05 | Google Calendar | NOT STARTED | BLOCKED — EXTERNAL CREDENTIAL |
 | M-I06 | Microsoft Outlook Calendar | NOT STARTED | BLOCKED — EXTERNAL CREDENTIAL |
 | M-I07 | Secure cloud document storage | NOT STARTED | BLOCKED until storage configured |
@@ -115,7 +115,7 @@
 | M-F02 | Accessibility | NOT STARTED | Not audited |
 | M-F03 | Consistent UX / design system | IN PROGRESS | HireSphere branding on auth pages; design system later |
 | M-F04 | Client-side validation | IN PROGRESS | Login/register forms |
-| M-F05 | Secure authentication workflow | IN PROGRESS | Token stored; centralized API URL; no route guards yet |
+| M-F05 | Secure authentication workflow | VERIFIED | AuthContext, protected routes, session expiry |
 | M-F06 | Error handling and user feedback | IN PROGRESS | Basic form errors; API global exception handler added |
 | M-F07 | Usability testing evidence | NOT STARTED | — |
 
@@ -123,7 +123,7 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-T01 | Unit / API / auth tests | TESTED | `HireSphere.API.Tests` — 14 passing (SQLite constraints + auth) |
+| M-T01 | Unit / API / auth tests | VERIFIED | BE 33 + FE 13 + live UAT 26 |
 | M-T02 | Integration tests | NOT STARTED | — |
 | M-T03 | UAT scenarios (18 mandatory) | NOT STARTED | — |
 | M-T04 | Postman and Swagger evidence | NOT STARTED | Swagger only |

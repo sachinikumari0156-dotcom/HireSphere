@@ -1,4 +1,6 @@
-﻿namespace HireSphere.API.Models;
+﻿using HireSphere.API.Models.Enums;
+
+namespace HireSphere.API.Models;
 
 public class CandidateProfile
 {
@@ -21,6 +23,20 @@ public class CandidateProfile
     public string? Location { get; set; }
 
     public int? YearsOfExperience { get; set; }
+
+    public string? DesiredJobTitle { get; set; }
+
+    public WorkArrangement? PreferredWorkArrangement { get; set; }
+
+    public int? SalaryExpectation { get; set; }
+
+    public string? Availability { get; set; }
+
+    public string? PortfolioUrl { get; set; }
+
+    public string? LinkedInUrl { get; set; }
+
+    public string? GitHubUrl { get; set; }
 
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 

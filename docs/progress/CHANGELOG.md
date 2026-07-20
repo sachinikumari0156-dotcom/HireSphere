@@ -45,3 +45,84 @@
 - Backend tests: PASS (14/14)
 - Frontend lint/build: PASS; frontend test script still missing
 - Migration apply: BLOCKED — SQL Server not available locally
+
+## Phase 2 verification closure — 2026-07-20
+
+**Commit message:** `fix(data): verify SQL Server migration and secure development seeding`
+
+- Installed/used SQL Server Express (`localhost\SQLEXPRESS`)
+- Applied `InitialSqlServerCoreModel` to `HireSphereDev` (Windows auth)
+- Confirmed 38 tables + `__EFMigrationsHistory`
+- Removed hardcoded seed password; user seed requires explicit enable + secrets/env
+- Added SQL Server verification tests; suite now 17 passing
+- API smoke test: Swagger 200 against SQL Server
+- Frontend lint/build regression: PASS
+- M-B02 promoted to VERIFIED
+
+## Phase 3 — 2026-07-20
+
+**Commit message:** `feat(auth): implement secure role based access and account workflows`
+**Status:** TESTED
+
+- Service-based auth: AuthService, TokenService, PasswordService, CurrentUserService, AdminUserService, ResourceAuthorizationService
+- Candidate self-registration; recruiter access-request + admin approve/reject; admin role/status/org APIs
+- Authorization policies for all four roles + combined recruitment policies
+- Ownership/org scoping on candidate profiles, applications, and jobs
+- Frontend AuthContext, protected role routes, Access Denied / Session Expired, recruiter request page
+- Migration `AddRecruiterAccessRequests` applied to HireSphereDev
+- Target framework aligned to net10.0 to match installed ASP.NET runtime
+- Backend tests: 33 passed
+- Frontend: lint/build PASS
+- Not claimed: password reset, email verification, refresh-token rotation, account lockout
+
+## Phase 3 verification closure — 2026-07-20
+
+**Commit message:** `test(auth): verify four role access and frontend authentication flows`
+**Status:** VERIFIED
+
+- Cleared NU1903 via `SQLitePCLRaw.bundle_e_sqlite3` 3.0.3 override (test project)
+- Added Vitest + RTL + jsdom; scripts `test`, `test:run`, `test:coverage`
+- Frontend auth tests: 13/13 PASS
+- Live four-role UAT on SQL Express `HireSphereDev`: 26/26 PASS
+- Evidence: `docs/testing/PHASE3_LIVE_UAT.md`, `PHASE3_AUTH_TEST_EVIDENCE.md`, `FRONTEND_TEST_RESULTS.md`
+- Backend: 33 tests PASS; build 0 errors / 0 advisory warnings
+- Frontend: lint PASS, build PASS
+
+## Phase 4.1 — 2026-07-20
+
+**Commit message:** `feat(candidate): complete profile resume and document workflows`
+
+- Candidate portal APIs under `/api/candidate` (dashboard, profile, experience, education, skills, certifications, resumes, documents)
+- Local secure file storage with MIME/extension/size validation
+- Migration `AddCandidateProfilePortalFields` applied to HireSphereDev
+- Frontend `/candidate` dashboard + `/candidate/profile` page
+- Backend tests: 43 passed; Frontend Vitest: auth 13 + candidate portal tests
+- Cloud storage verification: pending (local provider only)
+
+## Phase 4.2 — 2026-07-20
+
+**Commit message:** `feat(candidate): add job discovery recommendations and applications`
+
+- Candidate job discovery under `/api/candidate/jobs` (filters, pagination, sorting, Open-only)
+- Deterministic matching provider (`DeterministicJobMatchingProvider`) with explanation + human-review notice
+- Recommendations endpoint with highest-match ordering + incomplete-profile empty handling
+- Application wizard APIs: resume selection, cover letter, screening answers, terms, duplicate/closed-job guards, status history, withdraw
+- Migration `AddApplicationResumeId`
+- Frontend routes: jobs, job detail, recommendations, apply wizard, applications list/detail
+- Docs updated for API/portal/UAT/evidence/matrices
+- Backend/frontend verification: BE **52** tests PASS; FE Vitest **19** PASS; lint/build PASS
+- Migration `AddApplicationResumeId` applied to HireSphereDev (SQL Express)
+
+## Phase 4.3 — 2026-07-20
+
+**Commit message:** `feat(candidate): add assessment interview and tracking experience`
+
+- Assessment assignments: list/start/answer/submit with attempt limits, start/expiry checks, server scoring, no answer-key exposure, audit trail
+- Interviews: list/detail with timezone; confirm / reschedule-request / decline; meeting info gated; no calendar credentials
+- Application tracking: ordered `ApplicationStatusHistory`, latest update, next action, linked interviews/assessments
+- In-app notification foundation (`ApplicationSubmitted`, status updates, assessment/interview categories)
+- Enum additions: `ApplicationStatus.Assessment`, `Interviewed`; `InterviewCandidateResponse`
+- Migration `AddPhase43AssessmentsInterviewsNotifications` **applied** to HireSphereDev
+- Frontend routes: assessments, interviews, notifications + dashboard links + application timeline UI
+- Verification: BE **58** PASS; FE Vitest **22** PASS; lint/build PASS
+- Phase 4 remains **IN PROGRESS / not VERIFIED** — no full browser E2E or screenshot pack; recruiter assign/schedule UI is Phase 5

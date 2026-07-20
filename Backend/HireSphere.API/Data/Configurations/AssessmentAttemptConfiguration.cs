@@ -17,5 +17,10 @@ public class AssessmentAttemptConfiguration : IEntityTypeConfiguration<Assessmen
             .WithOne(r => r.AssessmentAttempt)
             .HasForeignKey<AssessmentResult>(r => r.AssessmentAttemptId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(at => at.Answers)
+            .WithOne(a => a.AssessmentAttempt)
+            .HasForeignKey(a => a.AssessmentAttemptId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

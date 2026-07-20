@@ -10,7 +10,7 @@ namespace HireSphere.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(Policy = "AdministratorOnly")]
     public class UsersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

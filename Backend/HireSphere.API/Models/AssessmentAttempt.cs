@@ -8,17 +8,26 @@ public class AssessmentAttempt
 
     public int SkillAssessmentId { get; set; }
 
+    public int AssessmentAssignmentId { get; set; }
+
     public int CandidateId { get; set; }
 
     public DateTime StartedAtUtc { get; set; } = DateTime.UtcNow;
 
     public DateTime? CompletedAtUtc { get; set; }
 
+    /// <summary>Hard deadline for this attempt (assignment expiry and/or duration).</summary>
+    public DateTime? AttemptExpiresAtUtc { get; set; }
+
     public AssessmentStatus Status { get; set; } = AssessmentStatus.InProgress;
 
     public SkillAssessment SkillAssessment { get; set; } = null!;
 
+    public AssessmentAssignment AssessmentAssignment { get; set; } = null!;
+
     public User Candidate { get; set; } = null!;
 
     public AssessmentResult? Result { get; set; }
+
+    public ICollection<AssessmentAnswer> Answers { get; set; } = new List<AssessmentAnswer>();
 }

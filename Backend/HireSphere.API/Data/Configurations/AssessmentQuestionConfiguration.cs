@@ -11,5 +11,7 @@ public class AssessmentQuestionConfiguration : IEntityTypeConfiguration<Assessme
         builder.Property(q => q.QuestionText).HasMaxLength(4000);
         builder.Property(q => q.QuestionType).HasMaxLength(50);
         builder.Property(q => q.Points).HasPrecision(5, 2);
+        builder.Property(q => q.OptionsJson).HasMaxLength(4000);
+        builder.Property(q => q.CorrectAnswerKey).HasMaxLength(500);
     }
 }

@@ -1,32 +1,35 @@
 # HireSphere — SRS Traceability Matrix
 
 **Source:** HireSphere SRS (local-spec; not committed)
-**Last updated:** 2026-07-20 (Phase 2)
+**Last updated:** 2026-07-20 (Phase 4.3)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED
 
 | SRS Area | Requirement summary | Matrix ID | Status | Phase evidence |
 |----------|---------------------|-----------|--------|----------------|
-| Auth | Secure registration / login | M-C01, M-S01, M-S03 | IN PROGRESS | Phase 1: BCrypt hashing; Candidate-only public register |
-| Auth | JWT-based API auth | M-S01 | IN PROGRESS | JWT still issued; secrets externalized |
-| Auth | Privileged role control | M-S02 | IN PROGRESS | Public Admin/Recruiter/HM registration blocked; unit + API tests |
+| Auth | Secure registration / login | M-C01, M-S01, M-S03 | VERIFIED | Live UAT + automated tests 2026-07-20 |
+| Auth | JWT-based API auth | M-S01 | VERIFIED | Issuer/audience/lifetime + live login/me |
+| Auth | Privileged role control | M-S02 | VERIFIED | Public role ignored; admin assignment only |
 | Security | Secret handling | M-S08 | IMPLEMENTED | Tracked secrets replaced with placeholders |
 | Security | CORS restriction | M-S08 / quality | IMPLEMENTED | Configured `Cors:AllowedOrigins` |
 | Security | Error sanitization | Q-04 (partial) | IMPLEMENTED | Global exception handler returns safe JSON |
-| Security | Password not exposed in API | M-S06 | IN PROGRESS | UserDto + UsersController projections; tests |
-| Candidate | Profile / resume / jobs | M-C02–M-C06 | IN PROGRESS | Pre-existing partial APIs/UI |
-| Recruiter | Jobs / applications | M-RC01–M-RC06 | IN PROGRESS | API partial; UI placeholder |
+| Security | Password not exposed in API | M-S06 | TESTED | Candidate portal DTOs omit hashes; tests assert |
+| Candidate | Profile / resume | M-C02–M-C03 | TESTED | `/api/candidate` + local file storage; UI profile page |
+| Candidate | Jobs / applications / tracking | M-C04–M-C06 | TESTED | 4.2+4.3 automated; tracking timeline + next action; Phase 4 not VERIFIED without E2E |
+| Candidate | Assessments / interviews | M-R01 (partial) | TESTED | Candidate APIs + UI; recruiter schedule/assign still Phase 5 |
+| Recruiter | Jobs / applications | M-RC01–M-RC06 | IN PROGRESS | API partial; UI placeholder; candidate interview respond done |
 | Hiring Manager | Evaluation / decisions | M-HM01–M-HM04 | NOT STARTED | Models in DB; APIs pending |
 | Administrator | Users / orgs / analytics | M-A01–M-A05 | IN PROGRESS | UsersController secured; org models seeded |
-| Database | SQL Server deliverable | M-B02 | IMPLEMENTED | SqlServer provider + `InitialSqlServerCoreModel`; apply BLOCKED locally |
-| Database | Core entity model | M-B03 | IMPLEMENTED | 35+ entities, fluent configs, ER diagram |
-| AI | Matching / ranking / recs | M-AI01–M-AI09 | NOT STARTED | Model stubs only |
-| Integrations | Email / SMS / calendar / storage | M-I01–M-I07 | NOT STARTED | Credential-dependent |
+| Database | SQL Server deliverable | M-B02 | VERIFIED | Applied on SQL Express `HireSphereDev`; migration history confirmed |
+| Database | Core entity model | M-B03 | IMPLEMENTED | 35+ entities, fluent configs, ER diagram; 4.3 assignment/answer fields |
+| AI | Matching / ranking / recs | M-AI01–M-AI09 | IN PROGRESS | Deterministic matching + recommendations in 4.2; external AI / ranking pending Phase 8 |
+| Integrations | Email / SMS / calendar / storage | M-I01–M-I07 | IN PROGRESS | In-app notifications foundation; email/SMS/calendar/cloud still pending |
 | Frontend | Branding / API config | M-F03, M-F05 | IN PROGRESS | HireSphere branding; centralized `VITE_API_BASE_URL` |
-| Testing | Automated tests | M-T01 | IN PROGRESS | 14 backend tests passing |
+| Testing | Automated tests | M-T01 | IN PROGRESS | BE 58; FE Vitest 22; live E2E screenshot pack pending |
 | Report | Diagrams / contribution / demo | M-D01–M-D05 | IN PROGRESS | ER diagram + data dictionary added |
 
 **Notes**
 
 - Original SRS PDF remains in ignored `local-spec/` and is not committed.
-- Phase 1 addresses security baseline; Phase 2 addresses database architecture and constraint tests.
-- Full SRS coverage continues in Phases 3–10.
+- Phase 4.1–4.3 candidate portal APIs/UI are automated-TESTED; Phase 4 is **not VERIFIED** without full browser E2E evidence.
+- External AI, email/SMS, and calendar credentials remain deferred.
+- Full SRS coverage continues in Phases 5–10.

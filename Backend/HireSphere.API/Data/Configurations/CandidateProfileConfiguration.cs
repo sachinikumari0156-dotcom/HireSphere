@@ -17,6 +17,11 @@ public class CandidateProfileConfiguration : IEntityTypeConfiguration<CandidateP
         builder.Property(c => c.ResumePath).HasMaxLength(500);
         builder.Property(c => c.Summary).HasMaxLength(4000);
         builder.Property(c => c.Location).HasMaxLength(200);
+        builder.Property(c => c.DesiredJobTitle).HasMaxLength(200);
+        builder.Property(c => c.Availability).HasMaxLength(200);
+        builder.Property(c => c.PortfolioUrl).HasMaxLength(500);
+        builder.Property(c => c.LinkedInUrl).HasMaxLength(500);
+        builder.Property(c => c.GitHubUrl).HasMaxLength(500);
 
         builder.HasMany(c => c.WorkExperiences)
             .WithOne(w => w.CandidateProfile)

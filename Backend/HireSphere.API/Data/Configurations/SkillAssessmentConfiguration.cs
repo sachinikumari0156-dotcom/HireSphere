@@ -10,6 +10,7 @@ public class SkillAssessmentConfiguration : IEntityTypeConfiguration<SkillAssess
     {
         builder.Property(sa => sa.Title).HasMaxLength(200);
         builder.Property(sa => sa.Description).HasMaxLength(4000);
+        builder.Property(sa => sa.PassingScorePercent).HasPrecision(5, 2);
 
         builder.HasOne(sa => sa.Job)
             .WithMany()
@@ -24,6 +25,11 @@ public class SkillAssessmentConfiguration : IEntityTypeConfiguration<SkillAssess
         builder.HasMany(sa => sa.Attempts)
             .WithOne(at => at.SkillAssessment)
             .HasForeignKey(at => at.SkillAssessmentId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasMany(sa => sa.Assignments)
+            .WithOne(a => a.SkillAssessment)
+            .HasForeignKey(a => a.SkillAssessmentId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }
