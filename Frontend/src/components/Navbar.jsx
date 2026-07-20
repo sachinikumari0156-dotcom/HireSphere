@@ -1,18 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import { useState } from "react";
+
 
 function Navbar() {
 
     const navigate = useNavigate();
 
-    const [token, setToken] = useState(
-        localStorage.getItem("token")
-    );
 
-    const user = JSON.parse(
-        localStorage.getItem("user")
-    );
+    const token = localStorage.getItem("token");
+
+
+    const userData = localStorage.getItem("user");
+
+    const user = userData 
+        ? JSON.parse(userData)
+        : null;
+
 
 
     const logout = () => {
@@ -20,11 +23,34 @@ function Navbar() {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
 
-        setToken(null);
-
         navigate("/login");
 
+        window.location.reload();
+
     };
+
+
+
+    const dashboardPath = () => {
+
+        if (user?.role === "Candidate") {
+
+            return "/candidate-dashboard";
+
+        }
+
+
+        if (user?.role === "Recruiter") {
+
+            return "/recruiter-dashboard";
+
+        }
+
+
+        return "/";
+
+    };
+
 
 
     return (
@@ -32,11 +58,11 @@ function Navbar() {
         <nav className="navbar">
 
 
-            <h2 className="logo">
+            <Link to="/" className="logo">
 
                 Hire<span>Sphere</span>
 
-            </h2>
+            </Link>
 
 
 
@@ -44,39 +70,41 @@ function Navbar() {
 
 
                 <Link to="/">
+
                     Home
+
                 </Link>
 
 
 
                 {
-                    token ? (
+                    token && user ? (
 
                         <>
 
-                            <Link
-                                to={
-                                    user?.role === "Candidate"
-                                        ? "/candidate-dashboard"
-                                        : "/recruiter-dashboard"
-                                }
-                            >
+
+                            <Link to={dashboardPath()}>
 
                                 Dashboard
 
                             </Link>
 
 
+
                             <span className="username">
 
-                                {user?.fullName}
+                                {user.fullName}
 
                             </span>
 
 
+
                             <button
+
                                 className="logout-btn"
+
                                 onClick={logout}
+
                             >
 
                                 Logout
@@ -89,23 +117,33 @@ function Navbar() {
 
                     ) : (
 
+
                         <>
 
+
                             <Link to="/login">
+
                                 Login
+
                             </Link>
 
 
+
                             <Link
+
                                 to="/register"
+
                                 className="nav-cta"
+
                             >
 
                                 Register
 
                             </Link>
 
+
                         </>
+
 
                     )
 

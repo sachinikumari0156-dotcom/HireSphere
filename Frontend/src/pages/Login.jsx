@@ -9,7 +9,7 @@ function Login() {
 
     const [user, setUser] = useState({
         email: "",
-        password: "",
+        password: ""
     });
 
     const [showPassword, setShowPassword] = useState(false);
@@ -20,18 +20,18 @@ function Login() {
 
     const updateField = (field) => (e) => {
 
-        setUser({
-            ...user,
+        setUser(prev => ({
+            ...prev,
             [field]: e.target.value
-        });
+        }));
 
         if (errors[field]) {
-
-            setErrors({
-                ...errors,
+            setErrors(prev => ({
+                ...prev,
                 [field]: null
-            });
+            }));
         }
+
     };
 
 
@@ -47,138 +47,89 @@ function Login() {
             next.password = "Enter your password.";
         }
 
-
         setErrors(next);
 
         return Object.keys(next).length === 0;
-    };
 
+    };
 
 
     const handleLogin = async (e) => {
 
         e.preventDefault();
-
         setBanner(null);
 
-
-        if (!validate()) return;
-
+        if (!validate()) {
+            return;
+        }
 
         setSubmitting(true);
 
-
         try {
-
 
             const response = await api.post(
                 "/Auth/Login",
                 user
             );
 
-
-            console.log(
-                "LOGIN RESPONSE:",
-                response.data
-            );
-
-
-            // Save JWT token
             localStorage.setItem(
                 "token",
                 response.data.token
             );
 
-
-            // Save user details
             localStorage.setItem(
                 "user",
                 JSON.stringify(response.data)
             );
-
 
             setBanner({
                 type: "success",
                 text: "Login successful. Redirecting..."
             });
 
-
-
-            // Role based redirect
-
             setTimeout(() => {
 
-
                 if (response.data.role === "Candidate") {
-
                     navigate("/candidate-dashboard");
-
                 }
                 else if (response.data.role === "Recruiter") {
-
                     navigate("/recruiter-dashboard");
-
                 }
                 else {
-
                     navigate("/dashboard");
-
                 }
-
 
             }, 1000);
 
+        }
+        catch (error) {
 
-
-        } catch (error) {
-
-
-            console.log(
-                "LOGIN ERROR:",
-                error.response?.data
-            );
-
-
-            const message =
-                error.response?.data?.message ||
-                (typeof error.response?.data === "string"
-                    ? error.response.data
-                    : null) ||
-                "Invalid email or password.";
-
-
+            console.log("LOGIN ERROR:", error.response?.data);
 
             setBanner({
                 type: "error",
-                text: message
+                text:
+                    error.response?.data?.message ||
+                    "Invalid email or password."
             });
 
-
-
-        } finally {
-
+        }
+        finally {
             setSubmitting(false);
-
         }
 
     };
-
 
 
     return (
 
         <div className="reg-page">
 
-
             <div className="reg-brand">
 
-
                 <div className="reg-brand-mark">
-
                     hire<span>flow</span>
-
                 </div>
-
 
                 <div className="reg-brand-copy">
 
@@ -186,260 +137,117 @@ function Login() {
                         Welcome back
                     </span>
 
-
                     <h1 className="reg-headline">
                         Pick up right where you left off.
                     </h1>
 
-
                     <p className="reg-subcopy">
-
                         Sign in to check your applications,
                         manage your listings, and stay on top
                         of every conversation.
-
                     </p>
 
-
                 </div>
-
 
                 <div className="reg-brand-footer">
-
-                    © {new Date().getFullYear()} Hireflow
-
+                    &copy; {new Date().getFullYear()} Hireflow
                 </div>
 
-
             </div>
-
-
-
 
 
             <div className="reg-form-side">
 
-
                 <div className="reg-card">
 
-
-                    <h1>
-                        Sign in
-                    </h1>
-
+                    <h1>Sign in</h1>
 
                     <p className="reg-lead">
-
-                        New here?
-                        <a href="/register">
-                            Create an account
-                        </a>
-
+                        New here?{" "}
+                        <a href="/register">Create an account</a>
                     </p>
 
-
-
                     {banner && (
-
                         <div className={`reg-banner ${banner.type}`}>
-
                             {banner.text}
-
                         </div>
-
                     )}
-
-
-
-
-
 
                     <form onSubmit={handleLogin} noValidate>
 
+                        <div className="field">
 
-
-                        <div className={`field ${errors.email ? "field-error" : ""}`}>
-
-
-                            <label>
-                                Email
-                            </label>
-
+                            <label>Email</label>
 
                             <input
-
                                 type="email"
-
                                 placeholder="jane@example.com"
-
                                 value={user.email}
-
-                                onChange={
-                                    updateField("email")
-                                }
-
+                                onChange={updateField("email")}
                             />
 
-
-                            {
-                                errors.email &&
+                            {errors.email && (
                                 <div className="field-error-msg">
-
                                     {errors.email}
-
                                 </div>
-                            }
-
+                            )}
 
                         </div>
 
 
+                        <div className="field">
 
-
-
-
-
-                        <div className={`field ${errors.password ? "field-error" : ""}`}>
-
-
-                            <label>
-                                Password
-                            </label>
-
-
+                            <label>Password</label>
 
                             <div className="password-wrap">
 
-
                                 <input
-
-                                    type={
-                                        showPassword
-                                            ? "text"
-                                            : "password"
-                                    }
-
+                                    type={showPassword ? "text" : "password"}
                                     placeholder="Enter your password"
-
                                     value={user.password}
-
-                                    onChange={
-                                        updateField("password")
-                                    }
-
+                                    onChange={updateField("password")}
                                 />
 
-
-
                                 <button
-
                                     type="button"
-
                                     className="password-toggle"
-
-                                    onClick={() =>
-                                        setShowPassword(!showPassword)
-                                    }
-
+                                    onClick={() => setShowPassword(prev => !prev)}
                                 >
-
-                                    {
-                                        showPassword
-                                            ? "Hide"
-                                            : "Show"
-                                    }
-
-
+                                    {showPassword ? "Hide" : "Show"}
                                 </button>
-
 
                             </div>
 
-
-
-                            {
-                                errors.password &&
-
+                            {errors.password && (
                                 <div className="field-error-msg">
-
                                     {errors.password}
-
                                 </div>
-
-                            }
-
-
+                            )}
 
                         </div>
 
-
-
-
-
-
-                        <p style={{
-                            textAlign: "right",
-                            margin: "-8px 0 18px"
-                        }}>
-
-
-                            <a
-                                href="/forgot-password"
-                                style={{
-                                    fontSize: "12.5px",
-                                    color: "var(--slate-soft)"
-                                }}
-                            >
-
-                                Forgot password?
-
-                            </a>
-
-
+                        <p className="forgot-password">
+                            <a href="/forgot-password">Forgot password?</a>
                         </p>
 
-
-
-
-
-
                         <button
-
                             type="submit"
-
                             className="reg-submit"
-
                             disabled={submitting}
-
                         >
-
-                            {
-                                submitting
-                                    ? "Signing in..."
-                                    : "Sign in"
-                            }
-
-
+                            {submitting ? "Signing in..." : "Sign in"}
                         </button>
-
-
-
 
                     </form>
 
-
                 </div>
-
 
             </div>
 
-
         </div>
-
 
     );
 
 }
-
 
 export default Login;
