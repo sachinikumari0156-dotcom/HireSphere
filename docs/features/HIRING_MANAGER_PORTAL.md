@@ -4,6 +4,24 @@
 **Last updated:** 2026-07-20  
 **Environment:** `(localdb)\MSSQLLocalDB` / `HireSphereDev`
 
+## Phase 6.2 — Interview feedback, evaluations and decisions
+
+### Delivered
+
+- Interview list/detail for assigned HM / participants
+- Structured interview feedback (1–5 ratings, private panel comments)
+- Candidate evaluation Draft/Submitted with justification
+- Recommendations (`RecommendHire` etc.) with audit + decision history
+- FinalHire/FinalReject blocked for Hiring Manager role
+- Withdrawn applications reject new decisions
+- Migration `AddHiringManagerPortalPhase62`
+
+### Policy
+
+- Hiring Manager: recommendations only
+- Final decisions: Recruiter or Administrator
+- Candidate never receives private panel comments
+
 ## Phase 6.1 — Assigned vacancies and candidate review
 
 ### Delivered

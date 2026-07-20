@@ -45,6 +45,10 @@ import HiringManagerJobDetailPage from "./pages/hiring-manager/HiringManagerJobD
 import HiringManagerCandidatesPage from "./pages/hiring-manager/HiringManagerCandidatesPage";
 import HiringManagerApplicationPage from "./pages/hiring-manager/HiringManagerApplicationPage";
 import HiringManagerComparePage from "./pages/hiring-manager/HiringManagerComparePage";
+import HiringManagerInterviewsPage from "./pages/hiring-manager/HiringManagerInterviewsPage";
+import HiringManagerInterviewDetailPage from "./pages/hiring-manager/HiringManagerInterviewDetailPage";
+import HiringManagerEvaluationPage from "./pages/hiring-manager/HiringManagerEvaluationPage";
+import HiringManagerRecommendationPage from "./pages/hiring-manager/HiringManagerRecommendationPage";
 import { AdminDashboard } from "./pages/RoleDashboards";
 import "./App.css";
 
@@ -205,6 +209,10 @@ function App() {
                         <Route path="jobs/:id" element={<HiringManagerJobDetailPage />} />
                         <Route path="jobs/:id/candidates" element={<HiringManagerCandidatesPage />} />
                         <Route path="applications/:id" element={<HiringManagerApplicationPage />} />
+                        <Route path="applications/:id/evaluation" element={<HiringManagerEvaluationPage />} />
+                        <Route path="applications/:id/recommendation" element={<HiringManagerRecommendationPage />} />
+                        <Route path="interviews" element={<HiringManagerInterviewsPage />} />
+                        <Route path="interviews/:id" element={<HiringManagerInterviewDetailPage />} />
                         <Route path="compare" element={<HiringManagerComparePage />} />
                     </Route>
                     <Route

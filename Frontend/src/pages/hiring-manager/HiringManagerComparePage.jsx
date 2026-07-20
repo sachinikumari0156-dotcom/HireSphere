@@ -30,9 +30,24 @@ export default function HiringManagerComparePage() {
     }
 
     useEffect(() => {
-        if (idsFromQuery.length > 0) {
-            compare(idsFromQuery);
-        }
+        if (idsFromQuery.length === 0) return undefined;
+        let alive = true;
+        (async () => {
+            setLoading(true);
+            setError(null);
+            setResult(null);
+            try {
+                const response = await api.post("/hiring-manager/candidates/compare", {
+                    applicationIds: idsFromQuery
+                });
+                if (alive) setResult(response.data);
+            } catch (err) {
+                if (alive) setError(err.response?.data?.message || "Comparison failed.");
+            } finally {
+                if (alive) setLoading(false);
+            }
+        })();
+        return () => { alive = false; };
     }, [idsFromQuery]);
 
     return (

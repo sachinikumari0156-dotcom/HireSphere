@@ -1,12 +1,14 @@
 import React from 'react';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import HiringManagerHome from '../pages/hiring-manager/HiringManagerHome';
 import HiringManagerJobsPage from '../pages/hiring-manager/HiringManagerJobsPage';
 import HiringManagerApplicationPage from '../pages/hiring-manager/HiringManagerApplicationPage';
 import HiringManagerCandidatesPage from '../pages/hiring-manager/HiringManagerCandidatesPage';
+import HiringManagerInterviewDetailPage from '../pages/hiring-manager/HiringManagerInterviewDetailPage';
+import HiringManagerEvaluationPage from '../pages/hiring-manager/HiringManagerEvaluationPage';
 import ProtectedRoute from '../components/ProtectedRoute';
 import AccessDenied from '../pages/AccessDenied';
 import { AuthContext } from '../auth/auth-context';
@@ -15,7 +17,8 @@ import { authStub } from './authStub';
 vi.mock('../api/axios', () => ({
     default: {
         get: vi.fn(),
-        post: vi.fn()
+        post: vi.fn(),
+        put: vi.fn()
     }
 }));
 
@@ -140,7 +143,52 @@ describe('Comparison selection limit', () => {
     });
 });
 
-describe('Protected hiring manager route', () => {
+describe('Feedback and evaluation forms', () => {
+    beforeEach(() => vi.clearAllMocks());
+
+    it('loads interview feedback form', async () => {
+        api.get.mockResolvedValueOnce({
+            data: {
+                id: 8,
+                applicationId: 3,
+                candidateName: 'Ada',
+                jobTitle: 'Role',
+                interviewDateUtc: '2030-01-01T10:00:00Z',
+                timeZoneId: 'Asia/Colombo',
+                candidateResponse: 'Confirmed',
+                myFeedback: null
+            }
+        });
+        renderWithAuth(<HiringManagerInterviewDetailPage />, {
+            route: '/hiring-manager/interviews/8',
+            path: '/hiring-manager/interviews/:id'
+        });
+        expect(await screen.findByRole('heading', { name: /interview detail/i })).toBeInTheDocument();
+        expect(screen.getByLabelText(/recommendation/i)).toBeInTheDocument();
+        expect(screen.getByLabelText(/private panel comments/i)).toBeInTheDocument();
+    });
+
+    it('shows evaluation draft/submit controls', async () => {
+        api.get.mockResolvedValueOnce({
+            data: {
+                id: 1,
+                applicationId: 3,
+                submissionStatus: 'Draft',
+                justification: 'Draft text',
+                requiredSkillsAlignment: 70
+            }
+        });
+        renderWithAuth(<HiringManagerEvaluationPage />, {
+            route: '/hiring-manager/applications/3/evaluation',
+            path: '/hiring-manager/applications/:id/evaluation'
+        });
+        expect(await screen.findByRole('heading', { name: /candidate evaluation/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /save draft/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /submit evaluation/i })).toBeInTheDocument();
+        expect(screen.getByText(/status: draft/i)).toBeInTheDocument();
+    });
+});
+
     it('denies Candidate', async () => {
         render(
             <AuthContext.Provider value={authStub({

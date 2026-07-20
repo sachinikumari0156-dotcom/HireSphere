@@ -8,6 +8,23 @@ export default function HiringManagerJobsPage() {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    useEffect(() => {
+        let alive = true;
+        (async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await api.get("/hiring-manager/jobs");
+                if (alive) setItems(response.data.items || []);
+            } catch (err) {
+                if (alive) setError(err.response?.data?.message || "Could not load vacancies.");
+            } finally {
+                if (alive) setLoading(false);
+            }
+        })();
+        return () => { alive = false; };
+    }, []);
+
     async function load(params = {}) {
         setLoading(true);
         setError(null);
@@ -20,11 +37,6 @@ export default function HiringManagerJobsPage() {
             setLoading(false);
         }
     }
-
-    useEffect(() => {
-        load();
-    }, []);
-
     return (
         <main className="hm-page">
             <h2>Assigned vacancies</h2>

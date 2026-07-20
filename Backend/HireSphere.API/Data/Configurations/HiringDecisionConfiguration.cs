@@ -9,6 +9,9 @@ public class HiringDecisionConfiguration : IEntityTypeConfiguration<HiringDecisi
     public void Configure(EntityTypeBuilder<HiringDecision> builder)
     {
         builder.Property(h => h.Notes).HasMaxLength(4000);
+        builder.Property(h => h.Reason).HasMaxLength(2000).IsRequired();
+
+        builder.HasIndex(h => h.ApplicationId);
 
         builder.HasOne(h => h.Application)
             .WithMany()

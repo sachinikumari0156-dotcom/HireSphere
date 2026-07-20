@@ -10,7 +10,24 @@ export default function HiringManagerJobDetailPage() {
     const [success, setSuccess] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    async function load() {
+    useEffect(() => {
+        let alive = true;
+        (async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await api.get(`/hiring-manager/jobs/${id}`);
+                if (alive) setJob(response.data);
+            } catch (err) {
+                if (alive) setError(err.response?.data?.message || "Could not load vacancy.");
+            } finally {
+                if (alive) setLoading(false);
+            }
+        })();
+        return () => { alive = false; };
+    }, [id]);
+
+    async function reload() {
         setLoading(true);
         setError(null);
         try {
@@ -22,11 +39,6 @@ export default function HiringManagerJobDetailPage() {
             setLoading(false);
         }
     }
-
-    useEffect(() => {
-        load();
-    }, [id]);
-
     async function submitComment(e) {
         e.preventDefault();
         setSuccess(null);
@@ -35,7 +47,7 @@ export default function HiringManagerJobDetailPage() {
             await api.post(`/hiring-manager/jobs/${id}/review-comments`, { content: comment });
             setComment("");
             setSuccess("Review comment saved.");
-            await load();
+            await reload();
         } catch (err) {
             setError(err.response?.data?.message || "Could not save comment.");
         }

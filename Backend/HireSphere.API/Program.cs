@@ -45,6 +45,7 @@ builder.Services.AddScoped<IRecruiterPortalService, RecruiterPortalService>();
 builder.Services.AddScoped<IRecruiterPhase52Service, RecruiterPhase52Service>();
 builder.Services.AddScoped<IRecruiterPhase53Service, RecruiterPhase53Service>();
 builder.Services.AddScoped<IHiringManagerPortalService, HiringManagerPortalService>();
+builder.Services.AddScoped<IHiringManagerPhase62Service, HiringManagerPhase62Service>();
 
 builder.Services.AddCors(options =>
 {

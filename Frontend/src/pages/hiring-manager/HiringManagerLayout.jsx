@@ -9,6 +9,7 @@ export default function HiringManagerLayout() {
                 <nav className="hm-nav" aria-label="Hiring Manager">
                     <NavLink to="/hiring-manager" end>Dashboard</NavLink>
                     <NavLink to="/hiring-manager/jobs">Assigned vacancies</NavLink>
+                    <NavLink to="/hiring-manager/interviews">Interviews</NavLink>
                     <NavLink to="/hiring-manager/compare">Compare</NavLink>
                 </nav>
             </header>
