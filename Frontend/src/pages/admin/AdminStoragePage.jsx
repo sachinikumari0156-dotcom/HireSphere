@@ -29,11 +29,11 @@ export default function AdminStoragePage() {
         }
     }
 
-    if (!statuses.length && !error) return <main className="admin-page"><p>Loading storage…</p></main>;
-    if (error && !statuses.length) return <main className="admin-page"><p className="admin-error">{error}</p></main>;
+    if (!statuses.length && !error) return <div className="admin-page"><p>Loading storage…</p></div>;
+    if (error && !statuses.length) return <div className="admin-page"><p className="admin-error">{error}</p></div>;
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Storage providers</h2>
             <p className="admin-muted">Azure Blob cloud is Not Configured without verified credentials. Local development storage may be Healthy. Antivirus remains Not Configured when no scanner is installed.</p>
             {error && <p className="admin-error">{error}</p>}
@@ -52,6 +52,6 @@ export default function AdminStoragePage() {
             {dryRun && (
                 <pre className="admin-muted">{JSON.stringify(dryRun, null, 2)}</pre>
             )}
-        </main>
+        </div>
     );
 }

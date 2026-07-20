@@ -1,7 +1,7 @@
 # HireSphere — Phase Status
 
 **Last updated:** 2026-07-21
-**Overall readiness:** NOT READY (Phases 10–11 pending; Phase 9 in progress)
+**Overall readiness:** NOT READY (Phases 10–11 pending)
 
 | Phase | Name | Status | Commit | Push | Notes |
 |-------|------|--------|--------|------|-------|
@@ -14,9 +14,30 @@
 | 6 | Hiring Manager | VERIFIED | `4bafce2` + `da285d2` + verify | SUCCESS | Playwright HM journey PASS; 21 screenshots; LocalDB |
 | 7 | Administrator | VERIFIED | `3d2b4d7` + `55bef50` + verify | SUCCESS | Playwright Admin journey PASS; 28 screenshots; LocalDB |
 | 8 | AI and integrations | IMPLEMENTED — EXTERNAL PROVIDER VERIFICATION PENDING | `d94e08e` + `3a5ef00` + `472df59` + `ed74aed` | SUCCESS | Deterministic AI, outbox, ICS, local storage verified; external cloud providers NotConfigured |
-| 9 | UI design system | IN PROGRESS | `48db259` + 9.2 this cycle | PARTIAL | 9.1–9.2 UI on main after push; 9.3 a11y/responsive verify pending |
+| 9 | UI design system | VERIFIED | `48db259` + `3119e4f` + verify | SUCCESS | Design system + responsive portals; axe/keyboard/visual PASS; evidence in phase9-ui |
 | 10 | Quality and evidence | NOT STARTED | — | — | — |
 | 11 | Submission pack | NOT STARTED | — | — | — |
+
+---
+
+## Phase 9 verification (closed)
+
+### Evidence
+
+- Playwright Phase 9 UI journey: **PASS** (`docs/testing/PHASE9_UI_TEST_EVIDENCE.md`)
+- Full Playwright suite: **13/13 PASS**
+- Screenshots: `docs/evidence/phase9-ui/`
+- Backend tests: **114/114 PASS**
+- Frontend Vitest: **84/84 PASS**
+- Axe critical/serious on covered routes: **0**
+- Visual regression foundation: **PASS**
+- Database: `(localdb)\MSSQLLocalDB` / `HireSphereDev`
+
+### Focused commits
+
+1. `48db259` — accessible HireSphere design system
+2. `3119e4f` — responsive role portal experiences
+3. Verification — responsive accessibility and visual quality
 
 ---
 

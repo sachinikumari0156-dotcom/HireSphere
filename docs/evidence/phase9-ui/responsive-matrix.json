@@ -1,0 +1,76 @@
+{
+  "date": "2026-07-20",
+  "matrixResults": [
+    {
+      "role": "Administrator",
+      "name": "mobile-320",
+      "width": 320,
+      "height": 568,
+      "overflow": "pass"
+    },
+    {
+      "role": "Candidate",
+      "name": "mobile-320",
+      "width": 320,
+      "height": 568,
+      "overflow": "pass"
+    },
+    {
+      "role": "Administrator",
+      "name": "mobile-390",
+      "width": 390,
+      "height": 844,
+      "overflow": "pass"
+    },
+    {
+      "role": "Candidate",
+      "name": "mobile-390",
+      "width": 390,
+      "height": 844,
+      "overflow": "pass"
+    },
+    {
+      "role": "Administrator",
+      "name": "tablet-768",
+      "width": 768,
+      "height": 1024,
+      "overflow": "pass"
+    },
+    {
+      "role": "Candidate",
+      "name": "tablet-768",
+      "width": 768,
+      "height": 1024,
+      "overflow": "pass"
+    },
+    {
+      "role": "Administrator",
+      "name": "laptop-1280",
+      "width": 1280,
+      "height": 720,
+      "overflow": "pass"
+    },
+    {
+      "role": "Candidate",
+      "name": "laptop-1280",
+      "width": 1280,
+      "height": 720,
+      "overflow": "pass"
+    },
+    {
+      "role": "Administrator",
+      "name": "desktop-1440",
+      "width": 1440,
+      "height": 900,
+      "overflow": "pass"
+    },
+    {
+      "role": "Candidate",
+      "name": "desktop-1440",
+      "width": 1440,
+      "height": 900,
+      "overflow": "pass"
+    }
+  ],
+  "axeCriticalSerious": []
+}

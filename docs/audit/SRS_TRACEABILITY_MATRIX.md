@@ -1,7 +1,7 @@
 # HireSphere — SRS Traceability Matrix
 
 **Source:** HireSphere SRS (local-spec; not committed)
-**Last updated:** 2026-07-20 (Phase 6 Hiring Manager browser E2E VERIFIED)
+**Last updated:** 2026-07-21 (Phase 9 UI / accessibility VERIFIED)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED
 
 | SRS Area | Requirement summary | Matrix ID | Status | Phase evidence |
@@ -23,13 +23,14 @@
 | Database | Core entity model | M-B03 | IMPLEMENTED | 35+ entities, fluent configs, ER diagram; Phase 5 recruiter fields |
 | AI | Matching / ranking / recs | M-AI01–M-AI09 | IMPLEMENTED — EXTERNAL PENDING | Deterministic AI verified Phase 8; External AI NotConfigured |
 | Integrations | Email / SMS / calendar / storage | M-I01–M-I07 | IMPLEMENTED — EXTERNAL PENDING | Outbox + ICS + local storage verified; production/cloud NotConfigured |
-| Frontend | Branding / API config | M-F03, M-F05 | IN PROGRESS | HireSphere branding; centralized `VITE_API_BASE_URL` |
-| Testing | Automated tests | M-T01 | IN PROGRESS | BE 114; FE Vitest 60; Playwright 10/10 |
-| Report | Diagrams / contribution / demo | M-D01–M-D05 | IN PROGRESS | ER diagram + data dictionary + Phase 4–8 evidence |
+| Frontend | Branding / responsive / a11y | M-F03, M-F05 | VERIFIED | Phase 9 design system + responsive + axe; evidence phase9-ui |
+| Testing | Automated tests | M-T01 | IN PROGRESS | BE 114; FE Vitest 84; Playwright 13/13; formal UAT Phase 10 |
+| Report | Diagrams / contribution / demo | M-D01–M-D05 | IN PROGRESS | ER diagram + data dictionary + Phase 4–9 evidence |
 
 **Notes**
 
 - Original SRS PDF remains in ignored `local-spec/` and is not committed.
 - Phase 4 Candidate Portal is **VERIFIED** with Playwright browser E2E evidence (2026-07-20).
 - Phase 8 development adapters are verified; external cloud providers remain NotConfigured.
-- Full SRS coverage continues in Phases 9–11.
+- Phase 9 UI/accessibility is **VERIFIED**; formal usability study remains Phase 10.
+- Full SRS coverage continues in Phases 10–11.

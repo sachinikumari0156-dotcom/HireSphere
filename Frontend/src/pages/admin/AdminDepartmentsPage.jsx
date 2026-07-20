@@ -64,7 +64,7 @@ export default function AdminDepartmentsPage() {
     }
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Departments</h2>
             {error && <p className="admin-error" role="alert">{error}</p>}
             <form className="admin-form" onSubmit={create}>
@@ -106,6 +106,6 @@ export default function AdminDepartmentsPage() {
                     </li>
                 ))}
             </ul>
-        </main>
+        </div>
     );
 }

@@ -22,11 +22,11 @@ export default function AdminHome() {
         return () => { alive = false; };
     }, []);
 
-    if (loading) return <main className="admin-page"><p>Loading administrator dashboard…</p></main>;
-    if (error) return <main className="admin-page"><p className="admin-error" role="alert">{error}</p></main>;
+    if (loading) return <div className="admin-page"><p>Loading administrator dashboard…</p></div>;
+    if (error) return <div className="admin-page"><p className="admin-error" role="alert">{error}</p></div>;
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Dashboard</h2>
             <p className="admin-muted">Live LocalDB metrics for governance scope.</p>
             <section className="admin-stats" aria-label="Administrator metrics">
@@ -54,6 +54,6 @@ export default function AdminHome() {
                 ))}
             </ul>
             <Link className="admin-btn" to="/admin/users">Manage users</Link>
-        </main>
+        </div>
     );
 }

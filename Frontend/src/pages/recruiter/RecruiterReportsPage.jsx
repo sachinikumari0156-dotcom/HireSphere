@@ -65,7 +65,7 @@ export default function RecruiterReportsPage() {
     const empty = summary && summary.applicationsTotal === 0;
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>Recruitment reports</h2>
             <p className="rec-muted">Organization-scoped metrics from SQL Server. No fake chart data.</p>
 
@@ -129,6 +129,6 @@ export default function RecruiterReportsPage() {
                     </section>
                 </>
             )}
-        </main>
+        </div>
     );
 }

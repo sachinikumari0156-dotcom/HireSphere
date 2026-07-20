@@ -25,15 +25,15 @@ export default function HiringManagerHome() {
     }, []);
 
     if (loading) {
-        return <main className="hm-page"><p>Loading hiring manager dashboard…</p></main>;
+        return <div className="hm-page"><p>Loading hiring manager dashboard…</p></div>;
     }
 
     if (error) {
-        return <main className="hm-page"><p className="hm-error" role="alert">{error}</p></main>;
+        return <div className="hm-page"><p className="hm-error" role="alert">{error}</p></div>;
     }
 
     return (
-        <main className="hm-page">
+        <div className="hm-page">
             <h2>Dashboard</h2>
             <p className="hm-muted">Live metrics for vacancies assigned to you only.</p>
             <section className="hm-stats" aria-label="Hiring manager metrics">
@@ -50,6 +50,6 @@ export default function HiringManagerHome() {
                 <p className="hm-muted">No manager activity yet.</p>
             )}
             <Link className="hm-btn" to="/hiring-manager/jobs">View assigned vacancies</Link>
-        </main>
+        </div>
     );
 }

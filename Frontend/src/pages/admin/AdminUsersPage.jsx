@@ -86,7 +86,7 @@ export default function AdminUsersPage() {
     );
 
     return (
-        <main className="admin-page portal-page">
+        <div className="admin-page portal-page">
             <h2>Users</h2>
             <FilterDrawer title="user filters">{filterForm}</FilterDrawer>
             {error && <p className="admin-error" role="alert">{error}</p>}
@@ -121,6 +121,6 @@ export default function AdminUsersPage() {
                     </table>
                 </div>
             )}
-        </main>
+        </div>
     );
 }

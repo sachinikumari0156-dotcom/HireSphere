@@ -36,12 +36,12 @@ export default function RecruiterJobDetailPage() {
         }
     }
 
-    if (loading) return <main className="rec-page"><p>Loading job…</p></main>;
-    if (error && !job) return <main className="rec-page"><p className="rec-error">{error}</p></main>;
-    if (!job) return <main className="rec-page"><p className="rec-muted">Job not found.</p></main>;
+    if (loading) return <div className="rec-page"><p>Loading job…</p></div>;
+    if (error && !job) return <div className="rec-page"><p className="rec-error">{error}</p></div>;
+    if (!job) return <div className="rec-page"><p className="rec-muted">Job not found.</p></div>;
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>{job.title}</h2>
             <p className="rec-muted">Status: {job.status} · {job.location}</p>
             {message && <p className="rec-success" role="status">{message}</p>}
@@ -110,6 +110,6 @@ export default function RecruiterJobDetailPage() {
                     </button>
                 )}
             </div>
-        </main>
+        </div>
     );
 }

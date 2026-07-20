@@ -42,15 +42,15 @@ export default function CandidateApplicationDetailPage() {
     }
 
     if (loading) {
-        return <main className="dash-page"><p>Loading application…</p></main>;
+        return <div className="dash-page"><p>Loading application…</p></div>;
     }
 
     if (error) {
-        return <main className="dash-page"><p className="error">{error}</p></main>;
+        return <div className="dash-page"><p className="error">{error}</p></div>;
     }
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>{app.jobTitle}</h1>
                 <p>Status: {app.status} · Submitted {new Date(app.submittedAtUtc).toLocaleString()}</p>
@@ -144,6 +144,6 @@ export default function CandidateApplicationDetailPage() {
                 </div>
             )}
             {actionError && <p className="error">{actionError}</p>}
-        </main>
+        </div>
     );
 }

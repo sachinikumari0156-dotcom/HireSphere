@@ -55,7 +55,7 @@ export default function RecruiterComparePage() {
     }
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>Candidate comparison</h2>
             <p className="rec-muted">
                 Comparison supports review only and is not an automatic hiring decision.
@@ -104,6 +104,6 @@ export default function RecruiterComparePage() {
                     ))}
                 </div>
             )}
-        </main>
+        </div>
     );
 }

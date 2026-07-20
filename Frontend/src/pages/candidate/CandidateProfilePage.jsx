@@ -193,11 +193,11 @@ export default function CandidateProfilePage() {
     };
 
     if (loading) {
-        return <main className="dash-page"><p>Loading profile…</p></main>;
+        return <div className="dash-page"><p>Loading profile…</p></div>;
     }
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>Profile &amp; documents</h1>
                 <p>Completion: {detail?.profileCompletionPercent ?? 0}%</p>
@@ -354,6 +354,6 @@ export default function CandidateProfilePage() {
                     <input type="file" accept=".pdf,.doc,.docx,.png,.jpeg,.jpg" onChange={uploadResume} />
                 </label>
             </section>
-        </main>
+        </div>
     );
 }

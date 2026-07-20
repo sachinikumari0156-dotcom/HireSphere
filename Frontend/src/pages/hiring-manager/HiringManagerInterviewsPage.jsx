@@ -23,7 +23,7 @@ export default function HiringManagerInterviewsPage() {
     }, []);
 
     return (
-        <main className="hm-page">
+        <div className="hm-page">
             <h2>Interviews</h2>
             <p className="hm-muted">Interviews where you are assigned Hiring Manager or participant.</p>
             {error && <p className="hm-error" role="alert">{error}</p>}
@@ -38,6 +38,6 @@ export default function HiringManagerInterviewsPage() {
                     </li>
                 ))}
             </ul>
-        </main>
+        </div>
     );
 }

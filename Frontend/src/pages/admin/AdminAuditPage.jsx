@@ -39,7 +39,7 @@ export default function AdminAuditPage() {
     }
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Audit logs</h2>
             {error && <p className="admin-error" role="alert">{error}</p>}
             <form
@@ -62,6 +62,6 @@ export default function AdminAuditPage() {
                     <li key={a.id}>{a.createdAtUtc} · {a.action} · {a.entityType} · {a.details}</li>
                 ))}
             </ul>
-        </main>
+        </div>
     );
 }

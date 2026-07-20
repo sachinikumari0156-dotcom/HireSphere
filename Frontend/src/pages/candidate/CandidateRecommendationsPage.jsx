@@ -26,15 +26,15 @@ export default function CandidateRecommendationsPage() {
     }, []);
 
     if (loading) {
-        return <main className="dash-page"><p>Loading recommendations…</p></main>;
+        return <div className="dash-page"><p>Loading recommendations…</p></div>;
     }
 
     if (error) {
-        return <main className="dash-page"><p className="error">{error}</p></main>;
+        return <div className="dash-page"><p className="error">{error}</p></div>;
     }
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>Recommended jobs</h1>
                 <p>
@@ -69,6 +69,6 @@ export default function CandidateRecommendationsPage() {
                     ))}
                 </section>
             )}
-        </main>
+        </div>
     );
 }

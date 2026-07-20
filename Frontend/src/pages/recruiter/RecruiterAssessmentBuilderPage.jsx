@@ -94,10 +94,10 @@ export default function RecruiterAssessmentBuilderPage() {
         }
     }
 
-    if (loading) return <main className="rec-page"><p>Loading assessment builder…</p></main>;
+    if (loading) return <div className="rec-page"><p>Loading assessment builder…</p></div>;
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>{isNew ? "Create assessment" : "Assessment builder"}</h2>
             <p className="rec-muted">Answer keys are recruiter-only and never rendered in Candidate views.</p>
             {error && <p className="rec-error" role="alert">{error}</p>}
@@ -153,6 +153,6 @@ export default function RecruiterAssessmentBuilderPage() {
             <div className="rec-actions">
                 <Link className="rec-btn secondary" to="/recruiter/assessments">Back</Link>
             </div>
-        </main>
+        </div>
     );
 }

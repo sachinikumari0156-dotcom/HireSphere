@@ -49,12 +49,12 @@ export default function RecruiterApplicationPage() {
         }
     }
 
-    if (loading) return <main className="rec-page"><p>Loading application…</p></main>;
-    if (error && !detail) return <main className="rec-page"><p className="rec-error">{error}</p></main>;
+    if (loading) return <div className="rec-page"><p>Loading application…</p></div>;
+    if (error && !detail) return <div className="rec-page"><p className="rec-error">{error}</p></div>;
     if (!detail) return null;
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>{detail.candidateName}</h2>
             <p className="rec-muted">
                 {detail.jobTitle} · {detail.status} · applied {new Date(detail.appliedAtUtc).toLocaleString()}
@@ -142,6 +142,6 @@ export default function RecruiterApplicationPage() {
                     Messages
                 </Link>
             </div>
-        </main>
+        </div>
     );
 }

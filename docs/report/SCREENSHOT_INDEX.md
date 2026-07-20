@@ -1,5 +1,47 @@
 # Screenshot Index
 
+## Phase 9 — Responsive UI / Accessibility
+
+**Date:** 2026-07-21
+**Folder:** `docs/evidence/phase9-ui/`
+**Source:** Playwright Chromium live run (`e2e/phase9-ui.spec.js`)
+
+| File | Scenario |
+|------|----------|
+| `public-desktop.png` | Landing 1440×900 |
+| `public-mobile.png` | Landing 390×844 |
+| `login-desktop.png` | Login desktop |
+| `login-mobile.png` | Login mobile |
+| `candidate-dashboard-desktop.png` | Candidate dashboard desktop |
+| `candidate-dashboard-tablet.png` | Candidate dashboard tablet |
+| `candidate-dashboard-mobile.png` | Candidate dashboard mobile |
+| `candidate-job-filters-mobile.png` | Candidate jobs mobile |
+| `candidate-application-mobile.png` | Applications mobile |
+| `candidate-assessment-mobile.png` | Assessments mobile |
+| `recruiter-dashboard-desktop.png` | Recruiter dashboard |
+| `recruiter-dashboard-mobile.png` | Recruiter mobile |
+| `recruiter-pipeline-desktop.png` | Pipeline desktop |
+| `recruiter-pipeline-mobile.png` | Pipeline mobile |
+| `recruiter-job-form-mobile.png` | Job form mobile |
+| `manager-dashboard-desktop.png` | Hiring Manager dashboard |
+| `manager-dashboard-mobile.png` | Hiring Manager mobile |
+| `manager-evaluation-mobile.png` | Evaluation / vacancies mobile |
+| `admin-dashboard-desktop.png` | Administrator dashboard |
+| `admin-dashboard-mobile.png` | Administrator mobile |
+| `admin-user-list-mobile.png` | Users mobile |
+| `admin-role-matrix-tablet.png` | Roles tablet |
+| `admin-monitoring-mobile.png` | Monitoring |
+| `accessible-dialog-focus.png` | Mobile menu focus |
+| `keyboard-focus-visible.png` | Keyboard focus |
+| `accessible-form-errors.png` | Login validation errors |
+| `chart-accessible-summary.png` | Analytics summary |
+| `provider-not-configured-state.png` | Integrations Not Configured |
+| `axe-summary.png` | End-of-a11y capture |
+| `responsive-playwright-summary.png` | Responsive summary capture |
+| `visual-regression-summary.png` | Visual summary capture |
+| `mobile-navigation.png` | Public mobile nav open |
+| `mobile-dashboard.png` | Candidate mobile dashboard alias |
+
 ## Phase 8 — AI, Integrations, Calendar, Storage
 
 **Date:** 2026-07-21  
@@ -38,6 +80,7 @@
 | `admin-integration-dashboard.png` | Admin integrations dashboard |
 | `phase8-mobile-view.png` | Mobile 390×844 integrations |
 | `phase8-playwright-summary.png` | End-of-journey capture |
+
 
 No passwords, JWTs, API keys, OAuth tokens, SAS tokens, storage keys, or raw prompts are present.
 

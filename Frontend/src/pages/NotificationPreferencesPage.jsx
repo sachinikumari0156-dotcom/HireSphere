@@ -39,11 +39,11 @@ export default function NotificationPreferencesPage() {
         }
     }
 
-    if (!prefs && !error) return <main className="pref-page"><p>Loading preferences…</p></main>;
-    if (error && !prefs) return <main className="pref-page"><p className="pref-error">{error}</p></main>;
+    if (!prefs && !error) return <div className="pref-page"><p>Loading preferences…</p></div>;
+    if (error && !prefs) return <div className="pref-page"><p className="pref-error">{error}</p></div>;
 
     return (
-        <main className="pref-page">
+        <div className="pref-page">
             <h1>Notification preferences</h1>
             <p className="pref-muted">Security messages cannot be disabled. Optional channels require consent.</p>
             <form onSubmit={save} className="pref-form">
@@ -114,6 +114,6 @@ export default function NotificationPreferencesPage() {
                     </li>
                 ))}
             </ul>
-        </main>
+        </div>
     );
 }

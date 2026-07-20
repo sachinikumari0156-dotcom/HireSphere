@@ -26,15 +26,15 @@ export default function CandidateApplicationsPage() {
     }, []);
 
     if (loading) {
-        return <main className="dash-page"><p>Loading applications…</p></main>;
+        return <div className="dash-page"><p>Loading applications…</p></div>;
     }
 
     if (error) {
-        return <main className="dash-page"><p className="error">{error}</p></main>;
+        return <div className="dash-page"><p className="error">{error}</p></div>;
     }
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>My applications</h1>
                 <nav className="dash-nav">
@@ -62,6 +62,6 @@ export default function CandidateApplicationsPage() {
                     </article>
                 ))}
             </section>
-        </main>
+        </div>
     );
 }

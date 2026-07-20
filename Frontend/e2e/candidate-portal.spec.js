@@ -298,6 +298,10 @@ test("Candidate portal full browser journey", async ({ page, request }) => {
   await expect(page).toHaveURL(/\/candidate/, { timeout: 30_000 });
 
   // 61–62 logout
+  const menuToggle = page.getByRole("button", { name: /open menu/i });
+  if (await menuToggle.isVisible().catch(() => false)) {
+    await menuToggle.click();
+  }
   await page.getByRole("button", { name: /logout/i }).click();
   await expect(page).toHaveURL(/\/login/, { timeout: 20_000 });
   await page.goto("/candidate");

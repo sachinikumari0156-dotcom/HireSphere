@@ -126,7 +126,7 @@ export default function RecruiterPipelinePage() {
     );
 
     return (
-        <main className="rec-page portal-page">
+        <div className="rec-page portal-page">
             <h2>Applicant pipeline</h2>
             <p className="rec-muted">
                 Job #{id}. Select up to 5 applicants to compare.
@@ -236,6 +236,6 @@ export default function RecruiterPipelinePage() {
                     </table>
                 </div>
             )}
-        </main>
+        </div>
     );
 }

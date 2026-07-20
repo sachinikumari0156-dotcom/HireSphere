@@ -4,7 +4,7 @@ function RoleShell({ title, description }) {
     const { user } = useAuth();
 
     return (
-        <main style={{ padding: "2rem 1.5rem", maxWidth: 960, margin: "0 auto" }}>
+        <div style={{ padding: "2rem 1.5rem", maxWidth: 960, margin: "0 auto" }}>
             <h1>{title}</h1>
             <p>{description}</p>
             <p>
@@ -14,7 +14,7 @@ function RoleShell({ title, description }) {
                 Portal features for this role will be expanded in later phases.
                 This shell confirms authorized access only.
             </p>
-        </main>
+        </div>
     );
 }
 

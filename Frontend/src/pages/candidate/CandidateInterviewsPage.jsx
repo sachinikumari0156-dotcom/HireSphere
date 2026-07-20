@@ -26,15 +26,15 @@ export default function CandidateInterviewsPage() {
     }, []);
 
     if (loading) {
-        return <main className="dash-page"><p>Loading interviews…</p></main>;
+        return <div className="dash-page"><p>Loading interviews…</p></div>;
     }
 
     if (error) {
-        return <main className="dash-page"><p className="error">{error}</p></main>;
+        return <div className="dash-page"><p className="error">{error}</p></div>;
     }
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>Interviews</h1>
                 <p>Scheduled interviews for your applications.</p>
@@ -63,6 +63,6 @@ export default function CandidateInterviewsPage() {
                     ))}
                 </ul>
             )}
-        </main>
+        </div>
     );
 }

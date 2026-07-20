@@ -26,15 +26,15 @@ export default function CandidateAssessmentsPage() {
     }, []);
 
     if (loading) {
-        return <main className="dash-page"><p>Loading assessments…</p></main>;
+        return <div className="dash-page"><p>Loading assessments…</p></div>;
     }
 
     if (error) {
-        return <main className="dash-page"><p className="error">{error}</p></main>;
+        return <div className="dash-page"><p className="error">{error}</p></div>;
     }
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>Skill assessments</h1>
                 <p>Assigned assessments for your applications.</p>
@@ -68,6 +68,6 @@ export default function CandidateAssessmentsPage() {
                     ))}
                 </ul>
             )}
-        </main>
+        </div>
     );
 }

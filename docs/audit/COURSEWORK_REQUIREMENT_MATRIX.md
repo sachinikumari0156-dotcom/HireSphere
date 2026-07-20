@@ -1,7 +1,7 @@
 # HireSphere — Coursework Requirement Matrix
 
 **Course:** SE205.3 Software Architecture 2026
-**Last updated:** 2026-07-20 (Phase 6 Hiring Manager browser E2E VERIFIED)
+**Last updated:** 2026-07-21 (Phase 9 UI / accessibility VERIFIED)
 **Legend:** NOT STARTED | IN PROGRESS | IMPLEMENTED | TESTED | VERIFIED | BLOCKED — EXTERNAL CREDENTIAL | DEFERRED — OPTIONAL BONUS
 
 ---
@@ -111,13 +111,13 @@
 
 | ID | Requirement | Status | Evidence / notes |
 |----|-------------|--------|------------------|
-| M-F01 | Desktop, tablet, mobile responsive | IN PROGRESS | Partial CSS; not verified |
-| M-F02 | Accessibility | NOT STARTED | Not audited |
-| M-F03 | Consistent UX / design system | IN PROGRESS | HireSphere branding on auth pages; design system later |
-| M-F04 | Client-side validation | IN PROGRESS | Login/register forms |
+| M-F01 | Desktop, tablet, mobile responsive | VERIFIED | Phase 9 responsive matrix + Playwright; `docs/testing/PHASE9_RESPONSIVE_RESULTS.md` |
+| M-F02 | Accessibility | VERIFIED | axe critical/serious 0 on covered routes; keyboard results; semantic review (not SR certification) |
+| M-F03 | Consistent UX / design system | VERIFIED | Tokens + RoleShell + components; Phase 9.1–9.2 |
+| M-F04 | Client-side validation | VERIFIED | Auth + portal forms; accessible errors |
 | M-F05 | Secure authentication workflow | VERIFIED | AuthContext, protected routes, session expiry |
-| M-F06 | Error handling and user feedback | IN PROGRESS | Basic form errors; API global exception handler added |
-| M-F07 | Usability testing evidence | NOT STARTED | — |
+| M-F06 | Error handling and user feedback | VERIFIED | Alerts, empty/error states, provider Not Configured |
+| M-F07 | Usability testing evidence | NOT STARTED | Formal usability remains Phase 10 |
 
 ### Testing and evidence
 

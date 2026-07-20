@@ -48,7 +48,7 @@ export default function HiringManagerRecommendationPage() {
     }
 
     return (
-        <main className="hm-page">
+        <div className="hm-page">
             <h2>Recommendation</h2>
             <p className="hm-muted">
                 Hiring Managers submit recommendations. FinalHire/FinalReject require Recruiter or Administrator.
@@ -86,6 +86,6 @@ export default function HiringManagerRecommendationPage() {
                 ))}
             </ul>
             <Link className="hm-btn secondary" to={`/hiring-manager/applications/${id}`}>Back</Link>
-        </main>
+        </div>
     );
 }

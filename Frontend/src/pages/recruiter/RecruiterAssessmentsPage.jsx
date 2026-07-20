@@ -23,7 +23,7 @@ export default function RecruiterAssessmentsPage() {
     }, []);
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>Assessments</h2>
             <div className="rec-actions">
                 <Link className="rec-btn" to="/recruiter/assessments/new">Create assessment</Link>
@@ -41,6 +41,6 @@ export default function RecruiterAssessmentsPage() {
                     </li>
                 ))}
             </ul>
-        </main>
+        </div>
     );
 }

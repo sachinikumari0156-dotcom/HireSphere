@@ -53,13 +53,13 @@ export default function HiringManagerJobDetailPage() {
         }
     }
 
-    if (loading) return <main className="hm-page"><p>Loading vacancy…</p></main>;
+    if (loading) return <div className="hm-page"><p>Loading vacancy…</p></div>;
     if (error && !job) {
-        return <main className="hm-page"><p className="hm-error" role="alert">{error}</p></main>;
+        return <div className="hm-page"><p className="hm-error" role="alert">{error}</p></div>;
     }
 
     return (
-        <main className="hm-page">
+        <div className="hm-page">
             <h2>{job.title}</h2>
             <p className="hm-muted">{job.status} · {job.location} · Recruiter: {job.recruiterName || "—"}</p>
             {error && <p className="hm-error" role="alert">{error}</p>}
@@ -92,6 +92,6 @@ export default function HiringManagerJobDetailPage() {
                     <li key={c.id}>{c.authorName}: {c.content}</li>
                 ))}
             </ul>
-        </main>
+        </div>
     );
 }

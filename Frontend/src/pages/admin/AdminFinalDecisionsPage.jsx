@@ -20,7 +20,7 @@ export default function AdminFinalDecisionsPage() {
     }, []);
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Pending final decisions</h2>
             {error && <p className="admin-error" role="alert">{error}</p>}
             {items.length === 0 && <p className="admin-muted">No pending recommendations awaiting final decision.</p>}
@@ -33,7 +33,7 @@ export default function AdminFinalDecisionsPage() {
                     </li>
                 ))}
             </ul>
-        </main>
+        </div>
     );
 }
 
@@ -76,10 +76,10 @@ export function AdminFinalDecisionDetailPage() {
         }
     }
 
-    if (!detail && !error) return <main className="admin-page"><p>Loading…</p></main>;
+    if (!detail && !error) return <div className="admin-page"><p>Loading…</p></div>;
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Final decision review</h2>
             {detail && (
                 <>
@@ -111,6 +111,6 @@ export function AdminFinalDecisionDetailPage() {
                 <button type="submit" className="admin-btn">Record decision</button>
             </form>
             <Link className="admin-btn secondary" to="/admin/final-decisions">Back</Link>
-        </main>
+        </div>
     );
 }

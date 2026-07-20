@@ -63,11 +63,11 @@ export default function AdminIntegrationsPage() {
         }
     }
 
-    if (!statuses.length && !error) return <main className="admin-page"><p>Loading integrations…</p></main>;
-    if (error && !statuses.length) return <main className="admin-page"><p className="admin-error">{error}</p></main>;
+    if (!statuses.length && !error) return <div className="admin-page"><p>Loading integrations…</p></div>;
+    if (error && !statuses.length) return <div className="admin-page"><p className="admin-error">{error}</p></div>;
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Integration providers</h2>
             <p className="admin-muted">Statuses are truthful. Secrets are never shown. External providers remain Not Configured until verified with real credentials.</p>
             <p><span className="portal-provider-chip">Provider Not Configured</span> appears when credentials are absent.</p>
@@ -94,6 +94,6 @@ export default function AdminIntegrationsPage() {
                     </li>
                 ))}
             </ul>
-        </main>
+        </div>
     );
 }

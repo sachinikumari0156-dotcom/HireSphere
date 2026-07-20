@@ -52,7 +52,7 @@ export default function RecruiterJobsPage() {
     }
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>Jobs</h2>
             <p className="rec-muted">{totalCount} job(s) in your organization.</p>
 
@@ -123,6 +123,6 @@ export default function RecruiterJobsPage() {
                     </table>
                 </div>
             )}
-        </main>
+        </div>
     );
 }

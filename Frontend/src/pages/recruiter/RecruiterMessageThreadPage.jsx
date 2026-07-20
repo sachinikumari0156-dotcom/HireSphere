@@ -49,7 +49,7 @@ export default function RecruiterMessageThreadPage() {
     }
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>Application messages</h2>
             <p className="rec-muted">In-app thread only. External email/SMS delivery is not configured in Phase 5.</p>
             {loading && <p>Loading messages…</p>}
@@ -77,6 +77,6 @@ export default function RecruiterMessageThreadPage() {
             <div className="rec-actions">
                 <Link className="rec-btn secondary" to={`/recruiter/applications/${id}`}>Back</Link>
             </div>
-        </main>
+        </div>
     );
 }

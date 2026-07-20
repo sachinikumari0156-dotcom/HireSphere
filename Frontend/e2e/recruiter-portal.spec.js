@@ -20,6 +20,10 @@ async function loginUi(page, email, password) {
 }
 
 async function logoutUi(page) {
+  const menu = page.getByRole("button", { name: /open menu|open navigation menu/i });
+  if (await menu.isVisible().catch(() => false)) {
+    await menu.click();
+  }
   const logout = page.getByRole("button", { name: /logout/i });
   if (await logout.count()) {
     await logout.click();
@@ -156,7 +160,7 @@ test("Recruiter portal browser journey (Phase 5)", async ({ page, browser, reque
   await page.goto(`/recruiter/applications/${applicationId}`);
   await expect(page.getByText(/match score/i)).toBeVisible();
   await captureEvidence(page, "recruiter-application-detail.png");
-  const detailText = await page.locator("main").innerText();
+  const detailText = await page.locator("#main-content").innerText();
   expect(detailText.toLowerCase()).not.toContain("c:\\");
   expect(detailText.toLowerCase()).not.toContain("passwordhash");
 
@@ -276,6 +280,10 @@ test("Recruiter portal browser journey (Phase 5)", async ({ page, browser, reque
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/recruiter");
   await captureEvidence(page, "recruiter-mobile-dashboard.png");
+  const menuToggle = page.getByRole("button", { name: /open menu/i });
+  if (await menuToggle.isVisible().catch(() => false)) {
+    await menuToggle.click();
+  }
   await page.getByRole("button", { name: /logout/i }).click();
   await expect(page).toHaveURL(/\/login|\/$/);
 

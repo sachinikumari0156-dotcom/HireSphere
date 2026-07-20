@@ -55,7 +55,7 @@ export default function RecruiterScheduleInterviewPage() {
     }
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>Schedule interview</h2>
             <p className="rec-muted">Times are stored in UTC with timezone metadata. Calendar providers are Not Configured.</p>
             {error && <p className="rec-error" role="alert">{error}</p>}
@@ -80,7 +80,7 @@ export default function RecruiterScheduleInterviewPage() {
                     <input value={applicationId} onChange={(e) => setApplicationId(e.target.value)} />
                 </label>
                 <label>
-                    Start (local browser input → UTC)
+                    Start (local browser input â†’ UTC)
                     <input type="datetime-local" value={startLocal} onChange={(e) => setStartLocal(e.target.value)} />
                 </label>
                 <label>
@@ -118,6 +118,6 @@ export default function RecruiterScheduleInterviewPage() {
             <div className="rec-actions">
                 <Link className="rec-btn secondary" to="/recruiter/interviews">Back</Link>
             </div>
-        </main>
+        </div>
     );
 }

@@ -59,7 +59,7 @@ export default function CandidateJobsPage() {
     }
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>Browse jobs</h1>
                 <p>Search open roles. Only active jobs are shown.</p>
@@ -144,6 +144,6 @@ export default function CandidateJobsPage() {
                     </div>
                 </section>
             )}
-        </main>
+        </div>
     );
 }

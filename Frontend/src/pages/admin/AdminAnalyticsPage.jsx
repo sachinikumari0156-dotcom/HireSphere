@@ -29,8 +29,8 @@ export default function AdminAnalyticsPage() {
         return () => { alive = false; };
     }, []);
 
-    if (error) return <main className="admin-page"><p className="admin-error">{error}</p></main>;
-    if (!recruitment) return <main className="admin-page"><p>Loading analytics…</p></main>;
+    if (error) return <div className="admin-page"><p className="admin-error">{error}</p></div>;
+    if (!recruitment) return <div className="admin-page"><p>Loading analytics…</p></div>;
 
     const statusRows = recruitment.applicationsByStatus || [];
     const statusSummary = statusRows.length
@@ -38,7 +38,7 @@ export default function AdminAnalyticsPage() {
         : "No application status data.";
 
     return (
-        <main className="admin-page portal-page">
+        <div className="admin-page portal-page">
             <h2>Recruitment analytics</h2>
             <p className="admin-muted">{recruitment.unavailableMetricsNote}</p>
             <p className="portal-chart-summary" role="status">
@@ -82,6 +82,6 @@ export default function AdminAnalyticsPage() {
                 ))}
             </ul>
             {(skills?.skillDemandFromJobs || []).length === 0 && <p className="admin-muted">No skill demand data.</p>}
-        </main>
+        </div>
     );
 }

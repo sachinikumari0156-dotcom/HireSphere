@@ -38,7 +38,7 @@ export default function HiringManagerJobsPage() {
         }
     }
     return (
-        <main className="hm-page">
+        <div className="hm-page">
             <h2>Assigned vacancies</h2>
             <p className="hm-muted">Only jobs assigned to you as Hiring Manager.</p>
             <form
@@ -85,6 +85,6 @@ export default function HiringManagerJobsPage() {
                     </tbody>
                 </table>
             )}
-        </main>
+        </div>
     );
 }

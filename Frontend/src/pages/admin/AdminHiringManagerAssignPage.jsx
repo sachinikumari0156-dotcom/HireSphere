@@ -27,7 +27,7 @@ export default function AdminHiringManagerAssignPage() {
     }
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Hiring Manager assignment</h2>
             <p className="admin-muted">Assign Hiring Manager role, organization/department, and optional vacancy.</p>
             {error && <p className="admin-error" role="alert">{error}</p>}
@@ -51,6 +51,6 @@ export default function AdminHiringManagerAssignPage() {
                 </label>
                 <button type="submit" className="admin-btn">Assign</button>
             </form>
-        </main>
+        </div>
     );
 }

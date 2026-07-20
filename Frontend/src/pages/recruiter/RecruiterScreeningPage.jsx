@@ -43,7 +43,7 @@ export default function RecruiterScreeningPage() {
     }
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>Screening queue</h2>
             <p className="rec-muted">Review answers and record Pass / Fail / ManualReview / Shortlist / Reject with a reason.</p>
             {loading && <p>Loading…</p>}
@@ -104,6 +104,6 @@ export default function RecruiterScreeningPage() {
                     </li>
                 ))}
             </ul>
-        </main>
+        </div>
     );
 }

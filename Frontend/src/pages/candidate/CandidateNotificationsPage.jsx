@@ -51,17 +51,17 @@ export default function CandidateNotificationsPage() {
     }
 
     if (loading) {
-        return <main className="dash-page"><p>Loading notifications…</p></main>;
+        return <div className="dash-page"><p>Loading notifications…</p></div>;
     }
 
     if (error) {
-        return <main className="dash-page"><p className="error">{error}</p></main>;
+        return <div className="dash-page"><p className="error">{error}</p></div>;
     }
 
     const items = data?.items || [];
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>Notifications</h1>
                 <p>{data?.unreadCount ?? 0} unread</p>
@@ -102,6 +102,6 @@ export default function CandidateNotificationsPage() {
                     ))}
                 </ul>
             )}
-        </main>
+        </div>
     );
 }

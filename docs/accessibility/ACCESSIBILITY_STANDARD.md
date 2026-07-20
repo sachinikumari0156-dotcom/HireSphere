@@ -1,18 +1,24 @@
-# Accessibility standard (Phase 9)
+# Accessibility standard — HireSphere
 
-**Target:** WCAG 2.2 AA  
-**Tools:** axe-core / `@axe-core/playwright`, React Testing Library, keyboard Playwright
+**Target:** WCAG 2.2 Level AA for normal application content
+**Phase:** 9
+**Tools:** axe-core / `@axe-core/playwright`, keyboard Playwright checks, semantic HTML review
 
-## Required behaviours
+## Scope
 
-- Visible `:focus-visible`
-- Skip link to main content
-- One primary page heading (`h1`) per view
-- No colour-only status
-- Dialogs: name, modal, trap, Escape, restore focus
-- Mobile menus: accessible name + Escape
-- Charts (Phase 9.2+): title + text/table alternative
+Public, Candidate, Recruiter, Hiring Manager, and Administrator portals delivered through Phase 9.
 
-## Honest limits
+## Requirements
 
-Full NVDA/JAWS/VoiceOver certification is **not** claimed in Phase 9 unless a real screen-reader session is recorded. Semantic review covers markup landmarks/labels.
+- Visible focus indicators (`:focus-visible`)
+- Skip link to `#main-content`
+- One primary `main` landmark (page sections use `div`, not nested `main`)
+- Labels associated with form controls
+- Status not conveyed by colour alone (`StatusBadge` text + marker)
+- Charts include text summary and table alternative where used
+- `prefers-reduced-motion` respected in design-system CSS
+- Dialogs: accessible name, Escape where appropriate, focus management (Modal component)
+
+## Exceptions
+
+No formal external accessibility certification is claimed. Full assistive-technology certification (NVDA/JAWS/VoiceOver user testing) is out of Phase 9 scope unless separately executed.

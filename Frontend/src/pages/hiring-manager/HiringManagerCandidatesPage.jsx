@@ -41,7 +41,7 @@ export default function HiringManagerCandidatesPage() {
     }
 
     return (
-        <main className="hm-page">
+        <div className="hm-page">
             <h2>Candidates</h2>
             <p className="hm-muted">Authorized applicants for this assigned vacancy.</p>
             {error && <p className="hm-error" role="alert">{error}</p>}
@@ -85,6 +85,6 @@ export default function HiringManagerCandidatesPage() {
                     </tbody>
                 </table>
             )}
-        </main>
+        </div>
     );
 }

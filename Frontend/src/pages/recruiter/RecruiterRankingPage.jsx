@@ -44,11 +44,11 @@ export default function RecruiterRankingPage() {
         }
     }
 
-    if (loading) return <main className="rec-page"><p>Loading ranking…</p></main>;
-    if (error && !ranking) return <main className="rec-page"><p className="rec-error">{error}</p></main>;
+    if (loading) return <div className="rec-page"><p>Loading ranking…</p></div>;
+    if (error && !ranking) return <div className="rec-page"><p className="rec-error">{error}</p></div>;
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>Candidate ranking</h2>
             <p className="rec-notice">{ranking?.humanReviewNotice}</p>
             {message && <p className="rec-success" role="status">{message}</p>}
@@ -78,6 +78,6 @@ export default function RecruiterRankingPage() {
             <div className="rec-actions">
                 <Link className="rec-btn secondary" to={`/recruiter/applications/${id}`}>Back to application</Link>
             </div>
-        </main>
+        </div>
     );
 }

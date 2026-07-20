@@ -43,7 +43,7 @@ export default function AdminOrganizationsPage() {
     }
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Organizations</h2>
             {error && <p className="admin-error" role="alert">{error}</p>}
             {success && <p className="admin-success" role="status">{success}</p>}
@@ -67,6 +67,6 @@ export default function AdminOrganizationsPage() {
                     <li key={o.id}>{o.name} ({o.code}) · {o.status} · depts {o.departmentCount}</li>
                 ))}
             </ul>
-        </main>
+        </div>
     );
 }

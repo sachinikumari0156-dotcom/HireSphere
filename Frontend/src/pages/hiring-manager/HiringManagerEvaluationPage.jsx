@@ -80,10 +80,10 @@ export default function HiringManagerEvaluationPage() {
         }
     }
 
-    if (loading) return <main className="hm-page"><p>Loading evaluation…</p></main>;
+    if (loading) return <div className="hm-page"><p>Loading evaluation…</p></div>;
 
     return (
-        <main className="hm-page">
+        <div className="hm-page">
             <h2>Candidate evaluation</h2>
             <p className="hm-muted">Status: {status}. Scores are advisory — they do not auto-decide hiring.</p>
             {error && <p className="hm-error" role="alert">{error}</p>}
@@ -129,6 +129,6 @@ export default function HiringManagerEvaluationPage() {
                 <button type="button" className="hm-btn" onClick={() => save(true)}>Submit evaluation</button>
             </form>
             <Link className="hm-btn secondary" to={`/hiring-manager/applications/${id}`}>Back to review</Link>
-        </main>
+        </div>
     );
 }

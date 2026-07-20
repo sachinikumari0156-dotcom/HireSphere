@@ -42,7 +42,7 @@ export default function AdminRolesPage() {
     }
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Roles and permissions</h2>
             {error && <p className="admin-error" role="alert">{error}</p>}
             {success && <p className="admin-success" role="status">{success}</p>}
@@ -72,6 +72,6 @@ export default function AdminRolesPage() {
                     <button type="button" className="admin-btn" onClick={save}>Save permissions</button>
                 </section>
             )}
-        </main>
+        </div>
     );
 }

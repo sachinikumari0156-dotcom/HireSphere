@@ -51,7 +51,7 @@ export default function AdminRecruiterRequestsPage() {
     }
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Recruiter access requests</h2>
             {error && <p className="admin-error" role="alert">{error}</p>}
             {success && <p className="admin-success" role="status">{success}</p>}
@@ -73,6 +73,6 @@ export default function AdminRecruiterRequestsPage() {
                     </li>
                 ))}
             </ul>
-        </main>
+        </div>
     );
 }

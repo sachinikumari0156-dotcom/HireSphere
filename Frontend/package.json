@@ -13,7 +13,10 @@
     "test:coverage": "vitest run --coverage",
     "e2e": "playwright test",
     "e2e:headed": "playwright test --headed",
-    "e2e:report": "playwright show-report"
+    "e2e:report": "playwright show-report",
+    "test:a11y": "playwright test e2e/phase9-ui.spec.js e2e/candidate-a11y.spec.js",
+    "test:responsive": "playwright test e2e/phase9-ui.spec.js e2e/candidate-responsive.spec.js",
+    "test:visual": "playwright test e2e/phase9-visual.spec.js"
   },
   "dependencies": {
     "axios": "^1.18.1",

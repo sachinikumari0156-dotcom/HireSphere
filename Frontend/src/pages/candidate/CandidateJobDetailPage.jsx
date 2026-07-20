@@ -30,22 +30,22 @@ export default function CandidateJobDetailPage() {
     }, [id]);
 
     if (loading) {
-        return <main className="dash-page"><p>Loading job…</p></main>;
+        return <div className="dash-page"><p>Loading job…</p></div>;
     }
 
     if (error) {
         return (
-            <main className="dash-page">
+            <div className="dash-page">
                 <p className="error">{error}</p>
                 <Link to="/candidate/jobs">Back to jobs</Link>
-            </main>
+            </div>
         );
     }
 
     const match = job?.match;
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>{job.title}</h1>
                 <p>
@@ -96,6 +96,6 @@ export default function CandidateJobDetailPage() {
                     <p className="empty-state">{match.humanReviewNotice}</p>
                 </section>
             )}
-        </main>
+        </div>
     );
 }

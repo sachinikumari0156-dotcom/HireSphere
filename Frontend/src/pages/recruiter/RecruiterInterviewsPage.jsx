@@ -23,7 +23,7 @@ export default function RecruiterInterviewsPage() {
     }, []);
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>Interviews</h2>
             <p className="rec-muted">Calendar sync: Not Configured (Google/Outlook deferred to Phase 8).</p>
             <div className="rec-actions">
@@ -45,6 +45,6 @@ export default function RecruiterInterviewsPage() {
                     </li>
                 ))}
             </ul>
-        </main>
+        </div>
     );
 }

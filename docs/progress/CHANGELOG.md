@@ -1,5 +1,14 @@
 # HireSphere — Implementation Changelog
 
+## Phase 9 verification — 2026-07-21
+
+**Commit message:** `test(ui): verify responsive accessibility and visual quality`
+
+- Playwright Phase 9 UI + visual PASS; full suite 13/13
+- Evidence: `docs/evidence/phase9-ui/`; axe critical/serious 0 on covered routes
+- Nested `main` landmarks removed; mobile logout opens menu first
+- Phase 9 status: **VERIFIED**; Phases 10–11 pending
+
 ## Phase 9.2 — 2026-07-21
 
 **Commit message:** `feat(ui): complete responsive role portal experiences`

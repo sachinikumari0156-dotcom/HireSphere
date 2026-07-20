@@ -38,11 +38,11 @@ export default function AdminRecruiterRequestDetailPage() {
         }
     }
 
-    if (!item && !error) return <main className="admin-page"><p>Loading…</p></main>;
-    if (error && !item) return <main className="admin-page"><p className="admin-error">{error}</p></main>;
+    if (!item && !error) return <div className="admin-page"><p>Loading…</p></div>;
+    if (error && !item) return <div className="admin-page"><p className="admin-error">{error}</p></div>;
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Recruiter request</h2>
             <p>{item.fullName} · {item.businessEmail}</p>
             <p>Organization: {item.organizationName}</p>
@@ -58,6 +58,6 @@ export default function AdminRecruiterRequestDetailPage() {
                 </>
             )}
             <p><Link to="/admin/recruiter-requests">Back</Link></p>
-        </main>
+        </div>
     );
 }

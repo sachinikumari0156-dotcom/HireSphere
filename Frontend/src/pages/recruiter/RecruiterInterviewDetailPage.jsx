@@ -65,12 +65,12 @@ export default function RecruiterInterviewDetailPage() {
         }
     }
 
-    if (loading) return <main className="rec-page"><p>Loading interview…</p></main>;
-    if (error && !item) return <main className="rec-page"><p className="rec-error">{error}</p></main>;
+    if (loading) return <div className="rec-page"><p>Loading interview…</p></div>;
+    if (error && !item) return <div className="rec-page"><p className="rec-error">{error}</p></div>;
     if (!item) return null;
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>Interview detail</h2>
             {message && <p className="rec-success">{message}</p>}
             {error && <p className="rec-error">{error}</p>}
@@ -90,6 +90,6 @@ export default function RecruiterInterviewDetailPage() {
                 <button type="button" className="rec-btn danger" onClick={cancelInterview}>Cancel</button>
                 <Link className="rec-btn secondary" to="/recruiter/interviews">Back</Link>
             </div>
-        </main>
+        </div>
     );
 }

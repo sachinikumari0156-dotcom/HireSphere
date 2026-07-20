@@ -23,16 +23,16 @@ export default function HiringManagerApplicationPage() {
         return () => { alive = false; };
     }, [id]);
 
-    if (loading) return <main className="hm-page"><p>Loading candidate review…</p></main>;
+    if (loading) return <div className="hm-page"><p>Loading candidate review…</p></div>;
     if (error) {
-        return <main className="hm-page"><p className="hm-error" role="alert">{error}</p></main>;
+        return <div className="hm-page"><p className="hm-error" role="alert">{error}</p></div>;
     }
 
     const text = JSON.stringify(detail).toLowerCase();
     const hasPathLeak = text.includes("c:\\") || text.includes("passwordhash");
 
     return (
-        <main className="hm-page">
+        <div className="hm-page">
             <h2>Candidate review</h2>
             <p className="hm-muted">{detail.candidateName} · {detail.jobTitle} · {detail.status}</p>
 
@@ -68,6 +68,6 @@ export default function HiringManagerApplicationPage() {
                     Back to candidates
                 </Link>
             </div>
-        </main>
+        </div>
     );
 }

@@ -81,15 +81,15 @@ export default function CandidateInterviewDetailPage() {
     }
 
     if (loading) {
-        return <main className="dash-page"><p>Loading interview…</p></main>;
+        return <div className="dash-page"><p>Loading interview…</p></div>;
     }
 
     if (error) {
-        return <main className="dash-page"><p className="error">{error}</p></main>;
+        return <div className="dash-page"><p className="error">{error}</p></div>;
     }
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>{interview.jobTitle}</h1>
                 <p>
@@ -177,6 +177,6 @@ export default function CandidateInterviewDetailPage() {
             )}
 
             {actionError && <p className="error">{actionError}</p>}
-        </main>
+        </div>
     );
 }

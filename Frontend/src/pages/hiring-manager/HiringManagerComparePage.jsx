@@ -51,7 +51,7 @@ export default function HiringManagerComparePage() {
     }, [idsFromQuery]);
 
     return (
-        <main className="hm-page">
+        <div className="hm-page">
             <h2>Candidate comparison</h2>
             <p className="hm-muted">Compare up to 5 candidates from the same assigned vacancy. Ranking is advisory.</p>
             <form
@@ -87,6 +87,6 @@ export default function HiringManagerComparePage() {
                     </div>
                 </>
             )}
-        </main>
+        </div>
     );
 }

@@ -75,13 +75,13 @@ export default function AdminUserDetailPage() {
         }
     }
 
-    if (!detail && !error) return <main className="admin-page"><p>Loading user…</p></main>;
-    if (error && !detail) return <main className="admin-page"><p className="admin-error" role="alert">{error}</p></main>;
+    if (!detail && !error) return <div className="admin-page"><p>Loading user…</p></div>;
+    if (error && !detail) return <div className="admin-page"><p className="admin-error" role="alert">{error}</p></div>;
 
     const isSelf = Number(id) === me?.userId;
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>User detail</h2>
             <p className="admin-muted">{detail.fullName} · {detail.email} · {detail.role} · {detail.status}</p>
             {error && <p className="admin-error" role="alert">{error}</p>}
@@ -126,6 +126,6 @@ export default function AdminUserDetailPage() {
                 <button type="submit" className="admin-btn secondary">Assign organization</button>
             </form>
             <Link className="admin-btn secondary" to="/admin/users">Back</Link>
-        </main>
+        </div>
     );
 }

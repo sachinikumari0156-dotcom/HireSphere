@@ -164,11 +164,11 @@ export default function RecruiterJobFormPage() {
     }
 
     if (loading) {
-        return <main className="rec-page"><p>Loading job form…</p></main>;
+        return <div className="rec-page"><p>Loading job form…</p></div>;
     }
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>{isEdit ? "Edit job" : "Create job"}</h2>
             <p className="rec-muted">Organization is taken from your authenticated session.</p>
 
@@ -421,6 +421,6 @@ export default function RecruiterJobFormPage() {
                     <Link className="rec-btn secondary" to="/recruiter/jobs">Cancel</Link>
                 </div>
             </form>
-        </main>
+        </div>
     );
 }

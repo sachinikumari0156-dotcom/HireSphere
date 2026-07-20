@@ -113,18 +113,18 @@ export default function CandidateAssessmentDetailPage() {
     }
 
     if (loading) {
-        return <main className="dash-page"><p>Loading assessment…</p></main>;
+        return <div className="dash-page"><p>Loading assessment…</p></div>;
     }
 
     if (error) {
-        return <main className="dash-page"><p className="error">{error}</p></main>;
+        return <div className="dash-page"><p className="error">{error}</p></div>;
     }
 
     const inProgress = attempt?.status === "InProgress";
     const questions = attempt?.questions || assignment?.questions || [];
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>{assignment.title}</h1>
                 <p>
@@ -226,6 +226,6 @@ export default function CandidateAssessmentDetailPage() {
             )}
 
             {actionError && <p className="error">{actionError}</p>}
-        </main>
+        </div>
     );
 }

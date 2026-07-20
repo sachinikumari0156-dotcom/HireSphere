@@ -18,11 +18,11 @@ export default function AdminMonitoringPage() {
         return () => { alive = false; };
     }, []);
 
-    if (!data && !error) return <main className="admin-page"><p>Loading monitoring…</p></main>;
-    if (error) return <main className="admin-page"><p className="admin-error">{error}</p></main>;
+    if (!data && !error) return <div className="admin-page"><p>Loading monitoring…</p></div>;
+    if (error) return <div className="admin-page"><p className="admin-error">{error}</p></div>;
 
     return (
-        <main className="admin-page">
+        <div className="admin-page">
             <h2>Monitoring</h2>
             <section className="admin-stats" aria-label="Monitoring summary">
                 <article><h3>API health</h3><p>{data.apiHealth}</p></article>
@@ -42,7 +42,7 @@ export default function AdminMonitoringPage() {
             </ul>
             <p className="admin-muted">{data.providerNotes}</p>
             <AiStatusPanel />
-        </main>
+        </div>
     );
 }
 

@@ -25,11 +25,11 @@ export default function RecruiterHome() {
     }, []);
 
     if (loading) {
-        return <main className="rec-page"><p>Loading recruiter dashboard…</p></main>;
+        return <div className="rec-page"><p>Loading recruiter dashboard…</p></div>;
     }
 
     if (error) {
-        return <main className="rec-page"><p className="rec-error" role="alert">{error}</p></main>;
+        return <div className="rec-page"><p className="rec-error" role="alert">{error}</p></div>;
     }
 
     const empty = data
@@ -38,7 +38,7 @@ export default function RecruiterHome() {
         && data.totalApplicants === 0;
 
     return (
-        <main className="rec-page">
+        <div className="rec-page">
             <h2>Dashboard</h2>
             <p className="rec-muted">Live metrics for your organization only.</p>
 
@@ -81,6 +81,6 @@ export default function RecruiterHome() {
                     </ul>
                 )}
             </section>
-        </main>
+        </div>
     );
 }

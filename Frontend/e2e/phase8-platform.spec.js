@@ -20,6 +20,10 @@ async function loginUi(page, email, password) {
 }
 
 async function logoutUi(page) {
+  const menu = page.getByRole("button", { name: /open menu|open navigation menu/i });
+  if (await menu.isVisible().catch(() => false)) {
+    await menu.click();
+  }
   const logout = page.getByRole("button", { name: /logout/i });
   if (await logout.count()) {
     await logout.click();

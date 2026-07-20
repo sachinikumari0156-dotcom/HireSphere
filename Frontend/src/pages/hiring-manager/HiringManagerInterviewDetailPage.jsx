@@ -92,11 +92,11 @@ export default function HiringManagerInterviewDetailPage() {
         }
     }
 
-    if (loading) return <main className="hm-page"><p>Loading interview…</p></main>;
-    if (!detail) return <main className="hm-page"><p className="hm-error">{error}</p></main>;
+    if (loading) return <div className="hm-page"><p>Loading interview…</p></div>;
+    if (!detail) return <div className="hm-page"><p className="hm-error">{error}</p></div>;
 
     return (
-        <main className="hm-page">
+        <div className="hm-page">
             <h2>Interview detail</h2>
             <p className="hm-muted">
                 {detail.candidateName} · {detail.jobTitle} · {detail.interviewDateUtc} ({detail.timeZoneId}) · Response: {detail.candidateResponse}
@@ -151,6 +151,6 @@ export default function HiringManagerInterviewDetailPage() {
             <Link className="hm-btn secondary" to={`/hiring-manager/applications/${detail.applicationId}/recommendation`}>
                 Recommendation
             </Link>
-        </main>
+        </div>
     );
 }

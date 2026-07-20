@@ -71,7 +71,7 @@ export default function CandidateResumeAnalysisPage() {
     }
 
     return (
-        <main className="candidate-page">
+        <div className="candidate-page">
             <h1>Resume analysis</h1>
             <p className="muted">
                 AI-generated insight. Final recruitment decisions must be reviewed by authorized users.
@@ -138,6 +138,6 @@ export default function CandidateResumeAnalysisPage() {
                 </section>
             )}
             <Link to="/candidate/profile">Back to profile</Link>
-        </main>
+        </div>
     );
 }

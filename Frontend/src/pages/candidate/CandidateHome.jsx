@@ -28,11 +28,11 @@ export default function CandidateHome() {
     }, []);
 
     if (loading) {
-        return <main className="dash-page"><p>Loading dashboard…</p></main>;
+        return <div className="dash-page"><p>Loading dashboard…</p></div>;
     }
 
     if (error) {
-        return <main className="dash-page"><p className="error">{error}</p></main>;
+        return <div className="dash-page"><p className="error">{error}</p></div>;
     }
 
     const empty = !summary || (
@@ -42,7 +42,7 @@ export default function CandidateHome() {
     );
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>Candidate dashboard</h1>
                 <p>Welcome{user?.fullName ? `, ${user.fullName}` : ""}.</p>
@@ -94,6 +94,6 @@ export default function CandidateHome() {
                     No applications, interviews, or assessments yet. Complete your profile to get started.
                 </p>
             )}
-        </main>
+        </div>
     );
 }

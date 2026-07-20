@@ -66,30 +66,30 @@ export default function CandidateApplyPage() {
     }
 
     if (loading) {
-        return <main className="dash-page"><p>Loading application wizard…</p></main>;
+        return <div className="dash-page"><p>Loading application wizard…</p></div>;
     }
 
     if (error) {
         return (
-            <main className="dash-page">
+            <div className="dash-page">
                 <p className="error">{error}</p>
                 <Link to={`/candidate/jobs/${id}`}>Back to job</Link>
-            </main>
+            </div>
         );
     }
 
     if (!options.canApply) {
         return (
-            <main className="dash-page">
+            <div className="dash-page">
                 <h1>Apply — {options.jobTitle}</h1>
                 <p className="error">{options.blockReason}</p>
                 <Link to={`/candidate/jobs/${id}`}>Back to job</Link>
-            </main>
+            </div>
         );
     }
 
     return (
-        <main className="dash-page">
+        <div className="dash-page">
             <header className="dash-header">
                 <h1>Apply — {options.jobTitle}</h1>
                 <p>Step {step} of 3</p>
@@ -167,6 +167,6 @@ export default function CandidateApplyPage() {
                     </>
                 )}
             </form>
-        </main>
+        </div>
     );
 }
