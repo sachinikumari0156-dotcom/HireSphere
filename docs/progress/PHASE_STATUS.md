@@ -12,7 +12,7 @@
 | 4 | Candidate workflows | VERIFIED | Phase 4 E2E commit | SUCCESS | Browser Playwright; LocalDB |
 | 5 | Recruiter workflows | VERIFIED | Phase 5 feature + E2E verify | SUCCESS | Playwright recruiter journey PASS; LocalDB |
 | 6 | Hiring Manager | VERIFIED | `4bafce2` + `da285d2` + verify | SUCCESS | Playwright HM journey PASS; 21 screenshots; LocalDB |
-| 7 | Administrator | IN PROGRESS | Phase 7.1 pending push | — | User/org/dept/role governance in progress |
+| 7 | Administrator | IN PROGRESS | 7.1 + 7.2 on main; E2E pending | — | Audit/monitoring/analytics/final decisions delivered; verification next |
 | 8 | AI and integrations | NOT STARTED | — | — | Cloud storage deferred here |
 | 9 | UI design system | NOT STARTED | — | — | — |
 | 10 | Quality and evidence | NOT STARTED | — | — | — |

@@ -59,6 +59,10 @@ import AdminOrganizationsPage from "./pages/admin/AdminOrganizationsPage";
 import AdminDepartmentsPage from "./pages/admin/AdminDepartmentsPage";
 import AdminRolesPage from "./pages/admin/AdminRolesPage";
 import AdminHiringManagerAssignPage from "./pages/admin/AdminHiringManagerAssignPage";
+import AdminAuditPage from "./pages/admin/AdminAuditPage";
+import AdminMonitoringPage from "./pages/admin/AdminMonitoringPage";
+import AdminAnalyticsPage from "./pages/admin/AdminAnalyticsPage";
+import AdminFinalDecisionsPage, { AdminFinalDecisionDetailPage } from "./pages/admin/AdminFinalDecisionsPage";
 import "./App.css";
 
 function App() {
@@ -241,6 +245,11 @@ function App() {
                         <Route path="departments" element={<AdminDepartmentsPage />} />
                         <Route path="roles" element={<AdminRolesPage />} />
                         <Route path="hiring-managers" element={<AdminHiringManagerAssignPage />} />
+                        <Route path="audit" element={<AdminAuditPage />} />
+                        <Route path="monitoring" element={<AdminMonitoringPage />} />
+                        <Route path="analytics" element={<AdminAnalyticsPage />} />
+                        <Route path="final-decisions" element={<AdminFinalDecisionsPage />} />
+                        <Route path="final-decisions/:applicationId" element={<AdminFinalDecisionDetailPage />} />
                     </Route>
 
                     <Route path="/candidate-dashboard" element={<Navigate to="/candidate" replace />} />

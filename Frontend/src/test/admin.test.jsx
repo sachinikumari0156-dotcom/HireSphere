@@ -134,3 +134,78 @@ describe('Non-admin denied admin route', () => {
         expect(await screen.findByText(/access denied/i)).toBeInTheDocument();
     });
 });
+
+describe('Admin phase 7.2 pages', () => {
+    beforeEach(() => vi.clearAllMocks());
+
+    it('loads audit logs and export control', async () => {
+        api.get.mockResolvedValueOnce({ data: { items: [], totalCount: 0 } });
+        const { default: AdminAuditPage } = await import('../pages/admin/AdminAuditPage');
+        renderAdmin(<AdminAuditPage />);
+        expect(await screen.findByRole('heading', { name: /audit logs/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /export csv/i })).toBeInTheDocument();
+        expect(screen.getByText(/no audit events/i)).toBeInTheDocument();
+    });
+
+    it('shows NotConfigured provider statuses', async () => {
+        api.get.mockResolvedValueOnce({
+            data: {
+                apiHealth: 'Operational',
+                databaseConnectivity: 'Connected',
+                pendingRecruiterRequests: 0,
+                disabledAccounts: 0,
+                pendingAssessments: 0,
+                upcomingInterviews: 0,
+                pendingFinalDecisions: 0,
+                emailProviderStatus: 'NotConfigured',
+                smsProviderStatus: 'NotConfigured',
+                calendarProviderStatus: 'NotConfigured',
+                storageProviderStatus: 'NotConfigured',
+                providerNotes: 'Phase 8'
+            }
+        });
+        const { default: AdminMonitoringPage } = await import('../pages/admin/AdminMonitoringPage');
+        renderAdmin(<AdminMonitoringPage />);
+        expect(await screen.findByRole('heading', { name: /monitoring/i })).toBeInTheDocument();
+        expect(screen.getByText(/email: notconfigured/i)).toBeInTheDocument();
+    });
+
+    it('loads analytics empty skill demand', async () => {
+        api.get
+            .mockResolvedValueOnce({
+                data: {
+                    applicationsByStatus: [],
+                    shortlisted: 0,
+                    rejected: 0,
+                    hired: 0,
+                    unavailableMetricsNote: 'note'
+                }
+            })
+            .mockResolvedValueOnce({ data: { skillDemandFromJobs: [] } })
+            .mockResolvedValueOnce({ data: { jobsByDepartment: [] } });
+        const { default: AdminAnalyticsPage } = await import('../pages/admin/AdminAnalyticsPage');
+        renderAdmin(<AdminAnalyticsPage />);
+        expect(await screen.findByRole('heading', { name: /recruitment analytics/i })).toBeInTheDocument();
+        expect(screen.getByText(/no skill demand data/i)).toBeInTheDocument();
+    });
+
+    it('requires reason on final decision form', async () => {
+        api.get.mockResolvedValueOnce({
+            data: {
+                applicationId: 9,
+                candidateName: 'C',
+                jobTitle: 'J',
+                applicationStatus: 'Interviewed',
+                latestRecommendation: 'RecommendHire',
+                warnings: []
+            }
+        });
+        const { AdminFinalDecisionDetailPage } = await import('../pages/admin/AdminFinalDecisionsPage');
+        renderAdmin(<AdminFinalDecisionDetailPage />, {
+            route: '/admin/final-decisions/9',
+            path: '/admin/final-decisions/:applicationId'
+        });
+        expect(await screen.findByRole('heading', { name: /final decision review/i })).toBeInTheDocument();
+        expect(screen.getByLabelText(/reason/i)).toBeRequired();
+    });
+});

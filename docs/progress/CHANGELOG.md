@@ -1,5 +1,15 @@
 # HireSphere — Implementation Changelog
 
+## Phase 7.2 — 2026-07-20
+
+**Commit message:** `feat(admin): add audit monitoring analytics and final decision controls`
+
+- Audit list/export, monitoring summary, recruitment/workforce/skill analytics
+- Admin final-decision APIs (HM cannot FinalHire)
+- Safe CSV exports with formula-injection neutralization
+- Frontend audit/monitoring/analytics/final-decision pages + Vitest
+- Phase 7 remains IN PROGRESS until browser E2E verification
+
 ## Phase 7.1 — 2026-07-20
 
 **Commit message:** `feat(admin): add user access organization and department governance`

@@ -30,6 +30,7 @@ builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminUserService, AdminUserService>();
 builder.Services.AddScoped<IAdminPortalService, AdminPortalService>();
+builder.Services.AddScoped<IAdminPhase72Service, AdminPhase72Service>();
 builder.Services.AddScoped<IResourceAuthorizationService, ResourceAuthorizationService>();
 builder.Services.AddScoped<ILocalFileStorageService, LocalFileStorageService>();
 builder.Services.AddScoped<ICandidateProfileService, CandidateProfileService>();
