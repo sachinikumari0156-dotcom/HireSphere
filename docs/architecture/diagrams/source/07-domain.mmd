@@ -1,0 +1,29 @@
+﻿%% Domain / class overview (simplified)
+classDiagram
+  class User {
+    +Guid Id
+    +string Email
+    +string PasswordHash
+    +string Status
+  }
+  class Job {
+    +Guid Id
+    +string Status
+    +Guid OrganizationId
+  }
+  class Application {
+    +Guid Id
+    +string Status
+  }
+  class Interview {
+    +Guid Id
+    +DateTime StartsAtUtc
+  }
+  class HiringDecision {
+    +string DecisionType
+    +bool IsFinal
+  }
+  User "1" --> "*" Application
+  Job "1" --> "*" Application
+  Application "1" --> "*" Interview
+  Application "1" --> "0..*" HiringDecision

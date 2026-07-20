@@ -1,0 +1,15 @@
+﻿sequenceDiagram
+  actor R as Recruiter
+  participant API as Recruiter interviews
+  participant Cal as Internal calendar + ICS
+  participant DB as DB
+  R->>API: Schedule interview
+  API->>DB: Conflict detection
+  alt conflict
+    API-->>R: Warning / conflict response
+  else ok
+    API->>DB: Interview + participants
+    API->>Cal: Internal event + ICS content
+    API-->>R: Scheduled
+  end
+  Note over Cal: Google/Outlook Not Configured

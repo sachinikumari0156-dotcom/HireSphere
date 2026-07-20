@@ -1,0 +1,11 @@
+﻿sequenceDiagram
+  actor C as Candidate
+  participant API as Candidate AI API
+  participant P as Deterministic parse provider
+  participant DB as DB
+  C->>API: Request resume analysis
+  API->>P: Parse (deterministic)
+  P-->>API: Skills + explanation + human-review notice
+  API->>DB: ResumeAnalysis + ExtractedSkills
+  API-->>C: Review UI payload
+  Note over P: External AI Not Configured

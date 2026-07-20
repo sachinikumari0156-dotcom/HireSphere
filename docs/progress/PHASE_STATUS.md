@@ -1,7 +1,7 @@
 # HireSphere — Phase Status
 
 **Last updated:** 2026-07-21
-**Overall readiness:** NOT READY (Phase 11 pending)
+**Overall readiness:** PARTIAL (Phase 11 in progress; usability participants PENDING)
 
 | Phase | Name | Status | Commit | Push | Notes |
 |-------|------|--------|--------|------|-------|
@@ -16,7 +16,7 @@
 | 8 | AI and integrations | IMPLEMENTED — EXTERNAL PROVIDER VERIFICATION PENDING | `d94e08e` + `3a5ef00` + `472df59` + `ed74aed` | SUCCESS | Deterministic AI, outbox, ICS, local storage verified; external cloud providers NotConfigured |
 | 9 | UI design system | VERIFIED | `48db259` + `3119e4f` + verify | SUCCESS | Design system + responsive portals; axe/keyboard/visual PASS; evidence in phase9-ui |
 | 10 | Quality and UAT | PARTIALLY VERIFIED | `fe3c0cc` + `6cddb19` + release | PARTIAL | Automated quality/UAT/release PASS; real usability participants PENDING |
-| 11 | Submission pack | NOT STARTED | — | — | — |
+| 11 | Submission pack | IN PROGRESS | Phase 11.1 docs | — | Architecture report + ADRs + diagrams; evidence/demo pack pending |
 
 ---
 

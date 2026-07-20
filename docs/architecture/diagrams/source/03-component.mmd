@@ -1,0 +1,27 @@
+%% HireSphere — Component view inside the API host
+flowchart TB
+  subgraph Presentation
+    Ctrl[Controllers<br/>Auth Candidate Recruiter<br/>HiringManager Admin Integrations Storage]
+  end
+
+  subgraph Application
+    Svcs[Domain services<br/>profiles jobs applications<br/>assessments interviews decisions]
+    Outbox[NotificationOutbox + dispatcher]
+    AI[AI provider abstractions<br/>parse match rank insights]
+    Store[IFileStorageProvider]
+    Cal[ICalendarProvider + ICS]
+  end
+
+  subgraph Infrastructure
+    EF[EF Core ApplicationDbContext]
+    Providers[Email SMS Calendar Storage adapters]
+  end
+
+  Ctrl --> Svcs
+  Ctrl --> AI
+  Ctrl --> Store
+  Ctrl --> Cal
+  Svcs --> EF
+  Outbox --> Providers
+  AI --> EF
+  Store --> EF

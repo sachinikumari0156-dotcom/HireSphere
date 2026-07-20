@@ -1,0 +1,10 @@
+﻿sequenceDiagram
+  actor R as Recruiter
+  participant SPA as SPA
+  participant API as Recruiter API
+  participant DB as DB
+  R->>SPA: Screen / rank / shortlist
+  SPA->>API: Pipeline action
+  API->>DB: Org-scoped application update
+  API->>DB: RankingReview / status history
+  API-->>SPA: Updated pipeline DTO

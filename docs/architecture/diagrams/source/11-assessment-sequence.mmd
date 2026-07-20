@@ -1,0 +1,10 @@
+﻿sequenceDiagram
+  actor R as Recruiter
+  actor C as Candidate
+  participant API as Assessment APIs
+  participant DB as DB
+  R->>API: Assign assessment
+  API->>DB: AssessmentAssignment
+  C->>API: Submit answers
+  API->>DB: Score without exposing keys to client
+  API-->>C: Result summary only

@@ -1,0 +1,12 @@
+﻿sequenceDiagram
+  actor C as Candidate
+  participant API as Storage API
+  participant Store as IFileStorageProvider
+  participant DB as DB
+  C->>API: Upload document
+  API->>API: Validate extension size MIME
+  API->>Store: Store under generated key
+  API->>DB: CandidateDocument metadata
+  API-->>C: Metadata DTO
+  Note over Store: Azure Blob cloud Not Configured unless configured
+  Note over API: Antivirus Not Configured

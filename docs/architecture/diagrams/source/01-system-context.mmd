@@ -1,0 +1,30 @@
+%% HireSphere — System context (C4 Level 1)
+%% Matches implemented modular monolith with optional external providers
+flowchart LR
+  Cand[Candidate]
+  Rec[Recruiter]
+  HM[Hiring Manager]
+  Adm[Administrator]
+
+  HS[HireSphere Platform<br/>React SPA + ASP.NET Core API<br/>SQL Server / LocalDB]
+
+  Cand --> HS
+  Rec --> HS
+  HM --> HS
+  Adm --> HS
+
+  SMTP[Dev SMTP / MailHog<br/>Production SMTP: Not Configured]
+  SMS[Dev SMS Mock<br/>External SMS: Not Configured]
+  CalG[Google Calendar: Not Configured]
+  CalO[Outlook Calendar: Not Configured]
+  Stor[Local / Azurite storage<br/>Azure Blob cloud: Not Configured]
+  AI[Deterministic AI adapters<br/>External AI: Not Configured]
+  AV[Antivirus: Not Configured]
+
+  HS -.-> SMTP
+  HS -.-> SMS
+  HS -.-> CalG
+  HS -.-> CalO
+  HS --> Stor
+  HS --> AI
+  HS -.-> AV

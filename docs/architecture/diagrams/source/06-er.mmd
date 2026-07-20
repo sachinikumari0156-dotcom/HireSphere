@@ -1,0 +1,19 @@
+﻿%% ER — core entities (aligned with ApplicationDbContext)
+erDiagram
+  Users ||--o| CandidateProfiles : has
+  Users ||--o{ UserRoles : assigned
+  Roles ||--o{ UserRoles : includes
+  Organizations ||--o{ Departments : contains
+  Organizations ||--o{ Jobs : posts
+  CandidateProfiles ||--o{ Resumes : has
+  CandidateProfiles ||--o{ CandidateDocuments : has
+  Jobs ||--o{ Applications : receives
+  Applications ||--o{ ApplicationStatusHistory : tracks
+  Applications ||--o{ Interviews : schedules
+  Applications ||--o{ AssessmentAssignments : assigned
+  Applications ||--o{ CandidateEvaluations : evaluated
+  Applications ||--o{ HiringDecisions : decided
+  Resumes ||--o{ ResumeAnalyses : analyzed
+  Users ||--o{ Notifications : receives
+  Users ||--o{ AuditLogs : audited
+  NotificationOutbox }o--|| Users : targets

@@ -1,0 +1,9 @@
+﻿sequenceDiagram
+  actor HM as Hiring Manager
+  participant API as HiringManager API
+  participant DB as DB
+  HM->>API: Submit evaluation / recommendation
+  API->>DB: Verify assignment scope
+  API->>DB: Persist evaluation (not final decision)
+  API-->>HM: Advisory recommendation saved
+  Note over API: Final hire/reject requires Admin/Recruiter authority

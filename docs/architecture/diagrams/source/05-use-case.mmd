@@ -1,0 +1,35 @@
+%% HireSphere — Primary use cases by role
+flowchart TB
+  Cand((Candidate))
+  Rec((Recruiter))
+  HM((Hiring Manager))
+  Adm((Administrator))
+
+  UC1[Register / login]
+  UC2[Manage profile and documents]
+  UC3[Search jobs and apply]
+  UC4[Complete assessment / interview]
+  UC5[Create and publish jobs]
+  UC6[Screen rank assess shortlist]
+  UC7[Schedule interviews]
+  UC8[Review assigned candidates]
+  UC9[Submit feedback evaluation recommendation]
+  UC10[Govern users orgs roles]
+  UC11[Final hire / reject decision]
+  UC12[Audit analytics provider status]
+
+  Cand --> UC1
+  Cand --> UC2
+  Cand --> UC3
+  Cand --> UC4
+  Rec --> UC1
+  Rec --> UC5
+  Rec --> UC6
+  Rec --> UC7
+  HM --> UC1
+  HM --> UC8
+  HM --> UC9
+  Adm --> UC1
+  Adm --> UC10
+  Adm --> UC11
+  Adm --> UC12

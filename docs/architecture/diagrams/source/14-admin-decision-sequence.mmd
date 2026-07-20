@@ -1,0 +1,9 @@
+﻿sequenceDiagram
+  actor A as Administrator
+  participant API as Admin API
+  participant DB as DB
+  A->>API: FinalHire or FinalReject
+  API->>DB: Guard duplicate final decision
+  API->>DB: HiringDecision IsFinal=true + audit
+  API->>DB: Notify candidate (outbox / in-app)
+  API-->>A: Decision recorded

@@ -1,0 +1,14 @@
+﻿sequenceDiagram
+  actor U as User
+  participant SPA as React SPA
+  participant API as AuthController
+  participant DB as SQL Server
+  U->>SPA: Submit email/password
+  SPA->>API: POST /api/auth/login
+  API->>DB: Load user + roles + status
+  alt invalid or disabled
+    API-->>SPA: 401/403
+  else valid
+    API-->>SPA: JWT + safe user DTO
+    SPA->>SPA: Persist token in memory/storage
+  end

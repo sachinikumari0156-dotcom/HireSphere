@@ -1,0 +1,13 @@
+﻿sequenceDiagram
+  participant Svc as Domain service
+  participant OB as NotificationOutbox
+  participant Disp as Outbox processor
+  participant Email as IEmailProvider
+  Svc->>OB: Enqueue idempotent message
+  Disp->>OB: Claim pending rows
+  Disp->>Email: Send (dev SMTP or NotConfigured)
+  alt success
+    Disp->>OB: Mark Sent
+  else failure
+    Disp->>OB: Retry / Failed with limit
+  end

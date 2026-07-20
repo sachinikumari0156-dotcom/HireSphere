@@ -1,0 +1,15 @@
+%% HireSphere — Development / demo deployment (verified)
+flowchart LR
+  Dev[Developer workstation]
+  Vite[Vite dev server :5173]
+  API[ASP.NET Core :5167]
+  LDB[(LocalDB<br/>MSSQLLocalDB<br/>HireSphereDev)]
+  Disk[Local document folder]
+
+  Dev --> Vite
+  Dev --> API
+  Vite -->|VITE_API_BASE_URL| API
+  API --> LDB
+  API --> Disk
+
+  note1[Production cloud deploy: NOT VERIFIED]

@@ -1,0 +1,14 @@
+﻿sequenceDiagram
+  actor C as Candidate
+  participant SPA as SPA
+  participant API as CandidateJobs API
+  participant DB as DB
+  C->>SPA: Apply to published job
+  SPA->>API: POST application
+  API->>DB: Enforce ownership + duplicate check
+  alt duplicate
+    API-->>SPA: 409 Conflict
+  else ok
+    API->>DB: Insert Application + history + notification
+    API-->>SPA: 201 Created
+  end

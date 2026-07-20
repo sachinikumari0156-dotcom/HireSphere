@@ -1,0 +1,21 @@
+%% HireSphere — Container diagram (actual deployment shape)
+flowchart TB
+  subgraph Client
+    SPA[React Vite SPA<br/>Role portals + AuthContext]
+  end
+
+  subgraph Server
+    API[HireSphere.API<br/>ASP.NET Core controllers<br/>JWT + RBAC policies]
+    Workers[In-process workers<br/>Notification outbox processor]
+  end
+
+  subgraph Data
+    DB[(SQL Server / LocalDB<br/>HireSphereDev)]
+    FS[Local secure file store<br/>metadata in DB]
+  end
+
+  SPA -->|HTTPS/HTTP JSON| API
+  API --> DB
+  API --> FS
+  API --> Workers
+  Workers --> DB

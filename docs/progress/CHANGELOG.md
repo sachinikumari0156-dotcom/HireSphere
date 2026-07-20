@@ -1,5 +1,14 @@
 # HireSphere — Implementation Changelog
 
+## Phase 11.1 — 2026-07-21
+
+**Commit message:** `docs(architecture): finalize HireSphere architecture and technical report`
+
+- Final report source `docs/report/HIRESPHERE_FINAL_REPORT.md`
+- Coursework requirements checklist; ADRs 001–012
+- Mermaid diagram sources (17); database and API overview docs
+- Rendered diagram PNG export PENDING (no Mermaid CLI)
+
 ## Phase 10 release — 2026-07-21
 
 **Commit message:** `test(release): verify complete HireSphere release candidate`
